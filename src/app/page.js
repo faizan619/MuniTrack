@@ -7,7 +7,7 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <main>
+    <main className="min-h-screen sm:bg-yellow-600 md:bg-blue-700 lg:bg-green-700 xl:bg-red-700" >
       Home Page
     </main>
   );
