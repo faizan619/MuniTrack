@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Button from "./components/Button";
 
 export const metadata = {
   title: "Home : MuniTrack",
@@ -7,8 +8,14 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <main className="min-h-screen sm:bg-yellow-600 md:bg-blue-700 lg:bg-green-700 xl:bg-red-700" >
-      Home Page
+    <main className="p-2 flex flex-col gap-2 min-h-[35rem]  sm:bg-yellow-600 md:bg-blue-700 lg:bg-green-700 xl:bg-red-700" >
+      <div className="flex justify-between items-center">
+        <p className="text-xl font-extrabold uppercase">Issue</p>
+        <p>Search</p>
+      </div>
+      <div className="bg-green-600 rounded-lg p-3 h-full flex-1">
+        <Button title="api/issue" url="/api/issue" />
+      </div>
     </main>
   );
 }
