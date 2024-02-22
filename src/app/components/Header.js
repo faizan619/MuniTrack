@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 const Header = () => {
   const router = useRouter();
   return (
-    <div className="h-14 px-3 bg-gray-700 flex justify-between items-center gap-5">
+    <div className="h-14 px-3 bg-gray-700 flex justify-center md:justify-between items-center gap-5">
       <div className="flex gap-3 items-center cursor-context-menu">
         <Image src={Logo} height={300} width={35} alt="Logo" />
         <p className="font-extrabold text-xl font-sans text-white">

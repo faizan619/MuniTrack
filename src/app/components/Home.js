@@ -4,6 +4,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Button from "./Button";
+import toast from "react-hot-toast";
 
 export default function Home() {
   const { user } = useAuthContext(); // Moved to top level
@@ -11,21 +12,26 @@ export default function Home() {
   const auth = getAuth(); // Moved to top level
 
   useEffect(() => {
-    if (user == null) router.push("/register");
+    if (user == null) {
+      toast.remove()
+      toast.error("Please login to continue!")
+      router.push("/register");
+    }
   }, [user, router]); // Added router to the dependency array
 
   const LogoutBtn = () => {
     signOut(auth)
       .then(() => {
-        alert("Sign out successfully");
+        toast.success("Sign out successfully!");
         router.push("/");
       })
       .catch((error) => {
-        alert("Problem in Signing out");
+        toast.error("Problem in Signing out");
       });
   };
 
-  if (!user) { // Conditional rendering
+  if (!user) {
+    // Conditional rendering
     return <div>Only Logined Users can view this page</div>;
   }
 
