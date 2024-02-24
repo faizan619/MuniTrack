@@ -1,6 +1,5 @@
 "use client"
 import {onAuthStateChanged,getAuth} from "firebase/auth"
-// import apna_app from "@/firebase/config"
 import track_app from "@/firebase/config"
 import { createContext, useContext, useEffect, useState } from "react"
 const auth = getAuth(track_app)
@@ -16,7 +15,7 @@ export const AuthContextProvider = ({
         const unsubscribe = onAuthStateChanged(auth,(user)=>{
             if(user){
                 setUser(user);
-                console.log("user is :",user)
+                // console.log("user is :",user)
             }
             else{
                 setUser(null);
