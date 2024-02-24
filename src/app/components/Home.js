@@ -6,10 +6,11 @@ import { useEffect } from "react";
 import Button from "./Button";
 import toast from "react-hot-toast";
 
-export default function Home() {
+export default function Home() { 
   const { user } = useAuthContext(); // Moved to top level
   const router = useRouter(); // Moved to top level
   const auth = getAuth(); // Moved to top level
+  console.log("Auth details here : ",auth.currentUser.email)
 
   useEffect(() => {
     if (user == null) {

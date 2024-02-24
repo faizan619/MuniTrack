@@ -2,6 +2,7 @@
 import { useState } from "react";
 import register from "../components/auth/register";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -14,10 +15,19 @@ export default function Register() {
     const { result, error } = await register(email, password);
 
     if (error) {
-      return console.log(error);
+      // return console.log(error);
+      if(error.code === 'auth/email-already-in-use'){
+        toast.error("Email already Registered!!");
+      }
+      else{
+        toast.error(error)
+        // console.log(error)
+      }
     }
-    console.log(result);
-    return router.push("/login");
+    else{
+      console.log(result);
+      return router.push("/login");
+    }
   };
 
   return (
