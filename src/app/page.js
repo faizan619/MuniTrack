@@ -1,7 +1,5 @@
-import Image from "next/image";
-import Button from "./components/Button";
 import { connectDB } from "@/mongodb/database/conn";
-import Home from "./components/Home";
+import Home from "./element/pages/Home";
 
 export const metadata = {
   title: "Home : MuniTrack",

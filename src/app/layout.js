@@ -1,7 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/Navbar";
-import Header from "./components/Header";
+import Navbar from "./element/component/Flotter";
+import Header from "./element/component/Header";
 import { Toaster } from "react-hot-toast";
 import { AuthContextProvider } from "@/context/AuthContext";
 
