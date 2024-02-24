@@ -1,20 +1,33 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import register from "../element/auth/register";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { useAuthContext } from "@/context/AuthContext";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName,setdisplayName] = useState('');
-  const [phoneNumber,setphoneNumber] = useState('');
+  // const [imageURL,setimageURL] = useState('');
+  const { user } = useAuthContext(); // Moved to top level
+
   const router = useRouter();
+
+
+  useEffect(() => {
+    if (user != null) {
+      toast.remove()
+      toast.error("You are already login!");
+      router.push("/")
+    }
+  }, [user, router]);
+
 
   const handleForm = async (e) => {
     e.preventDefault();
       
-      const { result, error } = await register(email, password,displayName,phoneNumber);
+      const { result, error } = await register(email, password,displayName);
       
       if (error) {
         if(error.code === 'auth/email-already-in-use'){
@@ -32,69 +45,24 @@ export default function Register() {
   };
 
   return (
-    <div className="flex h-[91.5vh] bg-green-600 justify-center items-center ">
-      <div className="text-center text-white text-xl">
-        <h1 className="mb-7 uppercase text-2xl">Register</h1>
-        <form onSubmit={handleForm} className="text-left flex flex-col gap-7 p-7 bg-gray-700 rounded-md">
-          <label htmlFor="name">
-            <p>Name</p>
-            <input
-              onChange={(e) => setdisplayName(e.target.value)}
-              required
-              autoFocus
-              type="text"
-              name="name"
-              className="p-2 rounded-md text-black"
-              id="name"
-              placeholder="axender"
-            />
-          </label>
-          <label htmlFor="phone">
-            <p>Phone</p>
-            <input
-              onChange={(e) => setphoneNumber(e.target.value)}
-              required
-              type="number"
-              name="phone"
-              className="p-2 rounded-md text-black"
-              id="phone"
-              placeholder="11111 22222"
-            />
-          </label>
-          <label htmlFor="email">
-            <p>Email</p>
-            <input
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              type="email"
-              name="email"
-              className="p-2 rounded-md text-black"
-              id="email"
-              placeholder="example@mail.com"
-            />
-          </label>
-          <label htmlFor="password">
-            <p>Password</p>
-            <input
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              type="password"
-              className="p-2 text-black rounded-md"
-              name="password"
-              id="password"
-              placeholder="**********"
-            />
-          </label>
-          
-          <button
-            type="submit"
-            className="text-white bg-gray-900 hover:bg-gray-800 py-3 rounded-md"
-          >
-            Sign up 
-          </button>
-        </form>
-        <h1 className="text-left mt-3">Already having a Account? <span onClick={()=>router.push("/login")} className="text-red-700 cursor-pointer hover:underline">Login</span></h1>
-      </div>
+    <div className="flex flex-col justify-center items-center min-h-[91.5vh] px-1 bg-green-400  ">
+      <h1 className="text-center text-xl sm:text-2xl uppercase mb-5">Register</h1>
+      <form onSubmit={handleForm} className="rounded-md flex flex-col items-center justify-center py-5 px-2 gap-3 bg-gray-700 text-white sm:px-5 sm:py-7 sm:gap-5 ">
+        <div className="w-full">
+          <label className="" htmlFor="name">Name:</label>
+          <input type="text" required autoFocus name="name" id="name" placeholder="david gray" value={displayName} onChange={(e)=>setdisplayName(e.target.value)} className="py-1 px-2 text-black w-full rounded-sm" />
+        </div>
+        <div className="w-full">
+        <label className="" htmlFor="email">Email:</label>
+        <input type="email" required name="email" id="email" placeholder="david@gmail.com" value={email} onChange={(e)=>setEmail(e.target.value)} className="py-1 px-2 text-black w-full rounded-sm" />
+        </div>
+        <div className="w-full">
+          <label className="" htmlFor="pass" >Password</label>
+          <input type="password" required name="pass" id="pass" placeholder="*****" value={password} onChange={(e)=>setPassword(e.target.value)} className="py-1 px-2 text-black w-full rounded-sm" />
+        </div>
+        <button type="submit" className="border w-full py-1 rounded-sm">Register</button>
+      </form>
+      <h1 className="text-left mt-3">Already have a Account? <span onClick={()=>router.push("/login")} className="text-red-700 cursor-pointer hover:underline">Login</span></h1>
     </div>
   );
 }

@@ -22,7 +22,8 @@ export default function Home() {
     signOut(auth)
       .then(() => {
         toast.success("Sign out successfully!");
-        router.push("/");
+        window.location.reload();
+        // router.refresh("/");
       })
       .catch((error) => {
         toast.error("Problem in Signing out");
