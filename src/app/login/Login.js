@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
-import login from "../components/auth/login";
+import login from "../element/auth/login";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -10,14 +11,22 @@ export default function Login() {
 
   const handleForm = async (e) => {
     e.preventDefault();
-
     const { result, error } = await login(email, password);
-    if (error) {
-      return console.log("Error aaya in login :", error);
+
+    if(error){
+      if(error.code === 'auth/invalid-credential'){
+        toast.error("Check your credentials");
+      }
+      else{
+        toast.error("Some Problem in the Network")
+      }
     }
-    console.log(result);
-    return router.push("/");
-  };
+    else{
+      console.log(result);
+      return router.push("/")
+    }
+};
+
   return (
     <div className="flex h-[91.5vh] bg-green-600 justify-center items-center ">
       <div className="text-center text-white text-xl">
@@ -58,6 +67,7 @@ export default function Login() {
             Sign up
           </button>
         </form>
+        <h1 className="text-left mt-3">Create a new Account! <span onClick={()=>router.push("/register")} className="text-red-700 cursor-pointer hover:underline">Register</span></h1>
       </div>
     </div>
   );

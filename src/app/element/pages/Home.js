@@ -3,7 +3,6 @@ import { useAuthContext } from "@/context/AuthContext";
 import { getAuth, signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import Button from "../component/Button";
 import toast from "react-hot-toast";
 
 export default function Home() { 

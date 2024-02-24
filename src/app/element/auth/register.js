@@ -1,15 +1,23 @@
 import track_app from "@/firebase/config";
-import {createUserWithEmailAndPassword,getAuth} from "firebase/auth"
+import { updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 
-const auth = getAuth(track_app)
+const auth = getAuth(track_app);
 
-export default async function register(email,password){
-    let result = null,error = null;
-    try{
-        result = await createUserWithEmailAndPassword(auth,email,password);
-    }
-    catch(e){
-        error = e;
-    }
-    return {result,error}
+export default async function register(email, password,displayName,phoneNumber) {
+  let result = null,
+    error = null;
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    result = userCredential.user;
+    console.log("result here :",result)
+    await updateProfile(result, { displayName, phoneNumber });
+  } catch (e) {
+    error = e;
+  }
+  return { result, error };
 }
