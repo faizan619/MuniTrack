@@ -2,6 +2,7 @@
 import {onAuthStateChanged,getAuth} from "firebase/auth"
 import track_app from "@/firebase/config"
 import { createContext, useContext, useEffect, useState } from "react"
+import Splash from "@/app/element/pages/Splash"
 const auth = getAuth(track_app)
 export const AuthContext = createContext({})
 export const useAuthContext = ()=>useContext(AuthContext);
@@ -27,7 +28,7 @@ export const AuthContextProvider = ({
 
     return(
         <AuthContext.Provider value={{user}}>
-            {loading?<div>Loading...</div>:children}
+            {loading?<Splash/>:children}
         </AuthContext.Provider>
     )
 }
