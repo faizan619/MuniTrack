@@ -14,7 +14,7 @@ export default function Home() {
     if (user == null) {
       toast.remove()
       toast.error("Please login to continue!")
-      router.push("/login");
+      router.push("/google");
     }
   }, [user, router]); 
 
