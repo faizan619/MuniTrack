@@ -17,7 +17,7 @@ const Header = () => {
       if (user) {
         setName(user.displayName);
       } else {
-        setName("");
+        setName("unknown");
       }
     });
     return () => unsubscribe();
