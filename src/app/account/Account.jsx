@@ -14,8 +14,9 @@ export default function Account() {
     if (user == null) {
       toast.remove();
       toast.error("Please login to continue!");
-      router.push("/login");
+      router.push("/google");
     }
+
   }, [user, router]);
 
   const LogoutBtn = () => {
@@ -40,7 +41,7 @@ export default function Account() {
     <div className="min-h-[91.5vh] p-3 flex md:justify-center pt-5">
       <div className="flex flex-col gap-5 w-full md:w-3/4">
         <p className=" rounded-md px-3 py-5 text-sm bg-gray-600 text-green-400  ">
-          Name :{" "}
+          Name :
           <span className="uppercase font-bold text-white">
             {auth.currentUser.displayName}
           </span>
