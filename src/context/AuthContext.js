@@ -16,7 +16,6 @@ export const AuthContextProvider = ({
         const unsubscribe = onAuthStateChanged(auth,(user)=>{
             if(user){
                 setUser(user);
-                // console.log("user is :",user)
             }
             else{
                 setUser(null);

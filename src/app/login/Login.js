@@ -8,14 +8,14 @@ import { useAuthContext } from "@/context/AuthContext";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { user } = useAuthContext(); // Moved to top level
+  const { user } = useAuthContext(); 
 
   const router = useRouter();
   
       useEffect(() => {
         if (user != null) {
           toast.remove()
-          toast.error("You are already login!");
+          toast.success("You are now login!");
           router.push("/")
         }
       }, [user, router]);
