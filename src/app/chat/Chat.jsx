@@ -1,17 +1,18 @@
 "use client";
 import { useAuthContext } from "@/context/AuthContext";
 import { getAuth } from "firebase/auth";
+import { serverTimestamp } from "firebase/database";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function Chat() {
-  const { user } = useAuthContext(); // Moved to top level
-  const router = useRouter(); // Moved to top level
-  const auth = getAuth(); // Moved to top level
-  const [msg,setMsg] = useState("");  //for taking msg input
+  const { user } = useAuthContext();
+  const router = useRouter(); 
+  const auth = getAuth(); 
+  const [msg,setMsg] = useState("");  
 
-  const userName = auth.currentUser?.email;
+  const userName = auth.currentUser?.displayName;
 
   const submitData = async (e)=>{
     e.preventDefault();
@@ -23,10 +24,10 @@ export default function Chat() {
         },
         body:JSON.stringify({
           msg,
-          userName
+          userName,
+          timestamp:serverTimestamp()
         }),
       });
-      // console.log("response here :",res);
       if(res){
         toast.remove();
         toast.success("Message Sent!");
@@ -61,6 +62,7 @@ export default function Chat() {
         <form className="flex gap-2 pt-2 w-full" onSubmit={submitData}>
           <input
             type="text"
+            autoFocus
             placeholder="Enter Message... "
             className="w-full px-2 py-1 text-lg rounded-md text-black"
             value={msg}
@@ -81,8 +83,8 @@ export default function Chat() {
 const Chatting = ({msg})=>{
   const [details, setDetails] = useState(null);
   const [error, setError] = useState(null);
-  const auth = getAuth(); // Moved to top level
-  const userName = auth.currentUser.email;
+  const auth = getAuth(); 
+  const userName = auth.currentUser?.displayName;
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -107,10 +109,11 @@ const Chatting = ({msg})=>{
       {Object.values(details).map((chat, index) => (
         <div key={index} className={`flex ${chat.userName === userName?"justify-end":"justify-start"}`}>
           <div className="border flex flex-col max-w-[70%] text-gray-800 bg-white rounded-md overflow-hidden">
-            <h1 className="text-sm inline-block bg-gray-300 p-1">
+            <h1 className="text-sm inline-block bg-gray-300 p-1 cursor-pointer hover:underline">
               {chat.userName}
             </h1>
             <p className={`inline-block text-lg ${chat.userName === userName?"bg-white":"bg-green-700 text-white"}  p-1`}>{chat.msg}</p>
+            <p className="text-sm text-gray-500">{new Date(chat.timestamp).toLocaleString()}</p> {/* Display the timestamp */}
           </div>
         </div>
       ))}

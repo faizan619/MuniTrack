@@ -1,4 +1,5 @@
 import { initializeApp,getApps } from "firebase/app";
+import {getDatabase} from "firebase/database"
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -9,4 +10,5 @@ const firebaseConfig = {
 };
 
 const track_app = getApps().length === 0? initializeApp(firebaseConfig):getApps()[0];
+const db = getDatabase();
 export default track_app;
