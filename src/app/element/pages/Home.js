@@ -8,7 +8,6 @@ import toast from "react-hot-toast";
 export default function Home() { 
   const { user } = useAuthContext(); 
   const router = useRouter(); 
-  const auth = getAuth(); 
 
   useEffect(() => {
     if (user == null) {
