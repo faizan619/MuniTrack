@@ -51,7 +51,7 @@ export default function Account() {
               height={100}
               width={100}
               alt="profile photo"
-              className="rounded-full sm:rounded-md h-52 w-52 sm:h-40 sm:w-60 object-cover"
+              className="rounded-full sm:rounded-md h-52 w-52 sm:h-40 sm:w-60 object-contain"
             />
           </p>
           <div className="w-full flex flex-col gap-5">
