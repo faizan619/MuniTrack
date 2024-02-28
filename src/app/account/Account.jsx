@@ -42,7 +42,7 @@ export default function Account() {
     return <div>Only Logined Users can view this page</div>;
   }
   return (
-    <div className="min-h-[91.5vh] p-3 flex md:justify-center pt-5">
+    <div className="min-h-[91.5vh] p-3 flex md:justify-center pt-5 wallpaper ">
       <div className="flex flex-col gap-5 w-full md:w-3/4 pb-20">
         <div className="flex gap-5 items-center flex-col sm:flex-row">
           <p className=" rounded-md text-sm flex justify-center items-center">
@@ -55,13 +55,13 @@ export default function Account() {
             />
           </p>
           <div className="w-full flex flex-col gap-5">
-            <p className="rounded-md px-3 py-5 text-sm bg-gray-600 text-green-400 overflow-auto">
+            <p className="rounded-md px-3 py-5 text-sm bg-gray-800 text-green-400 overflow-auto border border-gray-500 ">
               Name :
               <span className="sm:ml-4 uppercase font-bold text-white">
                 {auth.currentUser.displayName}
               </span>
             </p>
-            <p className="rounded-md bg-gray-600 px-3 py-5 text-sm text-green-400 hover:bg-gray-700 overflow-auto">
+            <p className="rounded-md bg-gray-800 border border-gray-500 px-3 py-5 text-sm text-green-400 hover:bg-gray-700 overflow-auto">
               Email :
               <span className="sm:ml-4 uppercase font-bold text-white cursor-pointer hover:underline ">
                 {auth.currentUser.email}
@@ -70,7 +70,7 @@ export default function Account() {
           </div>
         </div>
         <div
-          className="bg-gray-600 px-3 py-5 rounded-md text-white flex items-center justify-between hover:underline hover:text-green-500 "
+          className="bg-gray-800 px-3 py-5 rounded-md text-white flex items-center justify-between hover:underline hover:text-green-500 border border-gray-500"
           onClick={toggleIsOpen}
         >
           <p className="font-semibold ">View Other Data.</p>
@@ -96,13 +96,13 @@ export default function Account() {
             <p className="rounded-md bg-green-500 px-3 py-5 text-sm text-gray-900 hover:bg-green-600 overflow-auto">
               Account Created :
               <span className="uppercase font-bold text-white cursor-pointer hover:underline sm:ml-4 ">
-                {auth.currentUser.metadata.creationTime}
+              {new Date(auth.currentUser.metadata.creationTime).toLocaleString('en-US', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone })}
               </span>
             </p>
             <p className="rounded-md bg-green-500 px-3 py-5 text-sm text-gray-900 hover:bg-green-600 overflow-auto">
               Last SignIn :
               <span className="sm:ml-4 uppercase font-bold text-white cursor-pointer hover:underline ">
-                {auth.currentUser.metadata.lastSignInTime}
+                {new Date(auth.currentUser.metadata.lastSignInTime).toLocaleString('en-US', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone })}
               </span>
             </p>
             <p className="rounded-md bg-green-500 px-3 py-5 text-sm text-gray-900 hover:bg-green-600 overflow-auto">
@@ -114,7 +114,7 @@ export default function Account() {
           </div>
         )}
         <p
-          className="rounded-md bg-gray-600 px-3 py-5 text-sm font-bold uppercase text-white hover:bg-gray-700 cursor-pointer"
+          className="rounded-md bg-gray-800 px-3 py-5 text-sm font-bold uppercase text-white hover:bg-gray-700 cursor-pointer border border-gray-500"
           onClick={() => {
             router.push("/account/TermAndCondition");
           }}
@@ -122,7 +122,7 @@ export default function Account() {
           Terms And Conditions.
         </p>
         <p
-          className="rounded-md bg-gray-600 px-3 py-5 text-sm font-bold uppercase text-white hover:bg-gray-700 cursor-pointer"
+          className="rounded-md bg-gray-800 px-3 py-5 text-sm font-bold uppercase text-white hover:bg-gray-700 cursor-pointer border border-gray-500"
           onClick={() => {
             router.push("/account/DeveloperDetails");
           }}
@@ -130,7 +130,7 @@ export default function Account() {
           Developer Details
         </p>
         <p
-          className="rounded-md bg-gray-600 px-3 py-5 text-sm font-bold uppercase text-white hover:bg-gray-700 cursor-pointer"
+          className="rounded-md bg-gray-800 px-3 py-5 text-sm font-bold uppercase text-white hover:bg-gray-700 cursor-pointer border border-gray-500"
           onClick={() => {
             router.push("/account/Feedback");
           }}

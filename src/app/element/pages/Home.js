@@ -5,27 +5,26 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 
-export default function Home() { 
-  const { user } = useAuthContext(); 
-  const router = useRouter(); 
+export default function Home() {
+  const { user } = useAuthContext();
+  const router = useRouter();
 
   useEffect(() => {
     if (user == null) {
-      toast.remove()
-      toast.error("Please login to continue!")
+      toast.remove();
+      toast.error("Please login to continue!");
       router.push("/google");
     }
-  }, [user, router]); 
+  }, [user, router]);
 
   if (!user) {
     return <div>Only Logined Users can view this page</div>;
   }
 
   return (
-    <main className="p-2 flex flex-col gap-2 min-h-[35rem] bg-gray-600">
-      <div className="flex justify-between items-center">
-        <p className="text-xl font-extrabold uppercase">Issue</p>
-      </div>
-    </main>
+    <div className="h-[91.5vh] wallpaper p-5 text-white text-center">
+      <h1 className="border p-5 rounded-lg mb-10 ">Home Page</h1>
+      <p>This Page is Still Left for building</p>
+    </div>
   );
 }

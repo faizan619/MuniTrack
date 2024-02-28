@@ -56,7 +56,7 @@ export default function Chat() {
     return <div>Only Logined Users can view this page</div>;
   }
   return (
-    <div className="h-[91.5vh] bg-green-400 p-1">
+    <div className="h-[91.5vh] wallpaper p-1">
       <div className="h-[85%] md:h-full ">
         <div className="flex flex-col-reverse gap-3 h-full overflow-auto px-2">
         <form className="flex gap-2 pt-2 w-full" onSubmit={submitData}>
@@ -103,7 +103,7 @@ const Chatting = ({msg})=>{
   },[msg]);
 
   if (error) return <div>Error Fetching the Chats.</div>;
-  if (!details) return <div>Loading...</div>;
+  if (!details) return <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin dark:border-violet-400"></div>;
   return(
     <div className="flex flex-col gap-3">
       {Object.values(details).map((chat, index) => (
@@ -112,7 +112,7 @@ const Chatting = ({msg})=>{
             <h1 className="text-sm inline-block bg-gray-300 p-1 cursor-pointer hover:underline">
               {chat.userName}
             </h1>
-            <p className={`inline-block text-lg ${chat.userName === userName?"bg-white":"bg-green-700 text-white"}  p-1`}>{chat.msg}</p>
+            <p className={`inline-block text-lg ${chat.userName === userName?"bg-white":"bg-gray-700 text-white"}  p-1`}>{chat.msg}</p>
             <p className="text-sm text-gray-500">{new Date(chat.timestamp).toLocaleString()}</p> {/* Display the timestamp */}
           </div>
         </div>
