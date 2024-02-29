@@ -5,6 +5,7 @@ const config = {
 
 export const connectDB = async () => {
   if (config.isConnected) {
+    console.log("Skipped Database!!")
     return;
   } else {
     try {

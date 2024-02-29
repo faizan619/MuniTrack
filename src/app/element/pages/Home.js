@@ -4,6 +4,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
+import AddButton from "../component/AddButton";
 
 export default function Home() {
   const { user } = useAuthContext();
@@ -22,9 +23,10 @@ export default function Home() {
   }
 
   return (
-    <div className="h-[91.5vh] wallpaper p-5 text-white text-center">
+    <div className="h-[90vh] wallpaper p-5 text-white text-center">
+      <AddButton/>
       <h1 className="border p-5 rounded-lg mb-10 ">Home Page</h1>
-      <p>This Page is Still Left for building</p>
+      <p>This Page is still Left for building</p>
     </div>
   );
 }

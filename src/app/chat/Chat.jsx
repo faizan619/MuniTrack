@@ -56,7 +56,7 @@ export default function Chat() {
     return <div>Only Logined Users can view this page</div>;
   }
   return (
-    <div className="h-[91.5vh] wallpaper p-1">
+    <div className="h-[90vh] wallpaper p-1">
       <div className="h-[85%] md:h-full ">
         <div className="flex flex-col-reverse gap-3 h-full overflow-auto px-2">
         <form className="flex gap-2 pt-2 w-full" onSubmit={submitData}>
@@ -68,7 +68,7 @@ export default function Chat() {
             value={msg}
             onChange={(e)=>setMsg(e.target.value)}
           />
-          <button type="submit" className="border px-5 text-white hover:bg-white hover:text-black bg-green-900">
+          <button type="submit" className="border px-5 text-white hover:bg-white hover:text-black bg-green-900 rounded-md transition-all">
             Sent
           </button>
         </form>
@@ -102,18 +102,18 @@ const Chatting = ({msg})=>{
     console.log("fetching...")
   },[msg]);
 
-  if (error) return <div>Error Fetching the Chats.</div>;
+  if (error) return <div className="text-white">Error Fetching the Chats.</div>;
   if (!details) return <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin dark:border-violet-400"></div>;
   return(
     <div className="flex flex-col gap-3">
       {Object.values(details).map((chat, index) => (
         <div key={index} className={`flex ${chat.userName === userName?"justify-end":"justify-start"}`}>
           <div className="border flex flex-col max-w-[70%] text-gray-800 bg-white rounded-md overflow-hidden">
-            <h1 className="text-sm inline-block bg-gray-300 p-1 cursor-pointer hover:underline">
+            <h1 className="text-sm inline-block px-1 bg-gray-300 p-1 cursor-pointer hover:underline">
               {chat.userName}
             </h1>
-            <p className={`inline-block text-lg ${chat.userName === userName?"bg-white":"bg-gray-700 text-white"}  p-1`}>{chat.msg}</p>
-            <p className="text-sm text-gray-500">{new Date(chat.timestamp).toLocaleString()}</p> {/* Display the timestamp */}
+            <p className={`inline-block text-lg px-1 ${chat.userName === userName?"bg-white":"bg-gray-700 text-white"}  p-1`}>{chat.msg}</p>
+            <p className="text-sm px-1 text-gray-500">{new Date(chat.timestamp).toLocaleString()}</p> {/* Display the timestamp */}
           </div>
         </div>
       ))}
