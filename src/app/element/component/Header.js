@@ -64,15 +64,17 @@ const Header = () => {
           >
             Chat
           </Link>
+          {name==="unknown"?(null):(
           <Link href={"account"}>
             <Image
-              src={auth.currentUser.photoURL}
+              src={auth.currentUser?.photoURL}
               height={0}
               width={40}
               alt="Account"
               className="rounded-full cursor-pointer"
             />
           </Link>
+          )}
         </ol>
       </div>
     </div>
