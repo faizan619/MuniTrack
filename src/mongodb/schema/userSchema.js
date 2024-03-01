@@ -10,7 +10,6 @@ const userSchema = new Schema({
         unique:true,
         required:[true,"Email is Required!"]
     },
-
 })
 
 export const User = mongoose.models.user || mongoose.model("user",userSchema)
