@@ -31,10 +31,6 @@ const IssueSchema = new Schema({
     type: String,
     required: true,
   },
-  issue_userId: {
-    type: mongoose.ObjectId,
-    required: true,
-  },
   issue_comment: {
     type: [String],
   },
