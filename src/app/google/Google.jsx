@@ -25,7 +25,6 @@ export default function Google() {
       const provider = new GoogleAuthProvider();
       const hello  = await signInWithPopup(auth, provider);
       console.log("Hello google : ",hello)
-      console.log("Hello google displayName : ",hello.user.displayName)
       toast.success("Login Successfull");
       router.push("/");
     } catch (error) {
