@@ -38,7 +38,6 @@ export async function POST(request){
                 issue_location,
                 issue_user_name,
                 issue_user_email,
-                issue_userId
             });
             const createIssue = await issue.save();
             return NextResponse.json({createIssue})
