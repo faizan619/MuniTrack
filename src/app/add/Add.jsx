@@ -59,7 +59,6 @@ export default function Add() {
     return () => {
       if (previewUrl) {
         URL.revokeObjectURL(previewUrl);
-        console.log("preview Url : ", previewUrl);
       }
     };
   }, [previewUrl]);
@@ -128,6 +127,7 @@ export default function Add() {
             issue_describe: "",
             issue_location: "",
           });
+          router.refresh("/")
           setTimeout(() => {
             router.push("/");
           }, 500);
@@ -138,7 +138,7 @@ export default function Add() {
         setLoading(false);
       } catch (error) {
         toast.remove();
-        toast.error("Cannot Post the Data!");
+        toast.error(`Error : Give Location permission`);
         setLoading(false);
       }
     }
