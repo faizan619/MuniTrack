@@ -3,14 +3,21 @@ import AnimeIcon from "../../../../public/assets/addicon.png";
 import Link from "next/link";
 export default function AddButton() {
   return (
-    <Link href={"/add"} className="absolute bottom-6 right-6 hidden md:block">
-      <Image
-        src={AnimeIcon}
-        height={70}
-        width={70}
-        alt="Add"
-        className="cursor-pointer hover:scale-105 transition-all"
-      />
-    </Link>
+    <div className="sticky bottom-10">
+      <div className="flex justify-end ">
+        <Link
+          href={"/add"}
+          className="sticky bottom-20 right-10 hidden md:block"
+        >
+          <Image
+            src={AnimeIcon}
+            height={70}
+            width={70}
+            alt="Add"
+            className="cursor-pointer transition-all"
+          />
+        </Link>
+      </div>
+    </div>
   );
 }
