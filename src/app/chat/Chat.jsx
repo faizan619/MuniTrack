@@ -17,7 +17,7 @@ export default function Chat() {
   const submitData = async (e)=>{
     e.preventDefault();
     if(msg){
-      const res = await fetch("https://munitrack-1-default-rtdb.firebaseio.com/chat.json",{
+      const res = await fetch(process.env.NEXT_PUBLIC_CHAT_DOMAIN,{
         method:"POST",
         headers:{
           "Content-Type":"application/json",
@@ -89,7 +89,7 @@ const Chatting = ({msg})=>{
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://munitrack-1-default-rtdb.firebaseio.com/chat.json",
+          process.env.NEXT_PUBLIC_CHAT_DOMAIN,
           { cache: "no-cache" }
         );
         const data = await response.json();
