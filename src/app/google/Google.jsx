@@ -17,7 +17,7 @@ export default function Google() {
       toast.success(`Welcome ${auth.currentUser.displayName}`);
       router.push("/");
     }
-  }, [user, router]);
+  }, [user, router, auth.currentUser.displayName]);
 
   const signInWithGooglePopup = async () => {
     setLoading(true);
@@ -31,42 +31,7 @@ export default function Google() {
       console.log("error in Google.jsx : ", error);
     }
     setLoading(false);
-  };
-
-
-  // const signInWithGooglePopup = async () => {
-  //   setLoading(true);
-  //   try {
-  //      const provider = new GoogleAuthProvider();
-  //      const hello = await signInWithPopup(auth, provider);
-  //      console.log("Hello google : ", hello);
-  //      toast.success("Login Successfull");
-  //      const user_name = hello.user.displayName;
-  //      const user_email = hello.user.email;
-   
-  //      let response = await fetch("http://localhost:3000/backend/user", {
-  //        method: "POST",
-  //        headers: {
-  //          "Content-Type": "application/json",
-  //        },
-  //        body: JSON.stringify({ user_name, user_email }),
-  //      });
-   
-  //      if (!response.ok) {
-  //        console.error('Backend response error:', response.status, await response.text());
-  //        throw new Error('Backend error');
-  //        return
-  //      }
-   
-  //      let post_info = await response.json();
-  //      console.log(post_info);
-  //      router.push("/");
-  //   } catch (error) {
-  //      console.error("Error in Google.jsx:", error);
-  //   }
-  //   setLoading(false);
-  //  };
-   
+  };  
    
 
   const signInWithGoogleRedirect = async () => {

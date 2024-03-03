@@ -8,6 +8,7 @@ export default function AddButton() {
         src={AnimeIcon}
         height={70}
         width={70}
+        alt="Add"
         className="cursor-pointer hover:scale-105 transition-all"
       />
     </Link>
