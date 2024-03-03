@@ -17,7 +17,7 @@ export default function Google() {
       toast.success(`Welcome ${auth.currentUser.displayName}`);
       router.push("/");
     }
-  }, [user, router, auth.currentUser.displayName]);
+  }, [user, router, auth.currentUser?.displayName]);
 
   const signInWithGooglePopup = async () => {
     setLoading(true);
