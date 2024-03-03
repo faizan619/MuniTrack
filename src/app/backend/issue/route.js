@@ -21,13 +21,13 @@ export async function GET(){
 }
 
 export async function POST(request){
-    let { issue_image_url,issue_title,issue_describe,issue_state,issue_location,issue_user_name,issue_user_email,issue_userId} = await request.json();
+    let { issue_image_url,issue_title,issue_describe,issue_state,issue_location,issue_user_name,issue_user_email} = await request.json();
     try {
-        if(!issue_title && !issue_describe && !issue_location && !issue_state ){
+        if(!issue_title || !issue_describe || !issue_location){
             return NextResponse.json({
                 message:"Please Fill all the Credentials!",
                 success:false,
-            },{status:500})
+            },{status:400})
         }
         else{
             const issue = new Issue({
@@ -40,12 +40,12 @@ export async function POST(request){
                 issue_user_email,
             });
             const createIssue = await issue.save();
-            return NextResponse.json({createIssue})
+            return NextResponse.json({createIssue,success:true})
         }
     } catch (error) {
         console.log("issue/route in POST error : ",error);
         return NextResponse.json({
-            message:"Can't Post the Issue :",
+            message:"Can't Post the Issue :"+error.message,
             success:false,
         },{status:500})
     }
