@@ -22,11 +22,5 @@ export default function Home() {
     return <div>Only Logined Users can view this page</div>;
   }
 
-  return (
-    <div className="h-[90vh] wallpaper p-5 text-white text-center">
-      <AddButton/>
-      <h1 className="border p-5 rounded-lg mb-10 ">Home Page</h1>
-      <p>This Page is still Left for building</p>
-    </div>
-  );
+  return (<></>);
 }

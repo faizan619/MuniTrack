@@ -99,7 +99,6 @@ const Chatting = ({msg})=>{
       }
     };
     fetchData();
-    console.log("fetching...")
   },[msg]);
 
   if (error) return <div className="text-white">Error Fetching the Chats.</div>;
