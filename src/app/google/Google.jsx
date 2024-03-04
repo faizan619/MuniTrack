@@ -4,6 +4,7 @@ import { GoogleAuthProvider, getAuth, signInWithPopup, signInWithRedirect } from
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/context/AuthContext";
+import AdminButton from "./Admin";
 
 export default function Google() {
   const router = useRouter();
@@ -48,7 +49,7 @@ export default function Google() {
   };
 
   return (
-    <div className="h-[91.5vh] flex justify-center items-center">
+    <div className="h-[90vh] flex flex-col gap-5 justify-center items-center">
 
     <div className="hidden lg:inline-block">
       <button
@@ -86,6 +87,7 @@ export default function Google() {
         <p>{loading?"Loading...":"Login with Google"}</p>
       </button>
     </div>
+    <AdminButton/>
     </div>
   );
 }
