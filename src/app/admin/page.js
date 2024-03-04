@@ -1,7 +1,7 @@
+import Admin from "./Admin";
+
 export default function Page(){
     return(
-        <div>
-            Admin Page here.
-        </div>
+        <Admin/>
     )
 }

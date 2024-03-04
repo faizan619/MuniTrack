@@ -14,7 +14,7 @@ const Header = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        setName(user.displayName);
+        setName(user?.displayName);
       } else {
         setName("unknown");
       }
