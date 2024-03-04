@@ -27,9 +27,9 @@ export default async function HomePost() {
       <h1 className="text-white text-2xl text-center p-5 uppercase ">Issues</h1>
       <div className="text-white flex gap-5 flex-wrap p-3 justify-evenly ">
         {issues === null ? (
-          <p>No Data Available</p>
+          <p>No Issue Available</p>
         ) : issues.length == 0 ? (
-          <p>No Data Found!</p>
+          <p>No Issue Found!</p>
         ) : (
           issues.map((item) => (
             <div
