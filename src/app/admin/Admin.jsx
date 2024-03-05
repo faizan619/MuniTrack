@@ -19,12 +19,12 @@ export default function Admin() {
     e.preventDefault();
     let password = pass.toLowerCase();
     if (password) {
-      if (password === process.env.NEXT_PUBLIC_REGISTER_PASSWORD) {
+      if (password === process.env.NEXT_PUBLIC_REGISTER) {
         toast.success("Register Yourself for Admin");
         setSpecial(true);
         setLogin(false)
       }
-      else if(password === process.env.NEXT_PUBLIC_LOGIN_PASSWORD){
+      else if(password === process.env.NEXT_PUBLIC_LOGIN){
         toast.success("Login Yourself as Admin");
         setLogin(true)
         setSpecial(false)
