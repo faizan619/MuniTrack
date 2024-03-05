@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import register from "../element/auth/register";
+import loginFun from "../element/auth/login";
 
 export default function Admin() {
   const { user } = useAuthContext();
@@ -12,21 +13,31 @@ export default function Admin() {
 
   const [pass, setPass] = useState("");
   const [special, setSpecial] = useState(false);
+  const [login,setLogin] = useState(false)
 
-  const handleAdmin = (e) => {
+  const handleRegisterAdmin = (e) => {
     e.preventDefault();
     let password = pass.toLowerCase();
     if (password) {
-      if (password === process.env.NEXT_PUBLIC_PASSWORD) {
-        toast.success("Welcome Admin");
+      if (password === process.env.NEXT_PUBLIC_REGISTER_PASSWORD) {
+        toast.success("Register Yourself for Admin");
         setSpecial(true);
-      } else {
+        setLogin(false)
+      }
+      else if(password === process.env.NEXT_PUBLIC_LOGIN_PASSWORD){
+        toast.success("Login Yourself as Admin");
+        setLogin(true)
+        setSpecial(false)
+      }
+       else {
         toast.success("Enter Correct Password or try Google Login!");
         setSpecial(false);
+        setLogin(false)
       }
     } else {
       toast.error("Please Enter the Password!");
       setSpecial(false);
+      setLogin(false)
     }
   };
 
@@ -37,12 +48,12 @@ export default function Admin() {
   useEffect(() => {
     if (user != null) {
       toast.remove();
-      toast.error("You are already login!");
+      toast.error("You are registered");
       router.push("/");
     }
   }, [user, router]);
 
-  const handleForm = async (e) => {
+  const handleRegisterForm = async (e) => {
     e.preventDefault();
 
     const { result, error } = await register(email, password, displayName);
@@ -55,14 +66,35 @@ export default function Admin() {
       }
     } else {
       console.log(result);
-      return router.push("/login");
+      return router.push("/");
     }
   };
+
+  const handleLoginForm = async (e)=>{
+    e.preventDefault();
+    const { result, error } = await loginFun(email, password);
+
+    if (error) {
+      if (error.code === "auth/invalid-credential") {
+        toast.error("Check your credentials");
+      } else {
+        toast.error("Some Problem in the Network");
+      }
+    } else {
+      console.log(result);
+      return router.push("/")
+    }
+  }
+
+  const backControl = (e)=>{
+    setLogin(false)
+    setSpecial(false)
+  }
 
   return (
     <div className="h-[90vh] flex justify-center items-center bg-black text-white">
       {special ? (
-        <form className="border flex flex-col gap-5 " onSubmit={handleForm}>
+        <form className="border flex flex-col gap-5 px-5 py-10 rounded-md" onSubmit={handleRegisterForm}>
           <input
             type="text"
             required
@@ -97,11 +129,38 @@ export default function Admin() {
           <button type="submit" className="border w-full py-1 rounded-sm">
             Register
           </button>
+          <button className="border border-dotted py-1" onClick={backControl}>Back</button>
         </form>
-      ) : (
+      ): login?(<form className="border flex flex-col gap-5 px-5 py-10 rounded-md" onSubmit={handleLoginForm}>
+      <input
+            type="email"
+            required
+            name="email"
+            id="email"
+            placeholder="david@gmail.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="py-1 px-2 text-black w-full rounded-sm"
+          />
+          <input
+            type="password"
+            required
+            name="pass"
+            id="pass"
+            placeholder="*****"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="py-1 px-2 text-black w-full rounded-sm"
+          />
+          <button type="submit" className="border w-full py-1 rounded-sm">
+            Login
+          </button>
+          <button className="border border-dotted py-1" onClick={backControl}>Back</button>
+      </form>) : (
+      
         <form
           className="border p-10 rounded-md flex flex-col gap-5"
-          onSubmit={handleAdmin}
+          onSubmit={handleRegisterAdmin}
         >
           <input
             type="text"
@@ -115,7 +174,9 @@ export default function Admin() {
             type="submit"
             className="border py-3 rounded-md cursor-pointer"
           />
+          <p className="border text-center py-3 rounded-md cursor-pointer" onClick={()=>{router.push("/google")}}>Back</p>
         </form>
+        
       )}
     </div>
   );
