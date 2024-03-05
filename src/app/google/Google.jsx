@@ -4,7 +4,7 @@ import { GoogleAuthProvider, getAuth, signInWithPopup, signInWithRedirect } from
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/context/AuthContext";
-import AdminButton from "./Admin";
+import AdminButton from "./AdminButton";
 
 export default function Google() {
   const router = useRouter();
