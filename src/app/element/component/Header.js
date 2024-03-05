@@ -14,13 +14,15 @@ const Header = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        setName(user.displayName);
+        setName(user?.displayName);
       } else {
         setName("unknown");
       }
     });
     return () => unsubscribe();
   }, [auth]);
+
+  const puto = auth.currentUser?.photoURL
 
   const isActive = (path) => path === pathname;
   return (
@@ -67,7 +69,7 @@ const Header = () => {
           {name==="unknown"?(null):(
           <Link href={"account"}>
             <Image
-              src={auth.currentUser?.photoURL}
+              src={puto===null?(Logo):(puto)}
               height={0}
               width={40}
               alt="Account"

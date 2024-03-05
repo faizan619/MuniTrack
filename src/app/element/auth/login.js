@@ -3,7 +3,7 @@ import {getAuth, signInWithEmailAndPassword} from "firebase/auth"
 
 const auth = getAuth(track_app)
 
-export default async function login(email,password){
+export default async function loginFun(email,password){
     let result = null,error = null;
 
     try{

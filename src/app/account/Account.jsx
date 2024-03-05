@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import Logo from "../../../public/assets/t-preview.png"
 
 export default function Account() {
   const { user } = useAuthContext();
@@ -37,6 +38,7 @@ export default function Account() {
       toast.success("Be a Part in Improving the Society!");
     }
   };
+  const puto = auth.currentUser?.photoURL
 
   if (!user) {
     return <div>Only Logined Users can view this page</div>;
@@ -47,7 +49,8 @@ export default function Account() {
         <div className="flex gap-5 items-center flex-col sm:flex-row">
           <p className=" rounded-md text-sm flex justify-center items-center">
             <Image
-              src={auth.currentUser.photoURL}
+              src={puto===null?(Logo):(puto)}
+              // src={Logo}
               height={100}
               width={100}
               alt="profile photo"
