@@ -22,6 +22,8 @@ const Header = () => {
     return () => unsubscribe();
   }, [auth]);
 
+  const puto = auth.currentUser?.photoURL
+
   const isActive = (path) => path === pathname;
   return (
     <div className="h-16 px-7 bg-gray-700 flex justify-center md:justify-between items-center gap-5 sticky top-0">
@@ -67,7 +69,7 @@ const Header = () => {
           {name==="unknown"?(null):(
           <Link href={"account"}>
             <Image
-              src={auth.currentUser?.photoURL}
+              src={puto===null?(Logo):(puto)}
               height={0}
               width={40}
               alt="Account"
