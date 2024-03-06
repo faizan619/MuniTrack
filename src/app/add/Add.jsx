@@ -65,7 +65,8 @@ export default function Add() {
 
   const [location, setLocation] = useState({ name: "", lat: "", lng: "" });
 
-  const identifyLocation = async () => {
+  const identifyLocation = async (e) => {
+    e.preventDefault();
     try {
       const position = await new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject);
@@ -74,7 +75,8 @@ export default function Add() {
         `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=en`
       );
       const data = await response.json();
-      const location = data.locality + "," + data.city;
+      // const location = data.locality + "," + data.city;
+      const location = data.localityInfo.administrative[data.localityInfo.administrative.length - 1].name;
       setLocation({
         name: location,
         lat: position.coords.latitude,
@@ -91,7 +93,7 @@ export default function Add() {
     e.preventDefault();
     if (!file) {
       toast.error("Please Upload the Image!");
-    } else if (!data) {
+    } else if (!data.issue_title || !data.issue_describe ) {
       toast.remove();
       toast.error("Please Enter all the Credentials!");
     } else {
@@ -173,7 +175,6 @@ export default function Add() {
     <div className="h-[90vh] wallpaper flex flex-col text-white overflow-auto text-center">
       <div className="h-full pt-5 ">
         <form
-          onSubmit={handleSubmit}
           className="flex flex-col gap-5  justify-center pb-20 px-5 md:px-20 lg:px-36"
         >
           <div className="flex flex-col gap-5">
@@ -263,6 +264,7 @@ export default function Add() {
             <input
               type="submit"
               disabled={loading}
+              onClick={handleSubmit}
               className="border bg-green-700 hover:bg-green-800 py-2 flex-1 rounded-md cursor-pointer"
               value={loading ? "Uploading..." : "Submit"}
             />
