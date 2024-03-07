@@ -37,28 +37,19 @@ export default async function HomePost() {
               key={item._id}
               className="border w-full sm:w-1/2 md:w-1/3 lg:w-[25%]  p-3 gap-1 rounded-md bg-white flex flex-col justify-between"
             >
-              
-              {/* <div className="py-1 w-full flex flex-col justify-between"> */}
-                <p>
-                  Title :{" "}
-                  <span className="font-bold uppercase">
-                    {item.issue_title}
-                  </span>
-                </p>
-                <p>
-                  Location :{" "}
-                  <span className="font-bold">
-                    {item.issue_location}
-                  </span>
-                </p>
-                <p>
-                  Sender Name :{" "}
-                  <span className="font-bold">
-                    {item.issue_user_name}
-                  </span>
-                </p>
-                <DetailBtn url={item.issue_user_name}/>
-               
+              <p>
+                Title :{" "}
+                <span className="font-bold uppercase">{item.issue_title}</span>
+              </p>
+              <p>
+                Location :{" "}
+                <span className="font-bold">{item.issue_location}</span>
+              </p>
+              <p>
+                Sender Name :{" "}
+                <span className="font-bold">{item.issue_user_name}</span>
+              </p>
+              <DetailBtn url={item.issue_user_name} />
             </div>
           ))
         )}
