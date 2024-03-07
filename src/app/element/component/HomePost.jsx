@@ -1,4 +1,5 @@
 import Image from "next/image";
+import DetailBtn from "./DetailBtn";
 
 const getPost = async () => {
   try {
@@ -25,7 +26,7 @@ export default async function HomePost() {
   return (
     <div className="pb-20">
       <h1 className="text-white text-2xl text-center p-5 uppercase ">Issues</h1>
-      <div className="text-white flex gap-5 flex-wrap p-3 justify-evenly ">
+      <div className="flex gap-5 flex-wrap p-3 justify-evenly ">
         {issues === null ? (
           <p>No Issue Available</p>
         ) : issues.length == 0 ? (
@@ -34,53 +35,30 @@ export default async function HomePost() {
           issues.map((item) => (
             <div
               key={item._id}
-              className="border w-full sm:w-1/2 md:w-1/3 lg:w-[25%]  p-3 rounded-md bg-gray-700 flex flex-col items-center "
+              className="border w-full sm:w-1/2 md:w-1/3 lg:w-[25%]  p-3 gap-1 rounded-md bg-white flex flex-col justify-between"
             >
-              <Image
-                src={item.issue_image_url}
-                height={0}
-                width={250}
-                alt="image"
-                className="rounded-md"
-              />
-              <div className="py-3 w-full">
+              
+              {/* <div className="py-1 w-full flex flex-col justify-between"> */}
                 <p>
                   Title :{" "}
-                  <span className="font-bold text-red-500 underline ">
+                  <span className="font-bold uppercase">
                     {item.issue_title}
                   </span>
                 </p>
                 <p>
-                  Description :{" "}
-                  <span className="font-bold text-red-500 underline ">
-                    {item.issue_describe}
-                  </span>
-                </p>
-                <p>
-                  State :{" "}
-                  <span className="font-bold text-red-500 underline ">
-                    {item.issue_state}
-                  </span>
-                </p>
-                <p>
                   Location :{" "}
-                  <span className="font-bold text-red-500 underline ">
+                  <span className="font-bold">
                     {item.issue_location}
                   </span>
                 </p>
                 <p>
                   Sender Name :{" "}
-                  <span className="font-bold text-red-500 underline ">
+                  <span className="font-bold">
                     {item.issue_user_name}
                   </span>
                 </p>
-                <p>
-                  Sender Email :{" "}
-                  <span className="font-bold text-red-500 underline ">
-                    {item.issue_user_email}
-                  </span>
-                </p>
-              </div>
+                <DetailBtn url={item.issue_user_name}/>
+               
             </div>
           ))
         )}
