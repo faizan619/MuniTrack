@@ -1,7 +1,7 @@
 import { connectDB } from "@/mongodb/database/conn";
 import Home from "./element/pages/Home";
 import HomePost from "./element/component/HomePost";
-import AddButton from "./element/component/AddButton";
+// import AddButton from "./element/component/AddButton";
 
 export const metadata = {
   title: "Home : MuniTrack",
@@ -10,10 +10,10 @@ export const metadata = {
 connectDB()
 export default function Page() {
   return (
-    <div className="min-h-[90vh] wallpaper">
+    <div className="min-h-[90vh] selection:underline ">
     <Home/>
-    <HomePost/>
-    <AddButton/>
+    {/* <HomePost/> */}
+    {/* <AddButton/> */}
     </div>
   );
 }
