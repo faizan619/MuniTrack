@@ -4,7 +4,7 @@ import DetailBtn from "./DetailBtn";
 const getPost = async () => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/backend/issue`,
+      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/issue`,
       {
         cache: "no-store",
       }
@@ -24,9 +24,11 @@ const getPost = async () => {
 export default async function HomePost() {
   const issues = await getPost();
   return (
-    <div className="pb-20">
-      <h1 className="text-white text-2xl text-center p-5 uppercase ">Issues</h1>
-      <div className="flex gap-5 flex-wrap p-3 justify-evenly ">
+    <div className="">
+      {/*
+      <h1 className="text-white text-2xl text-center p-5 uppercase ">Municipal Gravience Tracker</h1>
+
+       <div className="flex gap-5 flex-wrap p-3 justify-evenly ">
         {issues === null ? (
           <p>No Issue Available</p>
         ) : issues.length == 0 ? (
@@ -53,7 +55,7 @@ export default async function HomePost() {
             </div>
           ))
         )}
-      </div>
+      </div> */}
     </div>
   );
 }
