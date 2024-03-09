@@ -30,35 +30,34 @@ export default function Home() {
 
   return (
     <div>
-      <section className="flex relative justify-center items-center h-[90vh] text-white overflow-hidden">
+      <section className="flex relative justify-center items-center h-[90vh] px-3 sm:px-10 text-white overflow-hidden">
         <Image
           src={Img1}
           alt="bg image"
-          className="absolute z-0 brightness-50  w-screen h-screen"
+          className="absolute z-0 brightness-50 w-screen h-screen"
         />
-        <div className="text-center z-20 brightness-110 backdrop-blur-sm px-14 pb-10 pt-20 rounded-xl flex flex-col gap-5 ">
+        <div className="text-center z-20 brightness-110 sm:backdrop-blur-sm px-5 md:px-14 pb-10 pt-20 rounded-xl flex flex-col gap-5">
           <div>
-            <h1 className="text-6xl font-extrabold mb-3">
+            <h1 className="text-5xl md:text-6xl font-extrabold mb-3">
               MuniTrack
             </h1>
-            <p className="text-md italic">
-              ` Take a Step in Making your Country a Beautiful place. by first
-              start improving your society ``
+            <p className="md:text-md italic">
+              ` Take a Step in Making your Country a Beautiful place. by first start improving your society `
             </p>
           </div>
-          <div className="py-7">
+          <div className="py-3 md:py-7">
             <button
               onClick={() => {
                 router.push("/add");
               }}
-              className="px-7 py-3 text-xl uppercase rounded-md bg-gray-500 hover:bg-gray-400 text-white"
+              className="px-7 py-3 text-xl uppercase rounded-md bg-[#c0beaf] hover:scale-105 transition-all text-gray-900"
             >
               Post Issue
             </button>
           </div>
         </div>
       </section>
-      <section className="min-h-[90vh] bg-gray-950 text-white  p-5">
+      {/* <section className="min-h-[90vh] bg-gray-950 text-white  p-5">
               <h1 className="text-center text-3xl">Features</h1>
               <IssuePart title={"issue about garbage"} desc={"Raised a Issue on seeing any unnecessary dump area in your loccality"} img={SubImg1} />
               <IssuePart title={"issue about driving"} desc={"Unsafe driving can lead to thread to life.do complaint to take actions against them"} img={SubImg2} style={"flex-row-reverse"} />
@@ -67,7 +66,7 @@ export default function Home() {
 
 
       </section>
-      <section className="h-[90vh] bg-gray-800 flex justify-center items-center"><p>This Page is left to create</p></section>
+      <section className="h-[90vh] bg-gray-800 flex justify-center items-center"><p>This Page is left to create</p></section> */}
     </div>
   );
 }

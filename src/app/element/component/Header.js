@@ -32,7 +32,7 @@ const Header = () => {
         <p className="font-extrabold text-xl font-sans text-white">MuniTrack</p>
       </div>
       <div className="hidden md:block">
-        <ol className="flex gap-5 text-white items-center">
+        <ol className="flex gap-5 text-white items-center uppercase">
           <Link
             className={`px-3 py-1 rounded-md hover:bg-gray-600 transition-all ${
               isActive("/")
@@ -54,6 +54,28 @@ const Header = () => {
             href="/search"
           >
             Search
+          </Link>
+          <Link
+            className={`px-3 py-1 rounded-md hover:bg-gray-600 transition-all ${
+              isActive("/issue")
+                ? "bg-gray-600"
+                : "text-white"
+            }
+            `}
+            href="/issue"
+          >
+            Issue
+          </Link>
+          <Link
+            className={`px-3 py-1 rounded-md hover:bg-gray-600 transition-all ${
+              isActive("/issue")
+                ? "bg-gray-600"
+                : "text-white"
+            }
+            `}
+            href="/issue"
+          >
+            hmmm
           </Link>
           <Link
             className={`px-3 py-1 rounded-md hover:bg-gray-600 transition-all ${
