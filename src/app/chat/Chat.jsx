@@ -63,7 +63,7 @@ export default function Chat() {
     <div className="h-[90vh] wallpaper p-1">
       <div className="h-[85%] md:h-full ">
         <div className="flex flex-col-reverse gap-3 h-full overflow-auto px-2">
-        <form className="flex gap-2 pt-2 w-full" onSubmit={submitData}>
+        <form className="flex gap-2 pt-2 w-full fixed pr-10" onSubmit={submitData}>
           <input
             type="text"
             autoFocus
@@ -106,9 +106,9 @@ const Chatting = ({msg})=>{
   },[msg]);
 
   if (error) return <div className="text-white">Error Fetching the Chats.</div>;
-  if (!details) return <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin dark:border-violet-400"></div>;
+  if (!details) return <div className="w-16 mb-12  h-16 border-4 border-dashed rounded-full animate-spin dark:border-violet-400"></div>;
   return(
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 pt-2 pb-12">
       {Object.values(details).map((chat, index) => (
         <div key={index} className={`flex ${chat.userName === userName?"justify-end":"justify-start"}`}>
           <div className="border flex flex-col max-w-[70%] text-gray-800 bg-white rounded-md overflow-hidden">
@@ -116,7 +116,7 @@ const Chatting = ({msg})=>{
               {chat.userName}
             </h1>
             <p className={`inline-block text-lg px-1 ${chat.userName === userName?"bg-white":"bg-gray-700 text-white"}  p-1`}>{chat.msg}</p>
-            <p className="text-sm px-1 text-gray-500">{new Date(chat.timestamp).toLocaleString()}</p> {/* Display the timestamp */}
+            <p className="text-sm px-1 text-gray-500">{new Date(chat.timestamp).toLocaleString()}</p> 
           </div>
         </div>
       ))}
