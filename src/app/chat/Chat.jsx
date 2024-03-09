@@ -10,13 +10,15 @@ export default function Chat() {
   const { user } = useAuthContext();
   const router = useRouter(); 
   const auth = getAuth(); 
-  const [msg,setMsg] = useState("");  
+  const [msg,setMsg] = useState(""); 
+  const [loading,setLoading] = useState(false) 
 
   const userName = auth.currentUser?.displayName;
 
   const submitData = async (e)=>{
     e.preventDefault();
     if(msg){
+      setLoading(true)
       const res = await fetch(process.env.NEXT_PUBLIC_CHAT_DOMAIN,{
         method:"POST",
         headers:{
@@ -32,10 +34,12 @@ export default function Chat() {
         toast.remove();
         toast.success("Message Sent!");
         setMsg("");
+        setLoading(false)
       }
       else{
         toast.remove();
         toast.error("Network Issue. Please Refresh!")
+        setLoading(false)
       }
     }
     else{
@@ -68,7 +72,7 @@ export default function Chat() {
             value={msg}
             onChange={(e)=>setMsg(e.target.value)}
           />
-          <button type="submit" className="border px-5 text-white hover:bg-white hover:text-black bg-green-900 rounded-md transition-all">
+          <button type="submit" disabled={loading} className="border px-5 text-white hover:bg-white hover:text-black bg-green-900 rounded-md transition-all">
             Sent
           </button>
         </form>
