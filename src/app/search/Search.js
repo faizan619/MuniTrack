@@ -18,29 +18,35 @@ function useDebounce(value, delay) {
   return debouncedValue;
 }
 
-
 export default function Search() {
   const [inp, setInp] = useState(undefined);
-  const [data,setData] = useState("");
+  const [data, setData] = useState("");
   const debouncedId = useDebounce(inp, 500);
   const [loading, setLoading] = useState(false);
 
-  const getIssue = async ()=>{
-    if(inp!== undefined  && inp !== null && inp!==""){
+  const getIssue = async () => {
+    if (inp !== undefined && inp !== null && inp !== "") {
       setLoading(true);
-      let response = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN_URL}/backend/issue/${inp}`);
+      let response = await fetch(
+        `${process.env.NEXT_PUBLIC_DOMAIN_URL}/issue/${inp}`
+      );
       response = await response.json();
-      console.log("response :",response);
+      console.log("response :", response);
       setData(response);
-      setLoading(false)
-    }
-    else{
+      setLoading(false);
+    } else {
       setData([]);
     }
-  }
+  };
 
   useEffect(() => {
-    if (debouncedId !== undefined && debouncedId !== "" && debouncedId != null ) { getIssue(); }
+    if (
+      debouncedId !== undefined &&
+      debouncedId !== "" &&
+      debouncedId != null
+    ) {
+      getIssue();
+    }
   }, [debouncedId]);
 
   return (
@@ -48,30 +54,40 @@ export default function Search() {
       <input
         type="text"
         placeholder="Search Issue"
-        className="text-black px-3 py-1 w-full rounded-md"
+        className="text-black px-3 py-2 w-full rounded-md"
         value={inp}
         onChange={(e) => {
           setInp(e.target.value);
         }}
       />
       {!inp ? (
-        <>
-          <div>View Incharge</div>
-          <div>View Solved Issues</div>
-        </>
+        <div className="flex gap-5 flex-wrap justify-evenly py-5">
+          <div className="bg-white text-black hover:bg-gray-200 cursor-pointer px-5 py-3 rounded-md">View Issue Incharge</div>
+          <div className="bg-white text-black hover:bg-gray-200 cursor-pointer px-5 py-3 rounded-md">View Participants</div>
+          <div className="bg-white text-black hover:bg-gray-200 cursor-pointer px-5 py-3 rounded-md">
+            View Upcoming Drives
+          </div>
+        </div>
       ) : !data ? (
-        <p>Loading1...</p>
+        <p>No Data Found!!</p>
       ) : loading ? (
         <p>Loading...</p>
-      ) : data.length!==0 ? (
+      ) : data.length !== 0 ? (
         <div className="flex py-5">
-        <div className="border rounded-md bg-white text-black px-3 py-2">
-
-          <p>Title : <span className="font-bold capitalize">{data[0].issue_title}</span></p>
-          <p>Issued Raised by <span className="font-bold">{data[0].issue_user_name}</span></p>
+          <div className="border rounded-md bg-white text-black px-3 py-2">
+            <p>
+              Title :{" "}
+              <span className="font-bold capitalize">
+                {data[0].issue_title}
+              </span>
+            </p>
+            <p>
+              Issued Raised by{" "}
+              <span className="font-bold">{data[0].issue_user_name}</span>
+            </p>
+          </div>
         </div>
-        </div>
-      ):(
+      ) : (
         <p>Didn`t find the Item you are looking for </p>
       )}
     </div>

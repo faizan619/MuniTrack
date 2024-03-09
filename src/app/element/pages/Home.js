@@ -59,11 +59,11 @@ export default function Home() {
         </div>
       </section>
       <section className="min-h-[90vh] bg-gray-950 text-white  p-5">
-        
+              <h1 className="text-center text-3xl">Features</h1>
               <IssuePart title={"issue about garbage"} desc={"Raised a Issue on seeing any unnecessary dump area in your loccality"} img={SubImg1} />
               <IssuePart title={"issue about driving"} desc={"Unsafe driving can lead to thread to life.do complaint to take actions against them"} img={SubImg2} style={"flex-row-reverse"} />
               <IssuePart title={"issue about Unknown Weather"} desc={"If you are stuck but any natural clamities.raise your voice"} img={SubImg3} />
-              <IssuePart title={"Global Chat Room"} desc={"Along with Raising Issues.You can Connect with Other member in improving the society"} img={SubImg4} style={'flex-row-reverse'} />
+              <IssuePart title={"Global Chat Room"} desc={"Along with Raising Issues.You can Connect with Other member in improving the society"} img={SubImg4} style={'flex-row-reverse'} view={true} url={"/chat"} />
 
 
       </section>
@@ -73,9 +73,11 @@ export default function Home() {
 }
 
 
-const IssuePart = ({title,desc,img,style})=>{
+const IssuePart = ({title,desc,img,style,view,url})=>{
+  const router = useRouter();
+
   return(
-    <div className={`flex ${style} items-center`}>
+    <div className={`flex h-[75vh] ${style} items-center`}>
           <div className=" z-10 flex justify-center items-center flex-1">
             <Image
               src={img}
@@ -89,9 +91,11 @@ const IssuePart = ({title,desc,img,style})=>{
             <h1 className="text-3xl font-semibold uppercase text-green-500">
               {title}
             </h1>
-            <p className="capitalize">
+            <p className="capitalize px-5">
               {desc}
             </p>
+            {view && <button className="border px-5 py-2 rounded-md" onClick={()=>{router.push(url)}}>Hello</button>
+            }
           </div>
         </div>
   )
