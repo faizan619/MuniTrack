@@ -50,7 +50,7 @@ export default function Home() {
               onClick={() => {
                 router.push("/add");
               }}
-              className="px-7 py-3 text-xl uppercase rounded-md bg-[#c0beaf] hover:scale-105 transition-all text-gray-900"
+              className="px-7 py-3 text-xl uppercase rounded-md bg-gray-700 hover:scale-105 transition-all text-white"
             >
               Post Issue
             </button>
