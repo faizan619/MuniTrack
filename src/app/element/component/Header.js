@@ -89,7 +89,7 @@ const Header = () => {
             Chat
           </Link>
           {name==="unknown"?(null):(
-          <Link href={"account"}>
+          <Link href={"/account"}>
             <Image
               src={puto===null?(Logo):(puto)}
               height={0}

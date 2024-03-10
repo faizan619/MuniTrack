@@ -52,7 +52,7 @@ export default function Account() {
           alt="bg image"
           className="absolute z-0  w-screen h-screen"
         /> */}
-      <div className="flex z-10 flex-col gap-5 w-full md:w-3/4 pb-20">
+      <div className="flex z-10 flex-col gap-5 w-full md:w-3/4 px-3 pb-20">
         <div className="flex gap-5 items-center flex-col sm:flex-row">
           <p className=" rounded-md text-sm flex justify-center items-center">
             <Image
