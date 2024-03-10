@@ -46,7 +46,7 @@ export default function Account() {
     return <div>Only Logined Users can view this page</div>;
   }
   return (
-    <div className="min-h-[91.5vh] flex md:justify-center bg-gray-900 ">
+    <div className="min-h-[90vh] flex md:justify-center bg-gray-900 ">
     {/* <Image
           src={Img1}
           alt="bg image"
@@ -130,14 +130,6 @@ export default function Account() {
           }}
         >
           Terms And Conditions.
-        </p>
-        <p
-          className="rounded-md bg-gray-800 px-3 py-5 text-sm font-bold uppercase text-white hover:bg-gray-700 cursor-pointer border border-gray-500"
-          onClick={() => {
-            router.push("/account/DeveloperDetails");
-          }}
-        >
-          Developer Details
         </p>
         <p
           className="rounded-md bg-gray-800 px-3 py-5 text-sm font-bold uppercase text-white hover:bg-gray-700 cursor-pointer border border-gray-500"
