@@ -22,7 +22,7 @@ export async function GET() {
   }
 }
 
-export async function POST(req) {
+export async function POST(req) { 
   // const payload = await req.json();
   const { name, email, selectedEmoji, message } = await req.json();
   try {

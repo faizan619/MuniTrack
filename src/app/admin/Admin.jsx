@@ -48,25 +48,45 @@ export default function Admin() {
   useEffect(() => {
     if (user != null) {
       toast.remove();
-      toast.error("You are registered");
+      toast.success("You are registered");
       router.push("/");
     }
   }, [user, router]);
 
+  const [loading,setLoading] = useState(false)
   const handleRegisterForm = async (e) => {
     e.preventDefault();
-
-    const { result, error } = await register(email, password, displayName);
-
-    if (error) {
-      if (error.code === "auth/email-already-in-use") {
-        toast.error("Email already Registerend!!");
+    setLoading(true);
+    let admin_info = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN_URL}/user`,{
+      method:"POST",
+      headers:{"Content-Type":"application/json",},
+      body:JSON.stringify({displayName,email}),
+    });
+    if(!admin_info.ok){
+      toast.error("Email already registered")
+      // throw new Error("Server Error !")
+    }
+    admin_info = await admin_info.json();
+    if(admin_info.success){
+      const { result, error } = await register(email, password, displayName);
+      if (error) {
+        if (error.code === "auth/email-already-in-use") {
+          toast.remove();
+          toast.error("Email already Registerend!!");
+        } else {
+          toast.remove();
+          toast.error(error.message);
+        }
+        setLoading(false)
       } else {
-        toast.error(error.message);
+        console.log(result);
+        return router.push("/");
       }
-    } else {
-      console.log(result);
-      return router.push("/");
+    }
+    else{
+      toast.remove();
+      toast.error("There is Some problem while parsing your login. Try Again Later")
+      setLoading(false)
     }
   };
 
@@ -76,8 +96,10 @@ export default function Admin() {
 
     if (error) {
       if (error.code === "auth/invalid-credential") {
+        toast.remove()
         toast.error("Check your credentials");
       } else {
+        toast.remove();
         toast.error("Some Problem in the Network");
       }
     } else {
@@ -126,7 +148,7 @@ export default function Admin() {
             onChange={(e) => setPassword(e.target.value)}
             className="py-1 px-2 text-black w-full rounded-sm"
           />
-          <button type="submit" className="border w-full py-1 rounded-sm">
+          <button type="submit" disabled={loading} className="border w-full py-1 rounded-sm">
             Register
           </button>
           <button className="border border-dotted py-1" onClick={backControl}>Back</button>

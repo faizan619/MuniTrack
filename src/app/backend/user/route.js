@@ -1,6 +1,8 @@
 import { User } from "@/mongodb/schema/userSchema";
 import { NextResponse } from "next/server";
+import { connectDB } from "@/mongodb/database/conn";
 
+connectDB()
 export async function GET(){
     let user = [];
     try {
@@ -18,21 +20,39 @@ export async function GET(){
 }
 
 export async function POST(request){
-    let {user_name,user_email} = await request.json();
+    let {displayName,email} = await request.json();
     try {
-        if(!user_name && !user_email){
+        if(!displayName && !email){
             return NextResponse.json({
-                message:"Something Went Wrong. Please Try Again Later!",
+                message:"Enter All the Credentials!",
                 success:false
             },{status:500})
         }
         else{
-            const user = new User({
-                user_name,
-                user_email
-            });
-            const createUser = await user.save();
-            return NextResponse.json({createUser})
+            // const existingUser = await User.findOne({
+            //     $or: [{ email: email }],
+            //   });
+          
+            //   if (existingUser) {
+            //     return res.status(400).send("Email already taken");
+            //   }
+            const emailExist = await User.findOne({
+                email
+            })
+            if(emailExist){
+                return NextResponse.json({
+                    message:"User Email already created!",
+                    success:false
+                },{status:400})
+            }
+            else{
+                const user = new User({
+                    displayName,
+                    email
+                });
+                const createUser = await user.save();
+                return NextResponse.json({createUser,success:true})
+            }
         }
     } catch (error) {
         console.log("user/route in POST error : ",error);
