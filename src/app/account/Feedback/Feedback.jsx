@@ -36,7 +36,7 @@ const FeedbackPage = () => {
     } else {
       try {
         setLoading(true);
-        let feedback_i = await fetch(
+        let feedback_i = await fetch( 
           `${process.env.NEXT_PUBLIC_DOMAIN_URL}/feedback`,
           {
             method: "POST",

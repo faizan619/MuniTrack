@@ -36,7 +36,7 @@ export default function Home() {
           alt="bg image"
           className="absolute z-0 brightness-50 w-screen h-screen"
         />
-        <div className="text-center z-20 brightness-110 sm:backdrop-blur-sm px-5 md:px-14 pb-10 pt-20 rounded-xl flex flex-col gap-5">
+        <div className="text-center z-20 brightness-110 sm:backdrop-blur-sm shadow-sm shadow-white px-5 md:px-14 pb-10 pt-20 rounded-xl flex flex-col gap-5">
           <div>
             <h1 className="text-5xl md:text-6xl font-extrabold mb-3">
               MuniTrack
@@ -45,7 +45,7 @@ export default function Home() {
               ` Take a Step in Making your Country a Beautiful place. by first start improving your society `
             </p>
           </div>
-          <div className="py-3 md:py-7">
+          <div className="py-3 flex gap-5 flex-wrap justify-center md:py-7">
             <button
               onClick={() => {
                 router.push("/add");
@@ -53,6 +53,14 @@ export default function Home() {
               className="px-7 py-3 text-xl uppercase rounded-md bg-gray-700 hover:scale-105 transition-all text-white"
             >
               Post Issue
+            </button>
+            <button
+              onClick={() => {
+                router.push("/issue");
+              }}
+              className="px-7 py-3 text-xl uppercase rounded-md  hover:scale-105 transition-all text-white"
+            >
+              View Issue
             </button>
           </div>
         </div>
