@@ -107,7 +107,7 @@ export default function Add() {
         const url = await getDownloadURL(snapshot.ref);
         setimgLink(url);
         setData((prevInfo) => ({ ...prevInfo, issue_image_url: url }));
-        let issue_info = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN_URL}/backend/issue`, {
+        let issue_info = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN_URL}/issue`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

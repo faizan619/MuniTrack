@@ -6,8 +6,8 @@ export default function TAC() {
   const pathname = usePathname();
 
   return (
-    <div className="min-h-[91.5vh] py-5 px-3 flex flex-col gap-3">
-      <div className="">
+    <div className="min-h-[90vh] py-5 px-3 flex items-center flex-col gap-3">
+      <div className="md:w-3/4">
         <h1 className="text-center font-bold underline pb-3 text-lg">
           Municipal Grievance Tracker Terms and Conditions
         </h1>
@@ -25,7 +25,7 @@ export default function TAC() {
           app.
         </p>
       </div>
-      <ol className="list-decimal list-inside flex flex-col gap-5 pb-16 md:pb-0">
+      <ol className="list-decimal md:w-3/4 list-inside flex flex-col gap-5 pb-16 md:pb-0">
         {listData.map((section, index) => (
           <div key={index} className="bg-gray-700 rounded-md text-white p-3">
             <li className="font-bold capitalize">{section.title}</li>
