@@ -46,9 +46,8 @@ export default function ViewIncharge() {
             <p>Incharge Available : [ {users.length} ]</p>
             <div className="flex justify-start flex-wrap">
               {users.map((item) => (
-                <div className="flex flex-wrap mr-5 gap-5 my-3">
+                <div key={item._id} className="flex flex-wrap mr-5 gap-5 my-3">
                   <div
-                    key={item._id}
                     className="border flex items-center gap-3 p-3 rounded-md bg-white text-black"
                   >
                     <img
