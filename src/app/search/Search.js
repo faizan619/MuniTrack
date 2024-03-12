@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import ViewIncharge from "./ViewIncharge";
 
 function useDebounce(value, delay) {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -150,9 +151,8 @@ export default function Search() {
         <p>Didn`t find the Item you are looking for </p>
       )}
       {!inp && incharge ?(
-      <div className="bg-violet-800 h-96 flex flex-col justify-center items-center gap-5">
-        <p>This Will be the Start of Something Big</p>
-        <h1>InCharge Database Creation is left.</h1>
+      <div className="bg-violet-800 min-h-96 flex flex-col justify-center items-center gap-5 rounded-md">
+        <ViewIncharge/>
       </div>
       ):(null)}
       {!inp && member ?(
