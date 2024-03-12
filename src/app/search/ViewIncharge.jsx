@@ -21,14 +21,14 @@ const getPost = async () => {
 
 export default function ViewIncharge() {
   const [users, setUsers] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); 
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-        setIsLoading(true);
+      setIsLoading(true);
       const data = await getPost();
       setUsers(data);
-      setIsLoading(false)
+      setIsLoading(false);
       console.log("data : ", data);
     };
     fetchData();
@@ -37,16 +37,35 @@ export default function ViewIncharge() {
   return (
     <div>
       <div>
-      {isLoading ? (
-          <p>Loading...</p> 
+        {isLoading ? (
+          <p>Loading...</p>
         ) : users.length === 0 ? (
           <p>No Issue Available !</p>
         ) : (
-          users.map((item) => (
-            <div key={item._id}>
-              <p>Name : {item.displayName}</p>
+          <>
+            <p>Incharge Available : [ {users.length} ]</p>
+            <div className="flex justify-start flex-wrap">
+              {users.map((item) => (
+                <div className="flex flex-wrap mr-5 gap-5 my-3">
+                  <div
+                    key={item._id}
+                    className="border flex items-center gap-3 p-3 rounded-md bg-white text-black"
+                  >
+                    <img
+                      src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
+                        item.displayName
+                      )}&size=35&rounded=true&background=black&color=fff&uppercase=false`}
+                      alt={item.displayName}
+                    />
+
+                    <p className="text-xl uppercase font-extrabold">
+                      {item.displayName}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))
+          </>
         )}
       </div>
     </div>

@@ -116,7 +116,8 @@ export default function Admin() {
   return (
     <div className="h-[90vh] flex justify-center items-center bg-black text-white">
       {special ? (
-        <form className="border flex flex-col gap-5 px-5 py-10 rounded-md" onSubmit={handleRegisterForm}>
+        <form className="border flex flex-col gap-3 px-5 py-10 rounded-md" onSubmit={handleRegisterForm}>
+        <label>
           <input
             type="text"
             required
@@ -124,10 +125,13 @@ export default function Admin() {
             name="name"
             id="name"
             placeholder="david gray"
+            maxLength={20}
             value={displayName}
             onChange={(e) => setdisplayName(e.target.value)}
             className="py-1 px-2 text-black w-full rounded-sm"
           />
+          {displayName.length===20?(<p className="text-[13px] text-green-600">maximum 20 words required</p>):(null)}
+        </label>
           <input
             type="email"
             required
@@ -138,6 +142,8 @@ export default function Admin() {
             onChange={(e) => setEmail(e.target.value)}
             className="py-1 px-2 text-black w-full rounded-sm"
           />
+          <label>
+
           <input
             type="password"
             required
@@ -148,6 +154,8 @@ export default function Admin() {
             onChange={(e) => setPassword(e.target.value)}
             className="py-1 px-2 text-black w-full rounded-sm"
           />
+          {password!==""?(<p className="text-[13px] text-green-600 ">Remember the password for future login</p>):(null)}
+          </label>
           <button type="submit" disabled={loading} className="border w-full py-1 rounded-sm">
             Register
           </button>

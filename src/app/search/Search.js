@@ -151,7 +151,7 @@ export default function Search() {
         <p>Didn`t find the Item you are looking for </p>
       )}
       {!inp && incharge ?(
-      <div className="bg-violet-800 min-h-96 flex flex-col justify-center items-center gap-5 rounded-md">
+      <div className="bg-violet-800 mb-20 min-h-96 flex p-3 gap-5 rounded-md">
         <ViewIncharge/>
       </div>
       ):(null)}
