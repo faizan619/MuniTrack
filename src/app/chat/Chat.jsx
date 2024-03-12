@@ -60,7 +60,7 @@ export default function Chat() {
     return <div>Only Logined Users can view this page</div>;
   }
   return (
-    <div className="h-[90vh] wallpaper p-1">
+    <div className="h-[90vh] wallpaper1 p-1">
       <div className="h-[85%] md:h-full ">
         <div className="flex flex-col-reverse gap-3 h-full overflow-auto px-2">
         <form className="flex gap-2 pt-2 w-full fixed pr-10" onSubmit={submitData}>

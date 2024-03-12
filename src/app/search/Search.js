@@ -90,7 +90,7 @@ export default function Search() {
   }
 
   return (
-    <div className="min-h-[90vh] wallpaper text-white p-3 ">
+    <div className="min-h-[90vh] wallpaper1 text-white p-3 ">
       <input
         type="text"
         placeholder="Search Issue"

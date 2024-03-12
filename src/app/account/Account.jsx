@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Logo from "../../../public/assets/t-preview.png"
-import Img1 from "../../../public/assets/download.jpeg";
 
 
 export default function Account() {
@@ -46,13 +45,8 @@ export default function Account() {
     return <div>Only Logined Users can view this page</div>;
   }
   return (
-    <div className="min-h-[90vh] flex md:justify-center bg-gray-900 ">
-    {/* <Image
-          src={Img1}
-          alt="bg image"
-          className="absolute z-0  w-screen h-screen"
-        /> */}
-      <div className="flex z-10 flex-col gap-5 w-full md:w-3/4 px-3 pb-20">
+    <div className="min-h-[90vh] flex md:justify-center wallpaper1 ">
+      <div className="flex z-10 md:pt-5 flex-col gap-5 w-full md:w-3/4 px-3 pb-20">
         <div className="flex gap-5 items-center flex-col sm:flex-row">
           <p className=" rounded-md text-sm flex justify-center items-center">
             <Image
