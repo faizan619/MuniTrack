@@ -42,26 +42,42 @@ export default function Home() {
               MuniTrack
             </h1>
             <p className="md:text-md italic">
-              ` Take a Step in Making your Country a Beautiful place. by first start improving your society `
+              ` Take a Step in Making your Country a Beautiful place. by first
+              start improving your society `
             </p>
           </div>
           <div className="py-3 flex gap-5 flex-wrap justify-center md:py-7">
-            <button
-              onClick={() => {
-                router.push("/add");
-              }}
-              className="px-7 py-3 text-xl uppercase rounded-md bg-gray-700 hover:scale-105 transition-all text-white"
-            >
-              Post Issue
-            </button>
-            <button
-              onClick={() => {
-                router.push("/issue");
-              }}
-              className="px-7 py-3 text-xl uppercase rounded-md  hover:scale-105 transition-all text-white"
-            >
-              View Issue
-            </button>
+            {user.emailVerified ? (
+              <>
+                <button
+                  onClick={() => {
+                    router.push("/add");
+                  }}
+                  className="px-7 py-3 text-xl uppercase rounded-md bg-gray-700 hover:scale-105 transition-all text-white"
+                >
+                  Post Issue
+                </button>
+                <button
+                  onClick={() => {
+                    router.push("/issue");
+                  }}
+                  className="px-7 py-3 text-xl uppercase rounded-md  hover:scale-105 transition-all text-white"
+                >
+                  View Issue
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => {
+                    router.push("/issue");
+                  }}
+                  className="px-7 py-3 text-xl uppercase rounded-md bg-gray-700 hover:scale-105 transition-all text-white"
+                >
+                  View Issue
+                </button>
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -79,31 +95,36 @@ export default function Home() {
   );
 }
 
-
-const IssuePart = ({title,desc,img,style,view,url})=>{
+const IssuePart = ({ title, desc, img, style, view, url }) => {
   const router = useRouter();
 
-  return(
+  return (
     <div className={`flex h-[75vh] ${style} items-center`}>
-          <div className=" z-10 flex justify-center items-center flex-1">
-            <Image
-              src={img}
-              height={0}
-              width={0}
-              alt="image"
-              className="h-full px-20"
-            />
-          </div>
-          <div className=" z-10 flex-1 flex justify-center items-center gap-5 flex-col h-full">
-            <h1 className="text-3xl font-semibold uppercase text-green-500">
-              {title}
-            </h1>
-            <p className="capitalize px-5">
-              {desc}
-            </p>
-            {view && <button className="border px-5 py-2 rounded-md" onClick={()=>{router.push(url)}}>Hello</button>
-            }
-          </div>
-        </div>
-  )
-}
+      <div className=" z-10 flex justify-center items-center flex-1">
+        <Image
+          src={img}
+          height={0}
+          width={0}
+          alt="image"
+          className="h-full px-20"
+        />
+      </div>
+      <div className=" z-10 flex-1 flex justify-center items-center gap-5 flex-col h-full">
+        <h1 className="text-3xl font-semibold uppercase text-green-500">
+          {title}
+        </h1>
+        <p className="capitalize px-5">{desc}</p>
+        {view && (
+          <button
+            className="border px-5 py-2 rounded-md"
+            onClick={() => {
+              router.push(url);
+            }}
+          >
+            Hello
+          </button>
+        )}
+      </div>
+    </div>
+  );
+};
