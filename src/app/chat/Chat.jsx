@@ -5,48 +5,49 @@ import { serverTimestamp } from "firebase/database";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import Delete from "../../../public/assets/delete1.png";
+import Image from "next/image";
+import { deleteMessage } from "./DeleteMessage";
 
 export default function Chat() {
   const { user } = useAuthContext();
-  const router = useRouter(); 
-  const auth = getAuth(); 
-  const [msg,setMsg] = useState(""); 
-  const [loading,setLoading] = useState(false) 
+  const router = useRouter();
+  const auth = getAuth();
+  const [msg, setMsg] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const userName = auth.currentUser?.displayName;
 
-  const submitData = async (e)=>{
+  const submitData = async (e) => {
     e.preventDefault();
-    if(msg){
-      setLoading(true)
-      const res = await fetch(process.env.NEXT_PUBLIC_CHAT_DOMAIN,{
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json",
+    if (msg) {
+      setLoading(true);
+      const res = await fetch(process.env.NEXT_PUBLIC_CHAT_DOMAIN, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-        body:JSON.stringify({
+        body: JSON.stringify({
           msg,
           userName,
-          timestamp:serverTimestamp()
+          timestamp: serverTimestamp(),
         }),
       });
-      if(res){
+      if (res) {
         toast.remove();
         toast.success("Message Sent!");
         setMsg("");
-        setLoading(false)
-      }
-      else{
+        setLoading(false);
+      } else {
         toast.remove();
-        toast.error("Network Issue. Please Refresh!")
-        setLoading(false)
+        toast.error("Network Issue. Please Refresh!");
+        setLoading(false);
       }
-    }
-    else{
+    } else {
       toast.remove();
-      toast.error("Enter Message!")
+      toast.error("Enter Message!");
     }
-  }
+  };
 
   useEffect(() => {
     if (user == null) {
@@ -54,7 +55,7 @@ export default function Chat() {
       toast.error("Please login to continue!");
       router.push("/google");
     }
-  }, [user, router]); 
+  }, [user, router]);
 
   if (!user) {
     return <div>Only Logined Users can view this page</div>;
@@ -63,19 +64,26 @@ export default function Chat() {
     <div className="h-[90vh] wallpaper1 p-1">
       <div className="h-[85%] md:h-full ">
         <div className="flex flex-col-reverse gap-3 h-full overflow-auto px-2">
-        <form className="flex gap-2 pt-2 w-full fixed pr-10" onSubmit={submitData}>
-          <input
-            type="text"
-            autoFocus
-            placeholder="Enter Message... "
-            className="w-full px-2 py-1 text-lg rounded-md text-black"
-            value={msg}
-            onChange={(e)=>setMsg(e.target.value)}
-          />
-          <button type="submit" disabled={loading} className="border px-5 text-white hover:bg-white hover:text-black bg-green-900 rounded-md transition-all">
-            Sent
-          </button>
-        </form>
+          <form
+            className="flex gap-2 pt-2 w-full fixed pr-10"
+            onSubmit={submitData}
+          >
+            <input
+              type="text"
+              autoFocus
+              placeholder="Enter Message... "
+              className="w-full px-2 py-1 text-lg rounded-md text-black"
+              value={msg}
+              onChange={(e) => setMsg(e.target.value)}
+            />
+            <button
+              type="submit"
+              disabled={loading}
+              className="border px-5 text-white hover:bg-white hover:text-black bg-green-900 rounded-md transition-all"
+            >
+              Sent
+            </button>
+          </form>
           <Chatting msg={msg} />
         </div>
       </div>
@@ -83,19 +91,27 @@ export default function Chat() {
   );
 }
 
-
-const Chatting = ({msg})=>{
+const Chatting = ({ msg }) => {
   const [details, setDetails] = useState(null);
   const [error, setError] = useState(null);
-  const auth = getAuth(); 
+  const auth = getAuth();
   const userName = auth.currentUser?.displayName;
+  const { user } = useAuthContext();
+  const router = useRouter()
+
+  const handleDeleteClick = (messageId)=>{
+    deleteMessage(messageId);
+    toast.loading("Deleting... ");
+    router.refresh("/chat")
+  }
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          process.env.NEXT_PUBLIC_CHAT_DOMAIN,
-          { cache: "no-cache" }
-        );
+        const response = await fetch(process.env.NEXT_PUBLIC_CHAT_DOMAIN, {
+          cache: "no-cache",
+        });
         const data = await response.json();
         setDetails(data);
       } catch (error) {
@@ -103,23 +119,60 @@ const Chatting = ({msg})=>{
       }
     };
     fetchData();
-  },[msg]);
+  }, [msg]);
 
+  console.log("details : ",details)
   if (error) return <div className="text-white">Error Fetching the Chats.</div>;
-  if (!details) return <div className="w-16 mb-12  h-16 border-4 border-dashed rounded-full animate-spin dark:border-violet-400"></div>;
-  return(
+  if (!details)
+    return (
+      <div className="w-16 mb-12  h-16 border-4 border-dashed rounded-full animate-spin dark:border-violet-400"></div>
+    );
+  return (
     <div className="flex flex-col gap-3 pt-2 pb-12">
-      {Object.values(details).map((chat, index) => (
-        <div key={index} className={`flex ${chat.userName === userName?"justify-end":"justify-start"}`}>
+      {Object.entries(details).map(([key,chat], index) => (
+        <div
+          key={index}
+          className={`flex ${
+            chat.userName === userName ? "justify-end" : "justify-start"
+          }`}
+        >
           <div className="border flex flex-col max-w-[70%] text-gray-800 bg-white rounded-md overflow-hidden">
-            <h1 className="text-sm inline-block px-1 bg-gray-300 p-1 cursor-pointer hover:underline">
-              {chat.userName}
+            <h1 className="text-sm bg-gray-300 p-1 cursor-pointer hover:underline flex gap-5 justify-between">
+              <span>{chat.userName}</span>
+              <div>
+                {user.emailVerified ? (
+                  null
+                ) : (
+                  <>
+                  {/* <p>{key}</p> */}
+
+                    <Image
+                      src={Delete}
+                      height={30}
+                      width={20}
+                      alt="delete"
+                      className="hover:scale-125 transition-all hover:text-white"
+                      onClick={()=>handleDeleteClick(key)}
+                    />
+                  </>
+                )}
+              </div>
             </h1>
-            <p className={`inline-block text-lg px-1 ${chat.userName === userName?"bg-white":"bg-gray-700 text-white"}  p-1`}>{chat.msg}</p>
-            <p className="text-sm px-1 text-gray-500">{new Date(chat.timestamp).toLocaleString()}</p> 
+            <p
+              className={`inline-block text-lg px-1 ${
+                chat.userName === userName
+                  ? "bg-white"
+                  : "bg-gray-700 text-white"
+              }  p-1`}
+            >
+              {chat.msg}
+            </p>
+            <p className="text-sm px-1 text-gray-500">
+              {new Date(chat.timestamp).toLocaleString()}
+            </p>
           </div>
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
