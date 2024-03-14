@@ -36,7 +36,7 @@ export default function Search() {
         `${process.env.NEXT_PUBLIC_DOMAIN_URL}/issue/${inp}`
       );
       response = await response.json();
-      console.log("response :", response);
+      // console.log("response :", response);
       setData(response);
       setLoading(false);
     } else {
@@ -141,7 +141,7 @@ export default function Search() {
         <p>
           Location : <span className="font-bold">{item.issue_location}</span>
         </p>
-        <button className="text-left border border-white hover:bg-white hover:text-black transition-all px-3 py-1 rounded-md" onClick={() => router.push(`/issue/${item.issue_title}`)}>View Details</button>
+        <button className="text-left border border-white hover:bg-white hover:text-black transition-all px-3 py-1 rounded-md" onClick={() => router.push(`/issue/${item._id}`)}>View Details</button>
         </div>
       </div>
     ))}

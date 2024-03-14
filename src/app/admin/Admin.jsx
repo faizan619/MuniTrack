@@ -63,7 +63,7 @@ export default function Admin() {
       body:JSON.stringify({displayName,email}),
     });
     if(!admin_info.ok){
-      toast.error("Email already registered")
+      toast.error("There is Some problem while parsing your login. Try Again Later")
       // throw new Error("Server Error !")
     }
     admin_info = await admin_info.json();
@@ -85,7 +85,7 @@ export default function Admin() {
     }
     else{
       toast.remove();
-      toast.error("There is Some problem while parsing your login. Try Again Later")
+      toast.error("Email Already Registered !!")
       setLoading(false)
     }
   };
