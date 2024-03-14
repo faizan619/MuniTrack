@@ -31,6 +31,27 @@ const IssueSchema = new Schema({
     type: String,
     required: true,
   },
+  issue_uploaded_on:{
+    type:String,
+    required:true,
+    default:()=>new Date().toISOString()
+  },
+  issue_public_view:{
+    type:String,
+    default:false
+  },
+  issue_resolved_by:{
+    type:String,
+    required:false,
+  },
+  issue_resolved_on:{
+    type:String,
+    required:false,
+  },
+  issue_resolve_image_url:{
+    type:String,
+    required:false,
+  },
   issue_comment: {
     type: [String],
   },
