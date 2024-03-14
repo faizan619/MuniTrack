@@ -23,6 +23,10 @@ const IssueSchema = new Schema({
     type: String,
     required: [true, "Your Location is required!!"],
   },
+  issue_manual_location:{
+    type:String,
+    default:"none"
+  },
   issue_user_name: {
     type: String,
     required: true,
@@ -43,14 +47,17 @@ const IssueSchema = new Schema({
   issue_resolved_by:{
     type:String,
     required:false,
+    default:""
   },
   issue_resolved_on:{
     type:String,
     required:false,
+    default:""
   },
   issue_resolve_image_url:{
     type:String,
     required:false,
+    default:""
   },
   issue_comment: {
     type: [String],

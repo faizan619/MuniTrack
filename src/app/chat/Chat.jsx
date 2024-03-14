@@ -136,16 +136,14 @@ const Chatting = ({ msg }) => {
             chat.userName === userName ? "justify-end" : "justify-start"
           }`}
         >
-          <div className="border flex flex-col max-w-[70%] text-gray-800 bg-white rounded-md overflow-hidden">
-            <h1 className="text-sm bg-gray-300 p-1 cursor-pointer hover:underline flex gap-5 justify-between">
-              <span>{chat.userName}</span>
+          <div className=" flex flex-col max-w-[70%] text-gray-800  rounded-md overflow-hidden">
+            <h1 className="text-sm bg-transparent flex gap-5 justify-between">
+              <span className="capitalize border px-3 py-1 bg-white rounded-t-md">{chat.userName}</span>
               <div>
                 {user.emailVerified ? (
                   null
                 ) : (
                   <>
-                  {/* <p>{key}</p> */}
-
                     <Image
                       src={Delete}
                       height={30}
@@ -159,7 +157,7 @@ const Chatting = ({ msg }) => {
               </div>
             </h1>
             <p
-              className={`inline-block text-lg px-1 ${
+              className={`inline-block rounded-tr-md text-lg px-1 ${
                 chat.userName === userName
                   ? "bg-white"
                   : "bg-gray-700 text-white"
@@ -167,7 +165,7 @@ const Chatting = ({ msg }) => {
             >
               {chat.msg}
             </p>
-            <p className="text-sm px-1 text-gray-500">
+            <p className="text-sm px-1 bg-white text-gray-500">
               {new Date(chat.timestamp).toLocaleString()}
             </p>
           </div>
