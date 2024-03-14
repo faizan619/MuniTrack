@@ -21,7 +21,7 @@ export async function GET(){
 }
 
 export async function POST(request){
-    let { issue_image_url,issue_title,issue_describe,issue_state,issue_location,issue_user_name,issue_user_email} = await request.json();
+    let { issue_image_url,issue_title,issue_describe,issue_state,issue_location,issue_user_name,issue_user_email,issue_uploaded_on,issue_public_view} = await request.json();
     try {
         if(!issue_title || !issue_describe || !issue_location){
             return NextResponse.json({
@@ -38,6 +38,8 @@ export async function POST(request){
                 issue_location,
                 issue_user_name,
                 issue_user_email,
+                issue_uploaded_on,
+                issue_public_view
             });
             const createIssue = await issue.save();
             return NextResponse.json({createIssue,success:true})

@@ -5,11 +5,15 @@ import Link from "next/link";
 import { getAuth } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { useAuthContext } from "@/context/AuthContext";
+
 
 const Header = () => {
   const auth = getAuth();
   const [name, setName] = useState("");
   const pathname = usePathname();
+  const { user } = useAuthContext();
+
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -22,7 +26,7 @@ const Header = () => {
     return () => unsubscribe();
   }, [auth]);
 
-  const puto = auth.currentUser?.photoURL
+  const puto = auth.currentUser?.photoURL;
 
   const isActive = (path) => path === pathname;
   return (
@@ -35,9 +39,7 @@ const Header = () => {
         <ol className="flex gap-5 text-white items-center uppercase">
           <Link
             className={`px-3 py-1 rounded-md hover:bg-gray-600 transition-all ${
-              isActive("/")
-                ? "bg-gray-600"
-                : "text-white"
+              isActive("/") ? "bg-gray-600" : "text-white"
             }
             `}
             href="/"
@@ -46,9 +48,7 @@ const Header = () => {
           </Link>
           <Link
             className={`px-3 py-1 rounded-md hover:bg-gray-600 transition-all ${
-              isActive("/search")
-                ? "bg-gray-600"
-                : "text-white"
+              isActive("/search") ? "bg-gray-600" : "text-white"
             }
             `}
             href="/search"
@@ -57,47 +57,43 @@ const Header = () => {
           </Link>
           <Link
             className={`px-3 py-1 rounded-md hover:bg-gray-600 transition-all ${
-              isActive("/issue")
-                ? "bg-gray-600"
-                : "text-white"
+              isActive("/issue") ? "bg-gray-600" : "text-white"
             }
             `}
             href="/issue"
           >
             Issue
           </Link>
-          <Link
-            className={`px-3 py-1 rounded-md hover:bg-gray-600 transition-all ${
-              isActive("/issue")
-                ? "bg-gray-600"
-                : "text-white"
-            }
+          {user?.emailVerified ? (null) : (
+            <Link
+              className={`px-3 py-1 rounded-md hover:bg-gray-600 transition-all ${
+                isActive("/drive") ? "bg-gray-600" : "text-white"
+              }
             `}
-            href="/issue"
-          >
-            hmmm
-          </Link>
+              href="/drive"
+            >
+              Drive
+            </Link>
+          )}
           <Link
             className={`px-3 py-1 rounded-md hover:bg-gray-600 transition-all ${
-              isActive("/chat")
-                ? "bg-gray-600"
-                : "text-white"
+              isActive("/chat") ? "bg-gray-600" : "text-white"
             }
             `}
             href="/chat"
           >
             Chat
           </Link>
-          {name==="unknown"?(null):(
-          <Link href={"/account"}>
-            <Image
-              src={puto===null?(Logo):(puto)}
-              height={0}
-              width={40}
-              alt="Account"
-              className="rounded-full cursor-pointer"
-            />
-          </Link>
+          {name === "unknown" ? null : (
+            <Link href={"/account"}>
+              <Image
+                src={puto === null ? Logo : puto}
+                height={0}
+                width={40}
+                alt="Account"
+                className="rounded-full cursor-pointer"
+              />
+            </Link>
           )}
         </ol>
       </div>

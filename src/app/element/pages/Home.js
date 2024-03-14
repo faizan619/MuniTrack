@@ -76,6 +76,14 @@ export default function Home() {
                 >
                   View Issue
                 </button>
+                <button
+                  onClick={() => {
+                    router.push("/drive");
+                  }}
+                  className="px-7 py-3 text-xl uppercase rounded-md bg-gray-700 hover:scale-105 transition-all text-white"
+                >
+                  Create Drive
+                </button>
               </>
             )}
           </div>
