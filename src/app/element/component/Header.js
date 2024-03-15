@@ -62,7 +62,7 @@ const Header = () => {
             `}
             href="/issue"
           >
-            Issue
+            View
           </Link>
           {user?.emailVerified ? (null) : (
             <Link
@@ -72,7 +72,7 @@ const Header = () => {
             `}
               href="/drive"
             >
-              Drive
+              Create
             </Link>
           )}
           <Link
