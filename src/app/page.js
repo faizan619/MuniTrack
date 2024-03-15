@@ -1,6 +1,6 @@
 import { connectDB } from "@/mongodb/database/conn";
 import Home from "./element/pages/Home";
-import HomePost from "./issue/HomePost";
+import HomePost from "./issue/IssueShow";
 // import AddButton from "./element/component/AddButton";
 
 export const metadata = {
