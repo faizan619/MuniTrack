@@ -2,14 +2,35 @@ import Image from "next/image";
 import DetailBtn from "../element/component/DetailBtn";
 import toast from "react-hot-toast";
 export default function IssueComp1({ issues }) {
+  const handlePublicView = async (id) => {
+    toast.success("It is Still Building !!" + id);
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_DOMAIN_URL}/issue/id/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id }),
+        }
+      );
 
-  const handlePublicView = ()=>{
-    toast.success("It is Still Building !!");
-  }
+      if (!response.ok) {
+        throw new Error("Failed to update view");
+      }
+
+      toast.success("View updated successfully!");
+    } catch (error) {
+      toast.error("Failed to update view");
+    }
+  };
 
   return (
     <div className="">
-    <p className="text-white text-xl pl-7">Total Issues : [{issues?.length}]</p>
+      <p className="text-white text-xl pl-7">
+        Total Issues : [{issues?.length}]
+      </p>
       <div className="flex gap-5 flex-wrap p-3 justify-evenly">
         {issues === undefined ? (
           <p className="text-white">No Issue Available</p>
@@ -40,13 +61,17 @@ export default function IssueComp1({ issues }) {
                   <span className="font-bold">{item.issue_user_name}</span>
                 </p>
                 <p>
-                  Location :{" "}
-                  <span className="font-bold">{item.issue_location}</span>
+                  View :{" "}
+                  <span className="font-bold">{item.issue_public_view}</span>
                 </p>
                 <div className="flex gap-5">
-
-                <DetailBtn url={item._id} />
-                <button className="hover:border px-1" onClick={handlePublicView} >Vew Public</button>
+                  <DetailBtn url={item._id} />
+                  <button
+                    className="hover:border px-1"
+                    onClick={()=>{handlePublicView(item._id)}}
+                    >
+                    Vew Public
+                  </button>
                 </div>
               </div>
             </div>
