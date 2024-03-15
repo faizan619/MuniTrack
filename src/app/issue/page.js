@@ -1,4 +1,4 @@
-import HomePost from "./HomePost";
+import HomePost from "./IssueShow";
 
 export const metadata = {
     title: "Issue : MuniTrack",

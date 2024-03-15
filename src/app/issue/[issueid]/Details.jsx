@@ -30,7 +30,7 @@ export default function Details({ name }) {
     }, [name]);
 
     return (
-        <div className="h-[90vh] text-center">
+        <div className="h-[90vh] text-center wallpaper1 text-white">
             {data && (
                 <>
                     <div className="font-extrabold text-xl">Data here</div>
