@@ -1,12 +1,17 @@
 "use client";
+import { useAuthContext } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { usePathname} from "next/navigation";
 const Header = () => {
   const router = useRouter();
   const pathname = usePathname();
   const isActive = (path) => path === pathname;
+  const { user } = useAuthContext();
+
 
   return (
+    <>
+    {user===null?(null):(
     <div className="fixed z-50 w-full h-16 max-w-lg -translate-x-1/2 bg-white border border-gray-200 rounded-full bottom-2 left-1/2 dark:bg-gray-700 dark:border-gray-600 md:hidden">
       <div className="grid h-full max-w-lg grid-cols-5 mx-auto">
         <button
@@ -158,6 +163,8 @@ const Header = () => {
         </div> */}
       </div>
     </div>
+    )}
+    </>
   );
 };
 export default Header;

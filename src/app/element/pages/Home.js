@@ -19,7 +19,7 @@ export default function Home() {
   }, [user, router]);
 
   if (!user) {
-    return <div>Only Logined Users can view this page</div>;
+    return <div className="wallpaper1 h-[90vh] text-white">Only Logined Users can view this page</div>;
   }
 
   return (
