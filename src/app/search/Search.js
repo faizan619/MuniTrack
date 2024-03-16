@@ -32,11 +32,12 @@ export default function Search() {
   const getIssue = async () => {
     if (inp !== undefined && inp !== null && inp !== "") {
       setLoading(true);
+      setIncharge(false)
+      setCamp(false)
       let response = await fetch(
         `${process.env.NEXT_PUBLIC_DOMAIN_URL}/issue/${inp}`
       );
       response = await response.json();
-      // console.log("response :", response);
       setData(response);
       setLoading(false);
     } else {
@@ -61,19 +62,6 @@ export default function Search() {
     }
     else{
       setIncharge(true)
-      setMember(false)
-      setCamp(false)
-    }
-  }
-
-  let [member,setMember] = useState(false)
-  const handleMember = ()=>{
-    if(member){
-      setMember(false)
-    }
-    else{
-      setMember(true)
-      setIncharge(false)
       setCamp(false)
     }
   }
@@ -86,7 +74,6 @@ export default function Search() {
     else{
       setCamp(true);
       setIncharge(false);
-      setMember(false)
     }
   }
 
@@ -103,9 +90,8 @@ export default function Search() {
       />
       {!inp ? (
         <div className="flex gap-5 flex-wrap justify-evenly py-5">
-          <div className="bg-white text-black hover:bg-gray-200 cursor-pointer px-5 py-3 rounded-md" onClick={handleIncharge}>View Issue Incharge</div>
-          <div className="bg-white text-black hover:bg-gray-200 cursor-pointer px-5 py-3 rounded-md" onClick={handleMember}>View Participants</div>
-          <div className="bg-white text-black hover:bg-gray-200 cursor-pointer px-5 py-3 rounded-md" onClick={handleCamp}>
+          <div className={`${incharge?"bg-white text-black":"text-white"} hover:bg-gray-500 hover:text-white cursor-pointer px-5 py-3 rounded-md border border-gray-500`} onClick={handleIncharge}>View Issue Incharge</div>
+          <div className={`${camp?"bg-white text-black":"text-white"} hover:bg-gray-500 hover:text-white cursor-pointer px-5 py-3 rounded-md border border-gray-500`} onClick={handleCamp}>
             View Upcoming Drives
           </div>
         </div>
@@ -151,18 +137,12 @@ export default function Search() {
         <p>Didn`t find the Item you are looking for </p>
       )}
       {!inp && incharge ?(
-      <div className="bg-violet-800 mb-20 min-h-96 flex p-3 gap-5 rounded-md">
+      <div className="mb-20 min-h-52 p-3 gap-5">
         <ViewIncharge/>
       </div>
       ):(null)}
-      {!inp && member ?(
-      <div className="bg-gray-800 h-96 flex flex-col justify-center items-center gap-5">
-        <h1>Be a Member and Change the world</h1>
-        <p>Member Database is left to create</p>
-      </div>
-      ):(null)}
       {!inp && camp ?(
-      <div className="bg-purple-800 h-96 flex flex-col justify-center items-center gap-5">
+      <div className="min-h-52 mb-20 flex flex-col justify-center items-center gap-5">
       <p>Let together make this world a better place</p>
         <h1>Campain Database is Left to Create</h1>
       </div>

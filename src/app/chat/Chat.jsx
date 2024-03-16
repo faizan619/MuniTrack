@@ -121,7 +121,7 @@ const Chatting = ({ msg }) => {
     fetchData();
   }, [msg]);
 
-  console.log("details : ",details)
+  // console.log("details : ",details)
   if (error) return <div className="text-white">Error Fetching the Chats.</div>;
   if (!details)
     return (

@@ -79,7 +79,7 @@ export default function Admin() {
         }
         setLoading(false)
       } else {
-        console.log(result);
+        // console.log(result);
         return router.push("/");
       }
     }
@@ -103,7 +103,7 @@ export default function Admin() {
         toast.error("Some Problem in the Network");
       }
     } else {
-      console.log(result);
+      // console.log(result);
       return router.push("/")
     }
   }

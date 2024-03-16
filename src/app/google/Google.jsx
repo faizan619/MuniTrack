@@ -25,11 +25,11 @@ export default function Google() {
     try {
       const provider = new GoogleAuthProvider();
       const hello  = await signInWithPopup(auth, provider);
-      console.log("Hello google : ",hello)
+      // console.log("Hello google : ",hello)
       toast.success("Login Successfull");
       router.push("/");
     } catch (error) {
-      console.log("error in Google.jsx : ", error);
+      toast.error("Problem in Sign in. Try Again")
     }
     setLoading(false);
   };  
@@ -43,7 +43,7 @@ export default function Google() {
       toast.success("Login Successfull");
       router.push("/");
     } catch (error) {
-      console.log("error in Google.jsx : ", error);
+      toast.error("Problem in Sign in. Try Again")
     }
     setLoading(false);
   };
