@@ -29,20 +29,35 @@ export default  function HomePost() {
     getAllPost();
   },[data])
 
+  const [camp,setCamp] = useState(undefined)
+  const getAllDrive = async ()=>{
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN_URL}/campaign`,{
+        cache:"no-store"
+      });
+      if (!response.ok) {throw new Error(`Fetching Error : Status :${response.status}`);}
+      const raw_issue = await response.json();
+      setCamp(raw_issue)
+    } catch (error) {
+      console.error("Fetching issue data failed:", error);
+      return { success: false, error };      
+    }
+  };
+
+  useEffect(()=>{
+    getAllDrive();
+  },[camp])
+
   const [showIssue,SetShowIssue] = useState(true)
   const handleIssueView = ()=>{
     SetShowIssue(true);
     SetShowCamp(false);
-    toast.remove();
-    toast.success("This is Issue Page");
   }
   
   const [showCamp,SetShowCamp] = useState(false)
   const handleCampView = ()=>{
     SetShowIssue(false);
     SetShowCamp(true);
-    toast.remove();
-    toast.success("This is Campaign page")
   }
 
   return (
@@ -61,7 +76,7 @@ export default  function HomePost() {
     {showIssue &&  <IssueComp1 issues={data} />}
       </p>
     )}
-    {showCamp &&  <CampComp/> }
+    {showCamp &&  <CampComp camps={camp}/> }
     </div>
   );
 }
