@@ -17,10 +17,8 @@ export default function Details({ name }) {
                 throw new Error(`Fetching Error : Status :${response.status}`);
             }
             response = await response.json();
-            // console.log("response :", response);
             setData(response); 
         } catch (err) {
-            console.log("Fetching Details Failed !", err);
             toast.error("Failed to Fetch Details ! Please Refresh or Try again Later")
         }
     };
