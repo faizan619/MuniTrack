@@ -5,8 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import Logo from "../../../public/assets/t-preview.png"
-
+import Logo from "../../../public/assets/t-preview.png";
 
 export default function Account() {
   const { user } = useAuthContext();
@@ -39,7 +38,12 @@ export default function Account() {
       toast.success("Be a Part in Improving the Society!");
     }
   };
-  const puto = auth.currentUser?.photoURL
+  const puto = auth.currentUser?.photoURL;
+
+  const copyId = ()=>{
+    toast.remove();
+    toast.success("Copying feature is still to build !")
+  }
 
   if (!user) {
     return <div>Only Logined Users can view this page</div>;
@@ -50,7 +54,7 @@ export default function Account() {
         <div className="flex gap-5 items-center flex-col sm:flex-row">
           <p className=" rounded-md text-sm flex justify-center items-center">
             <Image
-              src={puto===null?(Logo):(puto)}
+              src={puto === null ? Logo : puto}
               // src={Logo}
               height={100}
               width={100}
@@ -74,7 +78,7 @@ export default function Account() {
           </div>
         </div>
         <div
-          className="bg-gray-800 px-3 py-5 rounded-md text-white flex items-center justify-between hover:underline hover:text-green-500 border border-gray-500"
+          className="bg-gray-800 px-3 py-5 rounded-md text-white flex items-center justify-between hover:underline cursor-pointer border border-gray-500"
           onClick={toggleIsOpen}
         >
           <p className="font-semibold ">View Other Data.</p>
@@ -96,24 +100,35 @@ export default function Account() {
           </svg>
         </div>
         {isOpen && (
-          <div className="flex flex-col gap-1 -mt-4">
-            <p className="rounded-md bg-green-500 px-3 py-5 text-sm text-gray-900 hover:bg-green-600 overflow-auto">
+          <div className="flex flex-col gap-3 -mt-2">
+            <p className="rounded-md bg-black px-3 border py-5 text-sm text-gray-700 transition-all hover:bg-green-600 overflow-auto">
               Account Created :
               <span className="uppercase font-bold text-white cursor-pointer hover:underline sm:ml-4 ">
-              {new Date(auth.currentUser.metadata.creationTime).toLocaleString('en-US', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone })}
+                {new Date(
+                  auth.currentUser.metadata.creationTime
+                ).toLocaleString("en-US", {
+                  timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                })}
               </span>
             </p>
-            <p className="rounded-md bg-green-500 px-3 py-5 text-sm text-gray-900 hover:bg-green-600 overflow-auto">
+            <p className="rounded-md bg-black px-3 border py-5 text-sm text-gray-700 transition-all hover:bg-green-600 overflow-auto">
               Last SignIn :
               <span className="sm:ml-4 uppercase font-bold text-white cursor-pointer hover:underline ">
-                {new Date(auth.currentUser.metadata.lastSignInTime).toLocaleString('en-US', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone })}
+                {new Date(
+                  auth.currentUser.metadata.lastSignInTime
+                ).toLocaleString("en-US", {
+                  timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                })}
               </span>
             </p>
-            <p className="rounded-md bg-green-500 px-3 py-5 text-sm text-gray-900 hover:bg-green-600 overflow-auto">
-              Unique ID :
-              <span className="sm:ml-4 uppercase font-bold text-white cursor-pointer hover:underline ">
-                {auth.currentUser.uid}
-              </span>
+            <p className="rounded-md bg-black px-3 border py-5 text-sm text-gray-700 transition-all hover:bg-green-600 overflow-auto flex justify-between">
+              <p>
+                Unique ID :
+                <span className="sm:ml-4 uppercase font-bold text-white cursor-pointer hover:underline ">
+                  {auth.currentUser.uid}
+                </span>
+              </p>
+              <p className="border px-3 rounded-sm hover:bg-white hover:text-black cursor-pointer text-white" onClick={copyId}>Copy</p>
             </p>
           </div>
         )}
@@ -125,6 +140,24 @@ export default function Account() {
         >
           Terms And Conditions.
         </p>
+        <p
+          className="rounded-md bg-gray-800 px-3 py-5 text-sm font-bold uppercase text-white hover:bg-gray-700 cursor-pointer border border-gray-500"
+          onClick={() => {
+            router.push("");
+          }}
+        >
+          Issue Raised.
+        </p>
+        {user.emailVerified ? null : (
+          <p
+            className="rounded-md bg-gray-800 px-3 py-5 text-sm font-bold uppercase text-white hover:bg-gray-700 cursor-pointer border border-gray-500"
+            onClick={() => {
+              router.push("");
+            }}
+          >
+            Total Issue Resolved
+          </p>
+        )}
         <p
           className="rounded-md bg-gray-800 px-3 py-5 text-sm font-bold uppercase text-white hover:bg-gray-700 cursor-pointer border border-gray-500"
           onClick={() => {

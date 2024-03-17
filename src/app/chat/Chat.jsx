@@ -58,14 +58,14 @@ export default function Chat() {
   }, [user, router]);
 
   if (!user) {
-    return <div>Only Logined Users can view this page</div>;
+    return <div className="flex justify-center items-center h-[90vh] wallpaper1">Only Logined Users can view this page</div>;
   }
   return (
     <div className="h-[90vh] wallpaper1 p-1">
       <div className="h-[85%] md:h-full ">
         <div className="flex flex-col-reverse gap-3 h-full overflow-auto px-2">
           <form
-            className="flex gap-2 mb-14 pt-2 w-full fixed pr-10"
+            className="flex gap-2 md:mb-1 mb-14 pt-2 w-full fixed pr-10"
             onSubmit={submitData}
           >
             <input
@@ -128,7 +128,7 @@ const Chatting = ({ msg }) => {
       <div className="w-16 mb-12  h-16 border-4 border-dashed rounded-full animate-spin dark:border-violet-400"></div>
     );
   return (
-    <div className="flex flex-col gap-3 pt-2 pb-24">
+    <div className="flex flex-col gap-3 pt-2 pb-24 md:pb-14">
       {Object.entries(details).map(([key,chat], index) => (
         <div
           key={index}

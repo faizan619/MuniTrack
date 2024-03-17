@@ -172,7 +172,7 @@ export default function Add() {
   };
 
   return (
-    <div className="h-[90vh] wallpaper flex flex-col text-white overflow-auto text-center">
+    <div className="h-[90vh] wallpaper1 flex flex-col text-white overflow-auto text-center">
       <div className="h-full pt-5 ">
         <form
           className="flex flex-col gap-5  justify-center pb-20 px-5 md:px-20 lg:px-36"
@@ -227,7 +227,7 @@ export default function Add() {
               placeholder="Click the Button"
               className={`text-black p-2 rounded-md flex-1 ${location.name?"block":"hidden"}`}
             />
-            <button onClick={identifyLocation} className={`p-2 flex-1 rounded-md border bg-blue-700 ${location.name?"hidden":"block"} `}>
+            <button onClick={identifyLocation} className={`p-2 flex-1 rounded-md border bg-green-700 ${location.name?"hidden":"block"} `}>
               Get Location
             </button>
           </div>

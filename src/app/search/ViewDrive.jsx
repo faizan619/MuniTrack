@@ -40,7 +40,7 @@ export default function ViewDrive() {
           <p>No Issue Found!</p>
         ) : (
           <div className="w-full">
-            <p>Drives Available : [ {drives.length} ]</p>
+            <p>Drives Found : [ {drives.length} ]</p>
             <div className="w-full">
               {drives.map((item) => (
                 <div key={item._id} className="flex flex-wrap mr-5 gap-5 my-3">
