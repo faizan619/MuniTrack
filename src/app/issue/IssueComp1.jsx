@@ -36,9 +36,9 @@ export default function IssueComp1({ issues }) {
             </Link>
             {issues.map((item) =>
               item.issue_public_view === "true" ? (
-                <IssueCard item={item} />
+                <IssueCard key={item._id} item={item} />
               ) : user?.emailVerified ? null : (
-                <IssueCard item={item} />
+                <IssueCard key={item._id} item={item} />
               )
             )}
           </div>
@@ -75,7 +75,6 @@ const IssueCard = ({ item }) => {
   const { user } = useAuthContext();
   return (
     <div
-      key={item._id}
       className={`relative rounded-md w-80 text-white overflow-hidden m-2 border-4  ${
         item.issue_state === "pending" ? "border-green-600" : "border-red-600"
       } `}
