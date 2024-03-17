@@ -1,46 +1,92 @@
 "use client";
+import { useAuthContext } from "@/context/AuthContext";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function Details({ name }) {
-    const [data, setData] = useState([]); 
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-    const getIssue = async () => {
-        try {
-            let response = await fetch(
-                `${process.env.NEXT_PUBLIC_DOMAIN_URL}/issue/id/${name}`,
-                {
-                    cache: "no-store",
-                }
-            );
-            if (!response.ok) {
-                throw new Error(`Fetching Error : Status :${response.status}`);
-            }
-            response = await response.json();
-            setData(response); 
-        } catch (err) {
-            toast.error("Failed to Fetch Details ! Please Refresh or Try again Later")
+  const {user} = useAuthContext();
+
+  const getIssue = async () => {
+    setLoading(true);
+    try {
+      let response = await fetch(
+        `${process.env.NEXT_PUBLIC_DOMAIN_URL}/issue/id/${name}`,
+        {
+          cache: "no-store",
         }
-    };
+      );
+      if (!response.ok) {
+        throw new Error(`Fetching Error : Status :${response.status}`);
+      }
+      response = await response.json();
+      setData(response);
+      setLoading(false);
+    } catch (err) {
+      toast.error(
+        "Failed to Fetch Details ! Please Refresh or Try again Later"
+      );
+      setLoading(false);
+    }
+  };
 
-    useEffect(() => {
-        getIssue();
-    }, [name]);
+  useEffect(() => {
+    getIssue();
+  }, [name]);
 
-    return (
-        <div className="h-[90vh] text-center wallpaper1 text-white">
-            {data && (
-                <>
-                    <div className="font-extrabold text-xl">Data here</div>
-                    <p>{data._id}</p>
-                    <p>{data.issue_title}</p>
-                    <p>{data.issue_describe}</p>
-                    <p>{data.issue_state}</p>
-                    <p>{data.issue_location}</p>
-                    <p>{data.issue_manual_location}</p>
-                    <p>{data.issue_public_view}</p>
-                </>
-            )}
-        </div>
-    );
+  const handleEdit = ()=>{
+    toast.success("Edit The issue is Still building")
+  }
+
+  const handleResolve = ()=>{
+    toast.success("Resolving Issue Is still left")
+  }
+
+  return (
+    <div className="min-h-[90vh] text-center wallpaper1 text-white">
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        data && (
+          <>
+            <div className="font-extrabold text-xl py-3">
+              Issue Raised by {data.issue_user_name}
+            </div>
+            <div className="flex flex-col gap-3 justify-center items-center">
+              <Image
+                src={data.issue_image_url}
+                height={0}
+                width={300}
+                className="object-contain border w-2/5 rounded-md"
+              />
+              <div className="text-left p-3 rounded-md w-3/4 flex flex-col gap-4 bg-purple-600">
+                <p>
+                  Title : <span className="font-bold uppercase underline">{data.issue_title}</span>
+                </p>
+                <p>
+                    Info : <span className="capitalize font-bold">{data.issue_describe}</span>
+                </p>
+                <p>
+                    Issue occured At : <span className="font-bold underline">{data.issue_location} {data.issue_manual_location==="none"?"":` or ${data.issue_manual_location}`}</span>
+                </p>
+                <p>
+                    Issue Uploaded on : <span className="font-bold">{data.issue_uploaded_on}</span>
+                </p>
+              </div>
+              <div className="flex gap-3">
+
+                {data.issue_state==="pending"?(
+                    user.emailVerified?(<p className="border px-5 py-2 rounded-md hover:bg-white hover:text-black cursor-pointer transition-all">Issue Not Resolved</p>):(<button className="border px-5 py-2 rounded-md hover:bg-white hover:text-black cursor-pointer transition-all" onClick={handleResolve}>Resolve This Issue</button>)
+                ):(<p>Issue Resolved By {data.issue_resolve_by}</p>)}
+                    {user.email === data.issue_user_email?(<button className="border px-5 py-2 rounded-md" onClick={handleEdit}>Edit Your Issue</button>):(null)}
+              </div>
+            </div>
+          </>
+        )
+      )}
+    </div>
+  );
 }
