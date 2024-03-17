@@ -66,16 +66,16 @@ export default  function HomePost() {
       <p className={`border text-xl px-5 py-2 rounded-md cursor-pointer hover:scale-105 ${showIssue?"bg-white":""} ${showIssue?"text-black":"text-white"}`}  onClick={handleIssueView}>Issue</p>
       <p className={`border text-xl px-5 py-2 rounded-md cursor-pointer hover:scale-105 ${showCamp?"bg-white ":""} ${showCamp?"text-black":"text-white"}`}  onClick={handleCampView}>Campaign</p>
     </div> 
-    {user.emailVerified?(<p>{showIssue && <div className="text-white px-7">
+    {/* {user.emailVerified?(<p>{showIssue && <div className="text-white px-7">
             <p>Total Issue : [0]</p>
             <div>
                 <p className="text-center text-lg">This is No Issue Available</p>
             </div>
         </div>}</p>):(
       <p>
-    {showIssue &&  <IssueComp1 issues={data} />}
       </p>
-    )}
+    )} */}
+    {showIssue &&  <IssueComp1 issues={data} />}
     {showCamp &&  <CampComp camps={camp}/> }
     </div>
   );
