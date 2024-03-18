@@ -38,18 +38,18 @@ export async function GET(request, { params }) {
 
   export async function DELETE(request, { params }) {
     try {
-      const { plantid } = params;
-      await Post.deleteOne({
-        _id: plantid,
+      const { issueid } = params;
+      await Issue.deleteOne({
+        _id: issueid,
       });
       return NextResponse.json({
         message:"Issue Deleted Successfully !!",
         success:true
       },{status:200})
     } catch (error) {
-      console.log("Cannot Delete plant Data !! : ", error);
+      console.log("Cannot Delete Issue !! : ", error);
       return NextResponse.json({
-        message:"Cannot Delete the Post",
+        message:"Cannot Delete the Issue",
         status:false
       },{status:500})
     }
