@@ -5,6 +5,8 @@ import toast from "react-hot-toast";
 import Link from "next/link";
 import Ima1 from "../../../public/background/img4.jpg";
 import { useAuthContext } from "@/context/AuthContext";
+import DeleteIssue from "./DeleteIssue";
+import { useState } from "react";
 export default function IssueComp1({ issues }) {
   const { user } = useAuthContext();
 
@@ -49,9 +51,11 @@ export default function IssueComp1({ issues }) {
 }
 
 const IssueCard = ({ item }) => {
+  const [loading,setLoading] = useState(false)
   const handlePublicView = async (id) => {
-    toast.success("It is Still Building !!" + id);
     try {
+      setLoading(true)
+      toast.loading("Changing the View");
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_DOMAIN_URL}/issue/view/${id}`,
         {
@@ -66,10 +70,13 @@ const IssueCard = ({ item }) => {
       if (!response.ok) {
         throw new Error("Failed to update view");
       }
-
+      toast.remove();
       toast.success("View updated successfully!");
+      setLoading(false)
     } catch (error) {
+      toast.remove();
       toast.error("Failed to update view");
+      setLoading(false)
     }
   };
   const { user } = useAuthContext();
@@ -103,110 +110,19 @@ const IssueCard = ({ item }) => {
           {item.issue_public_view === "true" ? null : (
             <button
               className="hover:border bg-green-600 rounded-md px-1"
+              disabled={loading}
               onClick={() => {
                 handlePublicView(item._id);
               }}
             >
-              Public
+              {loading?"Changing.":"Public"}
             </button>
           )}
           {user.emailVerified ? null : (
-            <DeleteBtn/>
+            <DeleteIssue dltItem={item}/>
           )}
         </div>
       </div>
     </div>
   );
 };
-
-const DeleteBtn = ({dltId})=>{
-  let removePost = ()=>{
-    toast.remove();
-    toast.success("Removed Successfully !!");
-  }
-  return(
-    <button className="bg-red-600 rounded-md px-1" onClick={removePost}>Delete</button> 
-  )
-}
-
-/*
-"use client";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { storage } from "@/firebase/config";
-import { ref, deleteObject } from "firebase/storage";
-import toast from "react-hot-toast";
-
-export default function DeleteButton({ id2 }) {
-  const router = useRouter();
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (id2) {
-      setLoading(true);
-      fetch(`https://royal-garden-ten.vercel.app/api/plantinfo/${id2}`)
-        .then((response) => response.json())
-        .then((data) => {
-          setData(data);
-          setLoading(false);
-        });
-    }
-  }, [id2]);
-
-  const removePost = async () => {
-    const confirmed = window.confirm(
-      "Are you sure you want to delete the Post?"
-    );
-    if (!confirmed) return;
-
-    toast.loading("Deleting The Data!");
-    const imageUrl = data?.image_url;
-    if (imageUrl) {
-      const regex = /(?<=o\/)[^?]+/;
-      const match = imageUrl.match(regex);
-      const imagePath = match ? match[0] : null;
-      const decodedFilename = decodeURIComponent(imagePath);
-      if (imagePath) {
-        const imageRef = ref(storage, decodedFilename);
-        try {
-          await deleteObject(imageRef);
-        } catch (error) {
-          toast.remove();
-          toast.error("Failed to delete image from storage");
-          console.error(error);
-          return;
-        }
-      }
-    }
-
-    try {
-      const res = await fetch(`https://royal-garden-ten.vercel.app/api/plantinfo/${id2}`, {
-        method: "DELETE",
-      });
-      if (res.ok) {
-        toast.remove();
-        toast.success("Data Removed Successfully!");
-        router.refresh();
-      } else {
-        toast.remove();
-        toast.error("Failed to delete data");
-      }
-    } catch (error) {
-      toast.remove();
-      toast.error("Failed to delete data");
-      console.error(error);
-    }
-  };
-
-  return (
-    <button
-      className="text-white border px-5 py-2 rounded-md flex-1 bg-red-700"
-      onClick={removePost}
-      disabled={loading}
-    >
-      Delete
-    </button>
-  );
-}
-*/
