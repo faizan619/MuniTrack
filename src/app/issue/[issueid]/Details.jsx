@@ -79,9 +79,9 @@ export default function Details({ name }) {
               <div className="flex gap-3">
 
                 {data.issue_state==="pending"?(
-                    user.emailVerified?(<p className="border px-5 py-2 rounded-md hover:bg-white hover:text-black cursor-pointer transition-all">Issue Not Resolved</p>):(<button className="border px-5 py-2 rounded-md hover:bg-white hover:text-black cursor-pointer transition-all" onClick={handleResolve}>Resolve This Issue</button>)
+                    user.emailVerified?(<p className="px-5 py-2 rounded-md cursor-pointer transition-all">Issue is Still pending</p>):(<button className="border px-5 py-2 rounded-md hover:bg-white hover:text-black cursor-pointer transition-all" onClick={handleResolve}>Resolve This Issue</button>)
                 ):(<p>Issue Resolved By {data.issue_resolve_by}</p>)}
-                    {user.email === data.issue_user_email?(<button className="border px-5 py-2 rounded-md" onClick={handleEdit}>Edit Your Issue</button>):(null)}
+                    {user.email === data.issue_user_email?(<button className="border px-5 py-2 hover:bg-white hover:text-black rounded-md" onClick={handleEdit}>Edit Your Issue</button>):(null)}
               </div>
             </div>
           </>

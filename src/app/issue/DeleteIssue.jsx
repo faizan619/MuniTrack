@@ -58,7 +58,7 @@ export default function DeleteIssue({ dltItem }) {
     }
   };
   return (
-    <button className="bg-red-600 rounded-md hover:scale-105 px-1" onClick={removePost}>
+    <button className="bg-red-600 rounded-md hover:scale-105 px-1" onClick={removePost} disabled={loading} >
       {loading?"Deleting":"Delete"}
     </button>
   );

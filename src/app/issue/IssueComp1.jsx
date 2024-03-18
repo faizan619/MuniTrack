@@ -123,7 +123,7 @@ const IssueCard = ({ item }) => {
               {loading ? "Changing." : "Public"}
             </button>
           )}
-          {user.emailVerified ? null : <DeleteIssue dltItem={item} />}
+          {user.emailVerified && item.issue_user_email !== user.email ? null : <DeleteIssue dltItem={item} />}
         </div>
       </div>
     </div>
