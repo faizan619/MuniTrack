@@ -305,7 +305,6 @@ export default function Add() {
             />
           </div>
         </form>
-        {JSON.stringify(data)}
       </div>
     </div>
   );
