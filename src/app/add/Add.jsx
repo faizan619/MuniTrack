@@ -25,6 +25,7 @@ export default function Add() {
     issue_title: "",
     issue_describe: "",
     issue_location: "",
+    issue_manual_location: "",
     issue_user_name: u_name,
     issue_user_email: u_email,
   });
@@ -76,7 +77,10 @@ export default function Add() {
       );
       const data = await response.json();
       // const location = data.locality + "," + data.city;
-      const location = data.localityInfo.administrative[data.localityInfo.administrative.length - 1].name;
+      const location =
+        data.localityInfo.administrative[
+          data.localityInfo.administrative.length - 1
+        ].name;
       setLocation({
         name: location,
         lat: position.coords.latitude,
@@ -93,9 +97,12 @@ export default function Add() {
     e.preventDefault();
     if (!file) {
       toast.error("Please Upload the Image!");
-    } else if (!data.issue_title || !data.issue_describe ) {
+    } else if (!data.issue_title || !data.issue_describe) {
       toast.remove();
       toast.error("Please Enter all the Credentials!");
+    } else if (!data.issue_location) {
+      toast.remove();
+      toast.error("Please Give the Location Permission");
     } else {
       setLoading(true);
       toast.loading("Uploading your Complaint!");
@@ -107,20 +114,23 @@ export default function Add() {
         const url = await getDownloadURL(snapshot.ref);
         setimgLink(url);
         setData((prevInfo) => ({ ...prevInfo, issue_image_url: url }));
-        let issue_info = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN_URL}/issue`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ ...data, issue_image_url: url }),
-        });
+        let issue_info = await fetch(
+          `${process.env.NEXT_PUBLIC_DOMAIN_URL}/issue`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ ...data, issue_image_url: url }),
+          }
+        );
         if (!issue_info.ok) {
-          throw new Error("Server Error");
+          throw new Error("Please Describe the Issue in Brief !");
         }
         issue_info = await issue_info.json();
         if (issue_info.success) {
           toast.remove();
-          toast.success("Form Submitted Successfully!!");
+          toast.success("Form Sent for confirmation from Admin");
           setPreviewUrl(null);
           setImageUpload(false);
           setData({
@@ -128,10 +138,11 @@ export default function Add() {
             issue_title: "",
             issue_describe: "",
             issue_location: "",
+            issue_manual_location: "",
           });
-          router.refresh("/")
+          router.refresh("/issue");
           setTimeout(() => {
-            router.push("/");
+            router.push("/issue");
           }, 500);
         } else {
           toast.remove();
@@ -140,7 +151,8 @@ export default function Add() {
         setLoading(false);
       } catch (error) {
         toast.remove();
-        toast.error(`Error : Give Location permission`);
+        // toast.error(`Error : Give Location permission`);
+        toast.error(error.message);
         setLoading(false);
       }
     }
@@ -152,17 +164,17 @@ export default function Add() {
       data.issue_image_url ||
       data.issue_describe ||
       data.issue_title
-    ){
+    ) {
       setPreviewUrl(null);
       setImageUpload(false);
       setLoading("");
       setLocation({
-        name:"",
-      })
+        name: "",
+      });
       setData({
         issue_title: "",
         issue_describe: "",
-        issue_location:""
+        issue_location: "",
       });
       toast.remove();
       toast.success("Data Successfully Cleared!");
@@ -174,9 +186,7 @@ export default function Add() {
   return (
     <div className="h-[90vh] wallpaper1 flex flex-col text-white overflow-auto text-center">
       <div className="h-full pt-5 ">
-        <form
-          className="flex flex-col gap-5  justify-center pb-20 px-5 md:px-20 lg:px-36"
-        >
+        <form className="flex flex-col gap-5  justify-center pb-20 px-5 md:px-20 lg:px-36">
           <div className="flex flex-col gap-5">
             <input
               type="file"
@@ -225,12 +235,31 @@ export default function Add() {
               value={location.name}
               readOnly
               placeholder="Click the Button"
-              className={`text-black p-2 rounded-md flex-1 ${location.name?"block":"hidden"}`}
+              className={`text-black p-2 rounded-md flex-1 ${
+                location.name ? "block" : "hidden"
+              }`}
             />
-            <button onClick={identifyLocation} className={`p-2 flex-1 rounded-md border bg-green-700 ${location.name?"hidden":"block"} `}>
+            <button
+              onClick={identifyLocation}
+              className={`p-2 flex-1 rounded-md border bg-green-700 ${
+                location.name ? "hidden" : "block"
+              } `}
+            >
               Get Location
             </button>
           </div>
+          <input
+            type="text"
+            placeholder="Enter Loction Manually (Optional)"
+            className="text-black p-2 rounded-md"
+            value={data.issue_manual_location}
+            onChange={(e) => {
+              setData((prevInfo) => ({
+                ...prevInfo,
+                issue_manual_location: e.target.value,
+              }));
+            }}
+          />
           <input
             type="text"
             required
@@ -270,11 +299,13 @@ export default function Add() {
             />
             <input
               type="reset"
+              disabled={loading}
               onClick={resetButton}
               className="border bg-red-700 hover:bg-red-800 py-2 flex-1 rounded-md cursor-pointer"
             />
           </div>
         </form>
+        {JSON.stringify(data)}
       </div>
     </div>
   );
