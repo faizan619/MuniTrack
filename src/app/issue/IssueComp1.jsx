@@ -10,12 +10,13 @@ import { useState } from "react";
 export default function IssueComp1({ issues }) {
   const { user } = useAuthContext();
 
-
   return (
     <div className="">
-      <p className="text-white text-xl pl-7">
-        Total Issues : [{issues?.length}]
-      </p>
+      {user.emailVerified ? null : (
+        <p className="text-white text-xl pl-7">
+          Total Issues : [{issues?.length}]
+        </p>
+      )}
       <div className="flex gap-5 flex-wrap p-3 justify-evenly">
         {issues === undefined ? (
           <p className="text-white">No Issue Available</p>
@@ -25,7 +26,7 @@ export default function IssueComp1({ issues }) {
           <div className="w-full flex flex-wrap">
             <Link
               href={"/add"}
-              className="relative rounded-md overflow-hidden m-2 flex flex-col justify-center items-center border cursor-alias bg-gray-600 w-80 hover:scale-105 transition-all"
+              className="relative rounded-md overflow-hidden m-2 flex flex-col justify-center items-center border cursor-alias bg-gray-600 w-72 hover:scale-105 transition-all"
             >
               <Image
                 src={Ima1}
@@ -36,13 +37,17 @@ export default function IssueComp1({ issues }) {
               />
               <div className="z-10 uppercase text-white">Create Issue</div>
             </Link>
-            {issues.map((item) =>
-              item.issue_public_view === "true" ? (
-                <IssueCard key={item._id} item={item} />
-              ) : user?.emailVerified ? null : (
-                <IssueCard key={item._id} item={item} />
-              )
-            )}
+
+            {issues
+              .slice()
+              .reverse()
+              .map((item) =>
+                item.issue_public_view === "true" ? (
+                  <IssueCard key={item._id} item={item} />
+                ) : user?.emailVerified ? null : (
+                  <IssueCard key={item._id} item={item} />
+                )
+              )}
           </div>
         )}
       </div>
@@ -51,10 +56,10 @@ export default function IssueComp1({ issues }) {
 }
 
 const IssueCard = ({ item }) => {
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const handlePublicView = async (id) => {
     try {
-      setLoading(true)
+      setLoading(true);
       toast.loading("Changing the View");
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_DOMAIN_URL}/issue/view/${id}`,
@@ -72,17 +77,17 @@ const IssueCard = ({ item }) => {
       }
       toast.remove();
       toast.success("View updated successfully!");
-      setLoading(false)
+      setLoading(false);
     } catch (error) {
       toast.remove();
       toast.error("Failed to update view");
-      setLoading(false)
+      setLoading(false);
     }
   };
   const { user } = useAuthContext();
   return (
     <div
-      className={`relative rounded-md w-80 text-white overflow-hidden m-2 border-4  ${
+      className={`relative rounded-md w-72 text-white overflow-hidden m-2 border-4  ${
         item.issue_state === "pending" ? "border-green-600" : "border-red-600"
       } `}
     >
@@ -115,12 +120,10 @@ const IssueCard = ({ item }) => {
                 handlePublicView(item._id);
               }}
             >
-              {loading?"Changing.":"Public"}
+              {loading ? "Changing." : "Public"}
             </button>
           )}
-          {user.emailVerified ? null : (
-            <DeleteIssue dltItem={item}/>
-          )}
+          {user.emailVerified ? null : <DeleteIssue dltItem={item} />}
         </div>
       </div>
     </div>
