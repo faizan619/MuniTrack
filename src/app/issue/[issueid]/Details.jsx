@@ -38,14 +38,6 @@ export default function Details({ name }) {
     getIssue();
   }, [name]);
 
-  const handleEdit = ()=>{
-    toast.success("Edit The issue is Still building")
-  }
-
-  const handleResolve = ()=>{
-    toast.success("Resolving Issue Is still left")
-  }
-
   return (
     <div className="min-h-[90vh] pb-20 text-center wallpaper1 text-white">
       {loading ? (
@@ -74,7 +66,7 @@ export default function Details({ name }) {
                     Issue occured At : <span className="font-bold underline">{data.issue_location} {data.issue_manual_location==="none"?"":` or ${data.issue_manual_location}`}</span>
                 </p>
                 <p>
-                    Issue Uploaded on : <span className="font-bold">{data.issue_uploaded_on}</span>
+                    Issue Uploaded on : <span className="font-bold">{new Date(data.issue_uploaded_on).toLocaleDateString()}</span>
                 </p>
               </div>
               <div className="flex gap-3">
@@ -82,7 +74,7 @@ export default function Details({ name }) {
                 {data.issue_state==="pending"?(
                     user.emailVerified?(<p className="px-5 py-2 rounded-md cursor-pointer transition-all">Issue is Still pending</p>):(<Link href={`/issue/resolved/${data._id}`} className="border px-5 py-2 rounded-md hover:bg-white hover:text-black cursor-pointer transition-all">Resolve This Issue</Link>)
                 ):(<p>Issue Resolved By {data.issue_resolve_by}</p>)}
-                    {user.email === data.issue_user_email?(<Link href={`/issue/update/${data._id}`} className="border px-5 py-2 hover:bg-white hover:text-black rounded-md">Edit Your Issue</Link>):(null)}
+                    {user.email === data.issue_user_email?(<a href={`/issue/update/${data._id}`} className="border px-5 py-2 hover:bg-white hover:text-black rounded-md">Edit Your Issue</a>):(null)}
               </div>
             </div>
           </>
