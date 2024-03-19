@@ -19,8 +19,8 @@ const getIssueById = async (id) => {
 
 export default async function Page({params}){
     let {id} = params;
-    const { issue_resolve_image_url,issue_resolved_on,issue_resolved_by,issue_state } =await getIssueById(id);
+    const { issue_state } =await getIssueById(id);
     return(
-        <ResolvedForm id={id} state={issue_state} resolve_by={issue_resolved_by} resolved_on={issue_resolved_on} resolve_image={issue_resolve_image_url} />
+        <ResolvedForm id={id} state={issue_state}/>
     )
 }

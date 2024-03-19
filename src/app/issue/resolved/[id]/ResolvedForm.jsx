@@ -1,5 +1,4 @@
 "use client";
-
 import { useAuthContext } from "@/context/AuthContext";
 import { storage } from "@/firebase/config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
@@ -9,13 +8,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { v4 } from "uuid";
 
-export default function ({
-  id,
-  state,
-  resolved_on,
-  resolved_by,
-  resolve_image,
-}) {
+export default function ResolvedForm({ id, state }) {
   const { user } = useAuthContext();
   const router = useRouter();
 
@@ -72,7 +65,6 @@ export default function ({
     };
   }, [previewUrl]);
 
-
   const handleIssue = async (e) => {
     e.preventDefault();
     if (info.state !== "pending") {
@@ -81,19 +73,24 @@ export default function ({
         toast.error("Please Upload the Resolve Photo of issue");
       } else {
         toast.loading("Uploading your Complaint!");
-      let filename = file.name;
-      let parts = filename.split(".");
-      const storageRef = ref(storage, `/${admin_name}Resolve/${v4()}.${parts[1]}`);
+        let filename = file.name;
+        let parts = filename.split(".");
+        const storageRef = ref(
+          storage,
+          `/${admin_name}Resolve/${v4()}.${parts[1]}`
+        );
         try {
-            const snapshot = await uploadBytes(storageRef,file);
-            const url = await getDownloadURL(snapshot.ref);
-            setInfo((prevInfo)=>({
-                ...prevInfo,resolve_image:url }));
+          const snapshot = await uploadBytes(storageRef, file);
+          const url = await getDownloadURL(snapshot.ref);
+          setInfo((prevInfo) => ({
+            ...prevInfo,
+            resolve_image: url,
+          }));
           let res = await fetch(
             `${process.env.NEXT_PUBLIC_DOMAIN_URL}/issue/resolve/${id}`,
             {
               method: "PUT",
-              body: JSON.stringify({...info,resolve_image:url}),
+              body: JSON.stringify({ ...info, resolve_image: url }),
             }
           );
           if (!res.ok) {
@@ -120,7 +117,7 @@ export default function ({
       <div className="flex flex-col justify-center items-center gap-5 min-h-[90vh] wallpaper1 text-white">
         <h1>Resolve Page</h1>
         <select
-        className="text-black"
+          className="text-black"
           value={info.state}
           onChange={(e) => {
             setInfo((prevInfo) => ({
