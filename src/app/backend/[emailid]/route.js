@@ -1,9 +1,11 @@
 import { Issue } from "@/mongodb/schema/issueSchema";
 import { NextResponse } from "next/server";
+import { connectDB } from "@/mongodb/database/conn";
 
+connectDB()
 export async function GET(request, { params }) {
   const { emailid } = params;
-  console.log("Email Id : ", emailid);
+  // console.log("Email Id : ", emailid);
   try {
     let issue = await Issue.find({ issue_user_email: emailid });
     return NextResponse.json(issue);

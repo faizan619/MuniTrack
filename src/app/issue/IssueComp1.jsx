@@ -88,7 +88,7 @@ const IssueCard = ({ item }) => {
   return (
     <div
       className={`relative rounded-md w-72 text-white overflow-hidden m-2 border-4  ${
-        item.issue_state === "pending" ? "border-green-600" : "border-red-600"
+        item.issue_state === "pending" ? "border-red-600" : "border-green-600"
       } `}
     >
       <Image
