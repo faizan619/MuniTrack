@@ -13,8 +13,32 @@ export default function Account() {
   const auth = getAuth();
 
   const [isOpen, setIsOpen] = useState(false);
-
   const toggleIsOpen = () => setIsOpen(!isOpen);
+
+  const [isIssueOpen, setIssueIsOpen] = useState(false);
+  const IssueIsOpen = () => setIssueIsOpen(!isIssueOpen);
+
+  const [data, setData] = useState(undefined);
+
+  const getAllPost = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_DOMAIN_URL}/${user.email}`,
+        { cache: "no-store" }
+      );
+      if (!response.ok) {
+        throw new Error(`Fetching Error : Status :${response.status}`);
+      }
+      const raw_issue = await response.json();
+      setData(raw_issue);
+    } catch (error) {
+      console.error("Fetching issue data failed:", error);
+      return { success: false, error };
+    }
+  };
+  useEffect(() => {
+    getAllPost();
+  }, []);
 
   useEffect(() => {
     if (user == null) {
@@ -40,10 +64,14 @@ export default function Account() {
   };
   const puto = auth.currentUser?.photoURL;
 
-  const copyId = ()=>{
-    toast.remove();
-    toast.success("Copying feature is still to build !")
-  }
+  const copyId = async () => {
+    try {
+      await navigator.clipboard.writeText(auth.currentUser.uid);
+      toast.success("Copied to Clipboard.");
+    } catch (err) {
+      toast.error("Failed to Copy : " + err);
+    }
+  };
 
   if (!user) {
     return <div>Only Logined Users can view this page</div>;
@@ -101,7 +129,7 @@ export default function Account() {
         </div>
         {isOpen && (
           <div className="flex flex-col gap-3 -mt-2">
-            <p className="rounded-md bg-black px-3 border py-5 text-sm text-gray-700 transition-all hover:bg-green-600 overflow-auto">
+            <p className="rounded-md bg-black wallpaper2 px-3 border py-5 text-sm text-gray-700 transition-all overflow-auto">
               Account Created :
               <span className="uppercase font-bold text-white cursor-pointer hover:underline sm:ml-4 ">
                 {new Date(
@@ -111,7 +139,7 @@ export default function Account() {
                 })}
               </span>
             </p>
-            <p className="rounded-md bg-black px-3 border py-5 text-sm text-gray-700 transition-all hover:bg-green-600 overflow-auto">
+            <p className="rounded-md  px-3 border py-5 text-sm text-gray-700 transition-all overflow-auto wallpaper2">
               Last SignIn :
               <span className="sm:ml-4 uppercase font-bold text-white cursor-pointer hover:underline ">
                 {new Date(
@@ -121,14 +149,19 @@ export default function Account() {
                 })}
               </span>
             </p>
-            <p className="rounded-md bg-black px-3 border py-5 text-sm text-gray-700 transition-all hover:bg-green-600 overflow-auto flex justify-between">
+            <p className="rounded-md wallpaper2 px-3 border py-5 text-sm text-gray-700 transition-all overflow-auto flex justify-between">
               <p>
                 Unique ID :
                 <span className="sm:ml-4 uppercase font-bold text-white cursor-pointer hover:underline ">
                   {auth.currentUser.uid}
                 </span>
               </p>
-              <p className="border px-3 rounded-sm hover:bg-white hover:text-black cursor-pointer text-white" onClick={copyId}>Copy</p>
+              <p
+                className="border px-4 hover:scale-110 py-1 transition-all rounded-sm hover:bg-white hover:text-black cursor-pointer text-white"
+                onClick={copyId}
+              >
+                Copy
+              </p>
             </p>
           </div>
         )}
@@ -140,15 +173,48 @@ export default function Account() {
         >
           Terms And Conditions.
         </p>
-        <p
-          className="rounded-md bg-gray-800 px-3 py-5 text-sm font-bold uppercase text-white hover:bg-gray-700 cursor-pointer border border-gray-500"
-          onClick={() => {
-            router.push("");
-          }}
+        <div
+          className="bg-gray-800 px-3 py-5 rounded-md text-white flex items-center justify-between hover:underline cursor-pointer border border-gray-500"
+          onClick={IssueIsOpen}
         >
-          Issue Raised.
-        </p>
-        {user.emailVerified ? null : (
+          <p className="font-semibold ">Issue Uploaded [ {data?.length} ].</p>
+          <svg
+            data-accordion-icon
+            class="w-3 h-3 rotate-180 shrink-0"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 10 6"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 5 5 1 1 5"
+            />
+          </svg>
+        </div>
+        {isIssueOpen && (
+          <div className="text-white wallpaper2 rounded-md -mt-3 max-h-80  overflow-auto">
+            <div className="p-3 backdrop-blur-sm h-full flex flex-col gap-3">
+              {data === undefined ? (
+                <p className="text-white">No Issue Available</p>
+              ) : data.length === 0 ? (
+                <p>You have Not Uploaded any Issue!</p>
+              ) : (
+                data.map((item,index) => (
+                  <div key={index} className="border p-2 rounded-md bg-white text-black">
+                    <p>Title : {item.issue_title}</p>
+                    <p>Describe : {item.issue_describe}</p>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        )}
+
+        {user?.emailVerified ? null : (
           <p
             className="rounded-md bg-gray-800 px-3 py-5 text-sm font-bold uppercase text-white hover:bg-gray-700 cursor-pointer border border-gray-500"
             onClick={() => {
