@@ -18,22 +18,26 @@ export async function GET(request, { params }) {
     }
   }
 
-  // export async function PUT(request, { params }) {
-  //   try {
-  //     const { issueid } = params;  
-  //     let post = await Issue.findById(issueid);
-  //     post.issue_public_view = true;
+  export async function PUT(request, { params }) {
+    try {
+      const { issueid } = params;  
+      let {title,describe,location} = await request.json();
+      let post = await Issue.findById(issueid);
+      // post.issue_public_view = true;
+      post.issue_title=title;
+      post.issue_describe=describe;
+      post.issue_manual_location = location;
   
-  //     const updatePost = await post.save();
-  //     return NextResponse.json(updatePost);
-  //   } catch (error) {
-  //     console.log("Error in Updating the Post!! : ", error);
-  //     return NextResponse.json({
-  //       message:"Cannot Update the View",
-  //       success:false
-  //     },{status:500})
-  //   }
-  // }
+      const updatePost = await post.save();
+      return NextResponse.json(updatePost);
+    } catch (error) {
+      console.log("Error in Updating the Post!! : ", error);
+      return NextResponse.json({
+        message:"Cannot Update the View",
+        success:false
+      },{status:500})
+    }
+  }
   
 
   export async function DELETE(request, { params }) {
