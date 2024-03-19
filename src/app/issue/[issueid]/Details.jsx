@@ -68,7 +68,17 @@ export default function Details({ name }) {
                 <p>
                     Issue Uploaded on : <span className="font-bold">{new Date(data.issue_uploaded_on).toLocaleDateString()}</span>
                 </p>
+                <p>
+                  Issue State : <span>{data.issue_state}</span>
+                </p>
               </div>
+              {
+                data.issue_state==="pending"?(null):(<div>
+                  <Image src={data.issue_resolve_image_url} height={200} width={250} alt="image" />
+                  <p>Issue Resolved By : {data.issue_resolved_on}</p>
+                  <p>Issue Resolved By : {data.issue_resolved_by}</p>
+                </div>)
+              }
               <div className="flex gap-3">
 
                 {data.issue_state==="pending"?(
