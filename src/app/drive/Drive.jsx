@@ -24,8 +24,8 @@ export default function Drive() {
   if (!user) {
     return <div>Only Logined Users can view this page</div>;
   } else if (user?.emailVerified) {
-    return <div className="h-[90vh] flex justify-center items-center">
-        <p className="border border-black p-5 rounded-md hover:scale-125 transition-all" id="nahi">Member`s Can`t Access this Page</p>
+    return <div className="h-[90vh] flex justify-center wallpaper1 items-center">
+        <p className="border border-white p-5 rounded-md hover:scale-125 transition-all text-white" id="nahi">Member`s Can`t Access this Page</p>
     </div>;
   } else {
     return <div className="min-h-[90vh] wallpaper1 flex flex-col items-center gap-5 text-white py-3 px-2">
