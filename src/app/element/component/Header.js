@@ -6,6 +6,7 @@ import { getAuth } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useAuthContext } from "@/context/AuthContext";
+import { kushan} from "../fonts";
 
 const Header = () => {
   const auth = getAuth();
@@ -31,7 +32,7 @@ const Header = () => {
     <div className="z-50 h-16 px-7 bg-gray-700 flex justify-center md:justify-between items-center gap-5 sticky top-0">
       <div className="flex gap-3 items-center cursor-context-menu">
         <Image src={Logo} height={300} width={35} alt="Logo" />
-        <p className="font-extrabold text-xl font-sans text-white">MuniTrack</p>
+        <p className={`text-2xl ${kushan.className} text-white`}>MuniTrack</p>
       </div>
       <div className="hidden md:block">
         <ol className="flex gap-5 text-white items-center uppercase">
