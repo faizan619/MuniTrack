@@ -1,7 +1,5 @@
 import { connectDB } from "@/mongodb/database/conn";
 import Home from "./element/pages/Home";
-import HomePost from "./issue/IssueShow";
-// import AddButton from "./element/component/AddButton";
 
 export const metadata = {
   title: "Home : MuniTrack",
@@ -12,8 +10,6 @@ export default function Page() {
   return (
     <div className="min-h-[90vh] selection:underline ">
     <Home/>
-    {/* <HomePost/> */}
-    {/* <AddButton/> */}
     </div>
   );
 }
