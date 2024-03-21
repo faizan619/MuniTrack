@@ -6,7 +6,7 @@ import { getAuth } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useAuthContext } from "@/context/AuthContext";
-import { kushan} from "../fonts";
+import { kushan,arima,serif} from "../fonts";
 
 const Header = () => {
   const auth = getAuth();
@@ -29,13 +29,13 @@ const Header = () => {
 
   const isActive = (path) => path === pathname;
   return (
-    <div className="z-50 h-16 px-7 bg-gray-700 flex justify-center md:justify-between items-center gap-5 sticky top-0">
+    <div className="z-50 h-16 px-7 bg-gray-600 flex justify-center md:justify-between items-center gap-5 sticky top-0">
       <div className="flex gap-3 items-center cursor-context-menu">
         <Image src={Logo} height={300} width={35} alt="Logo" />
         <p className={`text-2xl ${kushan.className} text-white`}>MuniTrack</p>
       </div>
       <div className="hidden md:block">
-        <ol className="flex gap-5 text-white items-center uppercase">
+        <ol className={`flex gap-5 text-white items-center uppercase ${serif.className}`}>
           <Link
             className={`px-3 py-1 rounded-md hover:bg-gray-600 transition-all ${
               isActive("/") ? "bg-gray-600" : "text-white"
