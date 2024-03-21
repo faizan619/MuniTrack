@@ -3,22 +3,43 @@ import { useAuthContext } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Img1 from "../../../../public/assets/img7.jpg";
-import { serif,arima,kushan,rye ,car} from "../fonts";
+import { serif, arima, kushan, rye, car } from "../fonts";
 export default function Home() {
   const { user } = useAuthContext();
   const router = useRouter();
 
   if (!user) {
-    return <div className="wallpaper1 h-[90vh] text-white flex justify-center items-center text-center ">
-      <div className="flex flex-col gap-6 p-7 rounded-md">
-      <div>
-        <h1 className={`text-4xl ${kushan.className} font-bold`}>Welcome to MuniTrack</h1>
-        <p className={`capitalize text-md ${arima.className}`}>(Municipal grievance Tracker)</p>
+    return (
+      <div className="wallpaper1 h-[90vh] text-white flex justify-center items-center text-center ">
+        <div className="flex flex-col gap-6 p-7 rounded-md">
+          <div>
+            <h1 className={`text-4xl ${kushan.className} font-bold`}>
+              Welcome to MuniTrack
+            </h1>
+            <p className={`capitalize text-md ${arima.className}`}>
+              (Municipal grievance Tracker)
+            </p>
+          </div>
+          <p className="italic text-sm">
+            You need to{" "}
+            <span
+              className={`text-red-600 uppercase font-bold ${kushan.className} text-md`}
+            >
+              Login
+            </span>{" "}
+            to Continue Using the app
+          </p>
+          <button
+            className={`uppercase text-lg border py-1 rounded-lg bg-red-600 border-none hover:scale-105 ${kushan.className} transition-all`}
+            onClick={() => {
+              router.push("/google");
+            }}
+          >
+            Login
+          </button>
+        </div>
       </div>
-        <p className="italic text-sm">You need to <span className={`text-red-600 uppercase font-bold ${kushan.className} text-md`}>Login</span> to Continue Using the app</p>
-        <button className={`uppercase text-lg border py-1 rounded-lg bg-red-600 border-none hover:scale-105 ${kushan.className} transition-all`} onClick={()=>{router.push("/google")}}>Login</button>
-      </div>
-    </div>;
+    );
   }
 
   return (
@@ -31,7 +52,9 @@ export default function Home() {
         />
         <div className="text-center z-20 brightness-110 sm:backdrop-blur-sm shadow-sm shadow-white px-5 md:px-14 pb-10 pt-20 rounded-xl flex flex-col gap-5">
           <div>
-            <h1 className={`text-5xl md:text-6xl ${kushan.className} font-extrabold mb-3`}>
+            <h1
+              className={`text-5xl md:text-6xl ${kushan.className} font-extrabold mb-3`}
+            >
               MuniTrack
             </h1>
             <p className={`md:text-md ${serif.className}`}>
@@ -46,7 +69,7 @@ export default function Home() {
                   onClick={() => {
                     router.push("/add");
                   }}
-                  className={`px-7 py-3 text-xl uppercase rounded-md bg-gray-700 hover:scale-105 transition-all ${serif.className} text-white`}
+                  className={`px-7 py-3 text-xl uppercase rounded-md bg-gray-800 hover:scale-105 transition-all ${serif.className} text-white`}
                 >
                   Post Issue
                 </button>
@@ -54,7 +77,7 @@ export default function Home() {
                   onClick={() => {
                     router.push("/issue");
                   }}
-                  className={`px-7 py-3 text-xl uppercase rounded-md  hover:scale-105 transition-all ${serif.className} text-white`}
+                  className={`relative uppercase ml-3 flex items-center ${serif.className} transition-all cursor-pointer text-xl before:bg-gray-500  before:absolute before:-bottom-1 before:block before:h-[2px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:scale-105`}
                 >
                   View Issue
                 </button>
@@ -65,17 +88,17 @@ export default function Home() {
                   onClick={() => {
                     router.push("/issue");
                   }}
-                  className={`px-7 py-3 text-xl uppercase bg-gray-700 rounded-md font-bold hover:scale-105 transition-all ${serif.className} text-white`}
+                  className={`px-7 py-3 text-xl uppercase bg-gray-800 rounded-md font-bold hover:scale-105 transition-all ${serif.className} text-white`}
                 >
-                  View 
+                  View
                 </button>
                 <button
                   onClick={() => {
                     router.push("/drive");
                   }}
-                  className={`px-7 py-3 text-xl uppercase rounded-md border font-bold hover:scale-105 transition-all ${serif.className} text-white`}
+                  className={`relative uppercase ml-3 flex items-center ${serif.className} transition-all cursor-pointer text-xl before:bg-gray-500  before:absolute before:-bottom-1 before:block before:h-[2px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:scale-105`}
                 >
-                  Campaign 
+                  Campaign
                 </button>
               </>
             )}
