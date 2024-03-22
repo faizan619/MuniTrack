@@ -48,6 +48,7 @@ export default function Home() {
         <Image
           src={Img1}
           alt="bg image"
+          loading="eager"
           className="absolute z-0 brightness-50 w-screen h-screen"
         />
         <div className="text-center z-20 brightness-110 sm:backdrop-blur-sm shadow-sm shadow-white px-5 md:px-14 pb-10 pt-20 rounded-xl flex flex-col gap-5">
