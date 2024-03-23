@@ -1,6 +1,7 @@
 import { Issue } from "@/mongodb/schema/issueSchema";
 import { NextResponse } from "next/server";
 import { connectDB } from "@/mongodb/database/conn";
+import { Campaign } from "@/mongodb/schema/campaignSchema";
 
 connectDB()
 export async function GET(request, { params }) {
@@ -18,5 +19,24 @@ export async function GET(request, { params }) {
       },
       { status: 404 }
     );
+  }
+}
+
+export async function DELETE(request, { params }) {
+  try {
+    const { emailid } = params;
+    await Campaign.deleteOne({
+      _id: emailid,
+    });
+    return NextResponse.json({
+      message:"Campaign Deleted Successfully !!",
+      success:true
+    },{status:200})
+  } catch (error) {
+    console.log("Cannot Delete Campaign !! : ", error);
+    return NextResponse.json({
+      message:"Cannot Delete the Issue",
+      status:false
+    },{status:500})
   }
 }
