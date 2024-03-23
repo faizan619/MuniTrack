@@ -9,25 +9,24 @@ export default function CampComp({ camps }) {
   const handleShare = () => {
     toast.success("This Feature is going to build");
   };
-  const handleDelete = async(id)=>{
+  const handleDelete = async (id) => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN_URL}/${id}`,{
-        method:"DELETE",
+      const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN_URL}/${id}`, {
+        method: "DELETE",
       });
-      if(res.ok){
+      if (res.ok) {
         toast.remove();
         toast.success("Campaign Deleted Successfully !");
-      }
-      else{
+      } else {
         toast.remove();
-        toast.error("Failed to Delete the Campaign")
+        toast.error("Failed to Delete the Campaign");
       }
     } catch (error) {
       toast.remove();
-          toast.error("Error : ",error.message);
-          console.error(error);
+      toast.error("Error : ", error.message);
+      console.error(error);
     }
-  }
+  };
   return (
     <div className="">
       <p className="text-white text-xl pl-7">
@@ -40,13 +39,16 @@ export default function CampComp({ camps }) {
           <p>No Campaign Found!</p>
         ) : (
           camps.map((item) => (
-            <div key={item._id} className="flex gap-5 px-2  bg-gray-100 rounded-md items-center w-2/5">
-              <div className="bg-gray-900 rounded-md text-white h-3/5 flex items-center justify-center uppercase ml-3 w-[35%]">
+            <div
+              key={item._id}
+              className="flex shadow-md shadow-gray-600 justify-center gap-5 px-2 bg-gray-100 rounded-md items-center w-[30rem]"
+            >
+              <div className="bg-gray-900 hidden rounded-md text-white wallpaper h-3/5 sm:flex items-center justify-center uppercase ml-3 w-[35%]">
                 <p className={`px-20 absolute text-xl ${arima.className}`}>
                   {item.drive_host_name}
                 </p>
               </div>
-              <div className="py-5 px-3 w-3/4 ">
+              <div className="py-5 px-1 sm:px-3 sm:w-3/4">
                 <div className="p-2">
                   <div className="py-2 flex flex-col gap-2">
                     <p className="italic text-sm">
@@ -70,7 +72,6 @@ export default function CampComp({ camps }) {
                           const monthName = monthNames[date.getMonth()];
                           const day = date.getDate();
 
-                          // Function to convert 24-hour time to 12-hour format with AM/PM
                           function convertTo12HourFormat(time24) {
                             const [hour, minute] = time24
                               .split(":")
@@ -109,18 +110,19 @@ export default function CampComp({ camps }) {
                       {item.drive_describe}
                     </p>
                   </div>
-                  <div className="rounded-md">
-                    <p className={``}>
-                      Place :{" "}
-                      <span className={`capitalize`}>
-                        {item.drive_location}
-                      </span>
-                    </p>
-                  </div>
+                  <p className={``}>
+                    Place :{" "}
+                    <span className={`capitalize`}>{item.drive_location}</span>
+                  </p>
+                  <p className="text-sm capitalize sm:hidden">InCharge : {item.drive_host_name}</p>
                   <div
                     className={`flex py-2 gap-2 ${arima.className} justify-between`}
                   >
-                    <Link href={item.drive_link} target="_faizan" className=" hover:scale-105 transition-all px-6 py-2 border bg-black text-white rounded-md">
+                    <Link
+                      href={item.drive_link}
+                      target="_faizan"
+                      className=" hover:scale-105 transition-all px-6 py-2 border bg-black text-white rounded-md"
+                    >
                       Join
                     </Link>
                     {user.emailVerified ? (
@@ -137,7 +139,12 @@ export default function CampComp({ camps }) {
                         {/* <button className=" hover:scale-105 transition-all px-6 py-2 border bg-green-600 text-white rounded-md">
                           Edit
                         </button> */}
-                        <button className=" hover:scale-105 transition-all px-6 py-2 border bg-red-600 text-white rounded-md" onClick={()=>{handleDelete(item._id)}}>
+                        <button
+                          className=" hover:scale-105 transition-all px-6 py-2 border bg-red-600 text-white rounded-md"
+                          onClick={() => {
+                            handleDelete(item._id);
+                          }}
+                        >
                           Delete
                         </button>
                       </>
@@ -152,13 +159,3 @@ export default function CampComp({ camps }) {
     </div>
   );
 }
-
-/*
-<div
-              key={item._id}
-              className="relative rounded-md text-white border overflow-hidden m-2"
-            >
-                <p>WhatApp Link : {item.drive_link}</p>
-                <p>Id : {item._id}</p>
-            </div>
-*/

@@ -115,7 +115,7 @@ export default function HomePost() {
     <div className="pb-20 wallpaper1 min-h-[90vh]">
       <div className={`flex justify-evenly py-5 ${arima.className}`}>
         <p
-          className={`border text-xl px-5 py-2 rounded-md cursor-pointer hover:scale-105 ${
+          className={`border text-xl px-2 sm:px-5 py-2 rounded-md cursor-pointer hover:scale-105 ${
             showIssue ? "bg-white" : ""
           } ${showIssue ? "text-black" : "text-white"}`}
           onClick={handleIssueView}
@@ -123,7 +123,7 @@ export default function HomePost() {
           Issue
         </p>
         <p
-          className={`border text-xl px-5 py-2 rounded-md cursor-pointer hover:scale-105 ${
+          className={`border text-xl px-2 sm:px-5 py-2 rounded-md cursor-pointer hover:scale-105 ${
             showCamp ? "bg-white " : ""
           } ${showCamp ? "text-black" : "text-white"}`}
           onClick={handleCampView}
@@ -131,7 +131,7 @@ export default function HomePost() {
           Campaign
         </p>
         <p
-          className={`border text-xl px-5 py-2 rounded-md cursor-pointer hover:scale-105 ${
+          className={`border text-xl px-2 sm:px-5 py-2 rounded-md cursor-pointer hover:scale-105 ${
             showIn ? "bg-white " : ""
           } ${showIn ? "text-black" : "text-white"}`}
           onClick={handleInCharge}
