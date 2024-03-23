@@ -40,7 +40,7 @@ export default function CampComp({ camps }) {
           <p>No Campaign Found!</p>
         ) : (
           camps.map((item) => (
-            <div className="flex gap-5 px-2  bg-gray-100 rounded-md items-center w-2/5">
+            <div key={item._id} className="flex gap-5 px-2  bg-gray-100 rounded-md items-center w-2/5">
               <div className="bg-gray-900 rounded-md text-white h-3/5 flex items-center justify-center uppercase ml-3 w-[35%]">
                 <p className={`px-20 absolute text-xl ${arima.className}`}>
                   {item.drive_host_name}
