@@ -18,9 +18,6 @@ export default function HomePost() {
   const [showCamp, SetShowCamp] = useState(false);
   const [showIn, setIn] = useState(false);
 
-  useEffect(() => {
-    getAllPost();
-  }, []);
 
   if (!user) {
     return <NotAuth name={"Chat Room"} />;
@@ -46,6 +43,11 @@ export default function HomePost() {
       return { success: false, error };
     }
   };
+
+  useEffect(() => {
+    getAllPost();
+  }, []);
+  
   const getAllDrive = async () => {
     toast.remove();
     toast.loading("Loading the Campaigns");
