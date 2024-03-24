@@ -5,6 +5,6 @@ import { useRouter } from "next/navigation"
 export default function DetailBtn({url}){
     const router = useRouter();
     return(
-        <button className="border bg-gray-600 hover:scale-110 transition-all px-2 text-white py-1 rounded-md" onClick={()=>{router.push(`/issue/${url}`)}}>View Detail</button>
+        <button className="bg-gray-900 px-3 py-2 rounded-md hover:scale-105 hover:bg-gray-800 text-white" onClick={()=>{router.push(`/issue/${url}`)}}>Details</button>
     )
 }
