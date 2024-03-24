@@ -27,7 +27,7 @@ export default function IssueComp1({ issues }) {
           <div className="w-full flex flex-wrap gap-5 justify-evenly">
             <Link
               href={"/add"}
-              className="relative rounded-md overflow-hidden flex flex-col justify-center items-center border cursor-alias bg-gray-600 w-72 hover:scale-105 transition-all"
+              className="relative rounded-md overflow-hidden flex flex-col justify-center items-center border cursor-alias bg-gray-600 h-80 w-72 hover:scale-105 transition-all"
             >
               <Image
                 src={Ima1}

@@ -153,7 +153,7 @@ const Chatting = ({ msg }) => {
                 chat.userName === userName ? "hidden" : "flex"
               }`}
             >
-              <span className={`capitalize ${serif.className} border px-3 py-1 bg-white rounded-t-md`}>
+              <span className={`capitalize bg-gray-800 text-white ${serif.className}  px-3 py-1 rounded-t-md`}>
                 {chat.userName}
               </span>
               {user.emailVerified ? null : (
