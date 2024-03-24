@@ -7,26 +7,27 @@ import Ima1 from "../../../public/background/img4.jpg";
 import { useAuthContext } from "@/context/AuthContext";
 import DeleteIssue from "./DeleteIssue";
 import { useState } from "react";
+import { arima, serif } from "../element/fonts";
 export default function IssueComp1({ issues }) {
   const { user } = useAuthContext();
 
   return (
     <div className="">
       {user.emailVerified ? null : (
-        <p className="text-white text-xl pl-7">
+        <p className={`text-white text-xl pl-7 ${arima.className}`}>
           Total Issues : [{issues?.length}]
         </p>
       )}
       <div className="flex gap-5 flex-wrap p-3 justify-evenly">
         {issues === undefined ? (
-          <p className="text-white">No Issue Available</p>
+          <p className="text-white">Loading Issues.</p>
         ) : issues.length === 0 ? (
           <p>No Issue Found!</p>
         ) : (
-          <div className="w-full flex flex-wrap">
+          <div className="w-full flex flex-wrap gap-5 justify-evenly">
             <Link
               href={"/add"}
-              className="relative rounded-md overflow-hidden m-2 flex flex-col justify-center items-center border cursor-alias bg-gray-600 w-72 hover:scale-105 transition-all"
+              className="relative rounded-md overflow-hidden flex flex-col justify-center items-center border cursor-alias bg-gray-600 w-72 hover:scale-105 transition-all"
             >
               <Image
                 src={Ima1}
@@ -35,7 +36,11 @@ export default function IssueComp1({ issues }) {
                 height={100}
                 className="absolute z-0 h-full w-full brightness-50 "
               />
-              <div className="z-10 uppercase text-white">Create Issue</div>
+              <div
+                className={`z-10 uppercase text-lg ${serif.className} text-white`}
+              >
+                Create Issue
+              </div>
             </Link>
 
             {issues
@@ -86,35 +91,30 @@ const IssueCard = ({ item }) => {
   };
   const { user } = useAuthContext();
   return (
-    <div
-      className={`relative rounded-md w-72 text-white overflow-hidden m-2 border-4  ${
-        item.issue_state === "pending" ? "border-red-600" : "border-green-600"
-      } `}
-    >
+    <div className={`text-white ${item.issue_state==="pending"?"border-red-700":"border-green-700"} border-2 relative h-80 flex flex-col w-72 overflow-hidden rounded-md shadow-md hover:shadow-gray-700 hover:scale-105 transition-all`}>
       <Image
         src={item.issue_image_url}
         alt="bg image"
         width={350}
         height={100}
-        className="absolute z-0 h-full w-full brightness-50 "
+        className="h-36 w-full z-10"
       />
-      <div className="z-10 px-7 items-start py-5 backdrop-blur-sm text-white flex flex-col gap-2">
-        <p>
-          Title :{" "}
-          <span className="font-bold capitalize">{item.issue_title}</span>
+      <p className={`absolute z-20 ${item.issue_state==="pending"?"bg-red-700":"bg-green-700"} capitalize px-5 right-0`}>{item.issue_state}</p>
+      <div className="flex-1 gap-2 bg-gray-200 text-black flex flex-col items-center justify-between z-10 py-4 px-3">
+        <p
+          className={`${serif.className} text-2xl uppercase border h-8 overflow-hidden`}
+        >
+          {item.issue_user_name}
         </p>
-        <p>
-          Issued Raised by{" "}
-          <span className="font-bold">{item.issue_user_name}</span>
+        <p
+          className={`text-center text-sm italic  h-14 overflow-hidden ${arima.className}`}
+        >
+          {item.issue_describe}
         </p>
-        <p>
-          View : <span className="font-bold">{item.issue_public_view}</span>
-        </p>
-        <div className="flex gap-5">
-          <DetailBtn url={item._id} />
+        <div className="w-full flex justify-center gap-5">
           {item.issue_public_view === "true" ? null : (
             <button
-              className="hover:border bg-green-600 rounded-md px-1"
+              className="relative inline transition-all cursor-pointer before:bg-gray-500  before:absolute before:-bottom-1 before:block before:h-[2px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100"
               disabled={loading}
               onClick={() => {
                 handlePublicView(item._id);
@@ -123,7 +123,10 @@ const IssueCard = ({ item }) => {
               {loading ? "Changing." : "Public"}
             </button>
           )}
-          {user.emailVerified && item.issue_user_email !== user.email ? null : <DeleteIssue dltItem={item} />}
+          <DetailBtn url={item._id} />
+          {user.emailVerified && item.issue_user_email !== user.email ? null : (
+            <DeleteIssue dltItem={item} />
+          )}
         </div>
       </div>
     </div>

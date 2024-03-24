@@ -43,8 +43,8 @@ export default function CampComp({ camps }) {
               key={item._id}
               className="flex shadow-md shadow-gray-600 justify-center gap-5 px-2 bg-gray-100 rounded-md items-center w-[30rem]"
             >
-              <div className="bg-gray-900 hidden rounded-md text-white wallpaper h-3/5 sm:flex items-center justify-center uppercase ml-3 w-[35%]">
-                <p className={`px-20 absolute text-xl ${arima.className}`}>
+              <div className="bg-gray-900 hidden rounded-md text-white h-3/5 sm:flex items-center justify-center uppercase ml-3 w-[35%]">
+                <p className={`px-20 absolute text-xl ${serif.className}`}>
                   {item.drive_host_name}
                 </p>
               </div>
