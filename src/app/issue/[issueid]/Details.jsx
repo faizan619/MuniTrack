@@ -39,6 +39,16 @@ export default function Details({ name }) {
     getIssue();
   }, [name]);
 
+  let [showiss,setshowiss] = useState(false)
+  let showIssue = ()=>{
+    if(showiss){
+      setshowiss(false);
+    }
+    else{
+      setshowiss(true);
+    }
+  }
+
   return (
     <div className="min-h-[90vh] flex justify-center pb-20 text-center wallpaper1 text-white">
       {loading ? (
@@ -66,7 +76,6 @@ export default function Details({ name }) {
                     )
                   ) : (
                     <p className={`capitalize rounded-md py-2 px-3 `}>
-                      Issue Resolved By {data.issue_resolved_by} on{" "}
                       <span>{data.issue_resolved_on}</span>
                     </p>
                   )}
@@ -81,14 +90,25 @@ export default function Details({ name }) {
                   {data.issue_state}
                 </span>
               </p>
-
+              <p
+                className={`${kushan.className} text-center text-3xl capitalize`}
+              >
+                {data.issue_title}
+              </p>
               {data.issue_state === "pending" ? (
                 <ConditionView data={data} />
               ) : (
-                <div>
-                  <div>
-                    Issue Resolved By <span>{data.issue_resolved_by}</span>
-                  </div>
+                <div className="flex flex-col gap-5">
+                  <p className={`${arima.className} text-green-700 text-lg`}>Issue Resolves By [ <span className={`${serif.className} bg-green-700 text-white px-3 uppercase`}>Admin : {data.issue_resolved_by}</span> ]</p>
+                  <Image
+                    height={0}
+                    width={350}
+                    src={data.issue_resolve_image_url}
+                    alt="Resolve image"
+                    className="w-full rounded-md h-72"
+                  />
+                  <button className={`border py-2 bg-slate-600 rounded-md text-white`} onClick={()=>{showIssue()}}>Show Issue</button>
+                  {showiss && <ConditionView data={data} />}
                 </div>
               )}
             </div>
@@ -99,83 +119,75 @@ export default function Details({ name }) {
   );
 }
 
-const ConditionView=({data})=>{
-  let {user} = useAuthContext();
-  return(
+const ConditionView = ({ data }) => {
+  let { user } = useAuthContext();
+  return (
     <>
-                  <p
-                    className={`${kushan.className} text-center text-3xl capitalize`}
-                  >
-                    {data.issue_title}
-                  </p>
-                  <div className={`flex justify-between`}>
-                    <div className={`flex gap-2 items-center`}>
-                      <img
-                        src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
-                          data.issue_user_name
-                        )}&size=35&rounded=true&background=black&color=fff&uppercase=false`}
-                        alt={data.issue_user_name}
-                      />
-                      <div className={`${serif.className}`}>
-                        <p>{data.issue_user_name}</p>
-                        <p className={`text-sm`}>
-                          {new Date(
-                            data.issue_uploaded_on
-                          ).toLocaleDateString()}
-                        </p>
-                      </div>
-                    </div>
-                    <div className={`flex gap-2`}>
-                      <button
-                        className={`${serif.className}`}
-                        onClick={() => {
-                          toast.success("Share Feature is still building.");
-                        }}
-                      >
-                        Share
-                      </button>
-                    </div>
-                  </div>
-                  <Image
-                    src={data.issue_image_url}
-                    height={0}
-                    width={350}
-                    className="object-contain shadow-sm shadow-black w-full h-96 rounded-md border-black"
-                  />
-                  <div className={`${serif.className} px-3`}>
-                    Location : {data.issue_location}{" "}
-                    {data.issue_manual_location === "" ||
-                    data.issue_manual_location === "none"
-                      ? ""
-                      : ` or ${data.issue_manual_location}`}
-                  </div>
-                  <div className={`capitalize ${arima.className} px-3 text-lg`}>
-                    {data.issue_describe}
-                  </div>
-                  <h1 className={`px-3 ${serif.className}`}>
-                    Issue Raiser Information
-                  </h1>
-                  <div
-                    className={`bg-gray-800 ${serif.className} text-white p-3 rounded-md`}
-                  >
-                    <p>Name : {data.issue_user_name}</p>
-                    <p>Email : {data.issue_user_email}</p>
-                  </div>
-                  <div className={`flex justify-center items-center gap-5`}>
-                    {user.email === data.issue_user_email ? (
-                      data.issue_state === "pending" ? (
-                        <a
-                          href={`/issue/update/${data._id}`}
-                          className="border px-5 py-2 hover:bg-gray-800 hover:text-white transition-all border-gray-800 rounded-md"
-                        >
-                          Edit Your Issue
-                        </a>
-                      ) : null
-                    ) : null}
-                  </div>
-                </>
-  )
-}
+      <div className={`flex justify-between transition-all`}>
+        <div className={`flex gap-2 items-center`}>
+          <img
+            src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
+              data.issue_user_name
+            )}&size=35&rounded=true&background=black&color=fff&uppercase=false`}
+            alt={data.issue_user_name}
+          />
+          <div className={`${serif.className}`}>
+            <p>{data.issue_user_name}</p>
+            <p className={`text-sm`}>
+              {new Date(data.issue_uploaded_on).toLocaleDateString()}
+            </p>
+          </div>
+        </div>
+        <div className={`flex gap-2`}>
+          <button
+            className={`${serif.className}`}
+            onClick={() => {
+              toast.success("Share Feature is still building.");
+            }}
+          >
+            Share
+          </button>
+        </div>
+      </div>
+      <Image
+        src={data.issue_image_url}
+        alt="Issue Image"
+        height={0}
+        width={350}
+        className="object-contain shadow-sm shadow-black w-full h-96 rounded-md border-black"
+      />
+      <div className={`${serif.className} px-3`}>
+        Location : {data.issue_location}{" "}
+        {data.issue_manual_location === "" ||
+        data.issue_manual_location === "none"
+          ? ""
+          : ` or ${data.issue_manual_location}`}
+      </div>
+      <div className={`capitalize ${arima.className} px-3 text-lg`}>
+        {data.issue_describe}
+      </div>
+      <h1 className={`px-3 ${serif.className}`}>Issue Raiser Information</h1>
+      <div
+        className={`bg-gray-800 ${serif.className} text-white p-3 rounded-md`}
+      >
+        <p>Name : {data.issue_user_name}</p>
+        <p>Email : {data.issue_user_email}</p>
+      </div>
+      <div className={`flex justify-center items-center gap-5`}>
+        {user.email === data.issue_user_email ? (
+          data.issue_state === "pending" ? (
+            <a
+              href={`/issue/update/${data._id}`}
+              className="border px-5 py-2 hover:bg-gray-800 hover:text-white transition-all border-gray-800 rounded-md"
+            >
+              Edit Your Issue
+            </a>
+          ) : null
+        ) : null}
+      </div>
+    </>
+  );
+};
 
 /*
                 
