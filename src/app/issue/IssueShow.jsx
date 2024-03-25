@@ -17,15 +17,7 @@ export default function HomePost() {
   const [showIssue, SetShowIssue] = useState(true);
   const [showCamp, SetShowCamp] = useState(false);
   const [showIn, setIn] = useState(false);
-
-  useEffect(() => {
-    getAllPost();
-  }, []);
-
-  if (!user) {
-    return <NotAuth name={"Chat Room"} />;
-  }
-
+  
   const getAllPost = async () => {
     toast.remove();
     toast.loading("Loading the Issue");
@@ -33,8 +25,8 @@ export default function HomePost() {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_DOMAIN_URL}/issue`,
         { cache: "no-store" }
-      );
-      if (!response.ok) {
+        );
+        if (!response.ok) {
         throw new Error(`Fetching Error : Status :${response.status}`);
       }
       const raw_issue = await response.json();
@@ -46,7 +38,15 @@ export default function HomePost() {
       return { success: false, error };
     }
   };
+  useEffect(() => {
+    getAllPost();
+  }, [user]);
 
+  
+  
+  if (!user) {
+    return <NotAuth name={"Chat Room"} />;
+  }
   
   const getAllDrive = async () => {
     toast.remove();
@@ -120,7 +120,7 @@ export default function HomePost() {
           className={`border text-xl px-2 sm:px-5 py-2 rounded-md cursor-pointer hover:scale-105 ${
             showIssue ? "bg-white" : ""
           } ${showIssue ? "text-black" : "text-white"}`}
-          onClick={()=>{handleIssueView}}
+          onClick={()=>{handleIssueView()}}
         >
           Issue
         </p>
@@ -128,7 +128,7 @@ export default function HomePost() {
           className={`border text-xl px-2 sm:px-5 py-2 rounded-md cursor-pointer hover:scale-105 ${
             showCamp ? "bg-white " : ""
           } ${showCamp ? "text-black" : "text-white"}`}
-          onClick={()=>{handleCampView}}
+          onClick={()=>{handleCampView()}}
         >
           Campaign
         </p>
@@ -136,7 +136,7 @@ export default function HomePost() {
           className={`border text-xl px-2 sm:px-5 py-2 rounded-md cursor-pointer hover:scale-105 ${
             showIn ? "bg-white " : ""
           } ${showIn ? "text-black" : "text-white"}`}
-          onClick={()=>{handleInCharge}}
+          onClick={()=>{handleInCharge()}}
         >
           Admin
         </p>
