@@ -1,4 +1,5 @@
 "use client";
+import { arima, serif } from "@/app/element/fonts";
 import { useAuthContext } from "@/context/AuthContext";
 import { storage } from "@/firebase/config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
@@ -112,57 +113,65 @@ export default function ResolvedForm({ id, state }) {
 
   if (user?.emailVerified) {
     return <div>Sorry! Only Admin Can Resolve a Issue</div>;
-  } else {
+  }else if(state!=="pending"){
+    return(
+      <div className={`${arima.className} text-xl cursor-pointer h-[90vh] flex justify-center items-center text-white wallpaper1`}><p className="shadow-sm shadow-white px-5 py-2 hover:scale-105 transition-all">The Issue Is Already Resolved. You Can't Edit That Now.</p></div>
+    )
+  }
+   else {
     return (
-      <div className="flex flex-col justify-center items-center gap-5 min-h-[90vh] wallpaper1 text-white">
-        <h1>Resolve Page</h1>
-        <select
-          className="text-black"
-          value={info.state}
-          onChange={(e) => {
-            setInfo((prevInfo) => ({
-              ...prevInfo,
-              state: e.target.value,
-            }));
-          }}
-        >
-          <option value="" disabled>
-            Select an option
-          </option>
-          <option value="pending">Pending</option>
-          <option value="resolved">Resolved</option>
-        </select>
-        {info.state === "pending" ? null : (
-          <div>
-            <input
-              type="file"
-              accept="image/* "
-              onChange={handleChange}
-              multiple="true"
-              className={`text-white border border-dashed rounded-md p-2 ${
-                imageUpload
-                  ? "file:bg-gray-600 file:text-white file:px-2"
-                  : "bg-gray-700"
-              } `}
-            />
-            {previewUrl != null && (
-              <Image
-                src={previewUrl}
-                height={0}
-                width={350}
-                alt="image"
-                className={`self-center rounded-md  bg-red-700  `}
+      <div
+        className={`flex pt-10 justify-center min-h-[90vh] wallpaper1 pb-28`}
+      >
+        <div className={`w-[80%] rounded-md bg-white py-8 px-2 flex flex-col items-center gap-5`}>
+          <select
+            className={`text-black text-lg ${arima.className} border p-3 rounded-md w-[80%] md:w-1/2 bg-white border-black`}
+            value={info.state}
+            onChange={(e) => {
+              setInfo((prevInfo) => ({
+                ...prevInfo,
+                state: e.target.value,
+              }));
+            }}
+          >
+            <option value="" disabled>
+              Select an option
+            </option>
+            <option value="pending">Pending</option>
+            <option value="resolved">Resolved</option>
+          </select>
+
+          {info.state === "pending" ? null : (
+            <div className={`w-full flex flex-col items-center gap-5`}>
+              <input
+                type="file"
+                accept="image/* "
+                onChange={handleChange}
+                multiple="true"
+                className={`text-black border border-dashed rounded-md w-[80%] md:w-1/2 px-2 py-3 ${
+                  imageUpload
+                    ? "file:bg-gray-600 file:text-white file:px-2 border-black"
+                    : "bg-gray-700"
+                } ${arima.className}`}
               />
-            )}
-          </div>
-        )}
-        <button
-          onClick={handleIssue}
-          className="border border-black px-3 py-1 rounded-md hover:scale-105"
-        >
-          Submit
-        </button>
-        {JSON.stringify(info)}
+              {previewUrl != null && (
+                <Image
+                  src={previewUrl}
+                  height={0}
+                  width={350}
+                  alt="image"
+                  className={`object-contain shadow-md w-[80%] shadow-white rounded-md h-80 bg-black`}
+                />
+              )}
+            </div>
+          )}
+          <button
+            onClick={handleIssue}
+            className={`w-[80%] bg-green-700 border-white px-3 py-2 rounded-md hover:scale-105 transition-all text-white ${serif.className} uppercase`}
+          >
+            Submit
+          </button>
+        </div>
       </div>
     );
   }
