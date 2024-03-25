@@ -115,7 +115,7 @@ export default function ResolvedForm({ id, state }) {
     return <div>Sorry! Only Admin Can Resolve a Issue</div>;
   }else if(state!=="pending"){
     return(
-      <div className={`${arima.className} text-xl cursor-pointer h-[90vh] flex justify-center items-center text-white wallpaper1`}><p className="shadow-sm shadow-white px-5 py-2 hover:scale-105 transition-all">The Issue Is Already Resolved. You Can't Edit That Now.</p></div>
+      <div className={`${arima.className} text-xl cursor-pointer h-[90vh] flex justify-center items-center text-white wallpaper1`}><p className="shadow-sm shadow-white px-5 py-2 hover:scale-105 transition-all">The Issue Is Already Resolved. You Can`t Edit That Now.</p></div>
     )
   }
    else {
