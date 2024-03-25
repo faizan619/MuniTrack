@@ -39,15 +39,14 @@ export default function Details({ name }) {
     getIssue();
   }, [name]);
 
-  let [showiss,setshowiss] = useState(false)
-  let showIssue = ()=>{
-    if(showiss){
+  let [showiss, setshowiss] = useState(false);
+  let showIssue = () => {
+    if (showiss) {
       setshowiss(false);
-    }
-    else{
+    } else {
       setshowiss(true);
     }
-  }
+  };
 
   return (
     <div className="min-h-[90vh] flex justify-center pb-20 text-center wallpaper1 text-white">
@@ -99,15 +98,35 @@ export default function Details({ name }) {
                 <ConditionView data={data} />
               ) : (
                 <div className="flex flex-col gap-5">
-                  <p className={`${arima.className} text-green-700 text-lg`}>Issue Resolves By [ <span className={`${serif.className} bg-green-700 text-white px-3 uppercase`}>Admin : {data.issue_resolved_by}</span> ]</p>
-                  <Image
-                    height={0}
-                    width={350}
-                    src={data.issue_resolve_image_url}
-                    alt="Resolve image"
-                    className="w-full rounded-md h-72"
-                  />
-                  <button className={`border py-2 bg-slate-600 rounded-md text-white`} onClick={()=>{showIssue()}}>Show Issue</button>
+                  <p className={`${arima.className} text-green-700 text-lg`}>
+                    Issue Resolves By [{" "}
+                    <span
+                      className={`${serif.className} bg-green-700 text-white px-3 uppercase`}
+                    >
+                      Admin : {data.issue_resolved_by}
+                    </span>{" "}
+                    ]
+                  </p>
+                  <div className="flex flex-col items-center">
+                    <Image
+                      height={0}
+                      width={350}
+                      src={data.issue_resolve_image_url}
+                      alt="Resolve image"
+                      className="rounded-md h-80 shadow-md shadow-black"
+                    />
+                    <p className={`text-red-700 ${arima.className}`}>
+                      Image of Resolve Issue
+                    </p>
+                  </div>
+                  <button
+                    className={`border py-2 bg-slate-600 rounded-md text-white`}
+                    onClick={() => {
+                      showIssue();
+                    }}
+                  >
+                    {showiss ? "Close Issue" : "Open Issue"}
+                  </button>
                   {showiss && <ConditionView data={data} />}
                 </div>
               )}
@@ -166,19 +185,20 @@ const ConditionView = ({ data }) => {
       <div className={`capitalize ${arima.className} px-3 text-lg`}>
         {data.issue_describe}
       </div>
-      <h1 className={`px-3 ${serif.className}`}>Issue Raiser Information</h1>
       <div
         className={`bg-gray-800 ${serif.className} text-white p-3 rounded-md`}
       >
-        <p>Name : {data.issue_user_name}</p>
-        <p>Email : {data.issue_user_email}</p>
+        <h1 className={`${serif.className} mb-3`}>Issue Raiser Information</h1>
+        <p className={`px-3`}>Name : <span className={`${arima.className} underline`}>{data.issue_user_name}</span></p>
+        <p className={`px-3`}>Email : <span className={`${arima.className} underline`}>{data.issue_user_email}</span></p>
+        <p className={`px-3`}>Raised Issue From : <span className={`${arima.className} underline`}>{data.issue_location}</span></p>
       </div>
       <div className={`flex justify-center items-center gap-5`}>
-        {user.email === data.issue_user_email ? (
+        {user?.email === data.issue_user_email ? (
           data.issue_state === "pending" ? (
             <a
               href={`/issue/update/${data._id}`}
-              className="border px-5 py-2 hover:bg-gray-800 hover:text-white transition-all border-gray-800 rounded-md"
+              className="border px-5 py-2 hover:bg-red-800 hover:text-white transition-all border-red-800 rounded-md"
             >
               Edit Your Issue
             </a>
@@ -188,30 +208,3 @@ const ConditionView = ({ data }) => {
     </>
   );
 };
-
-/*
-                
-                <p>
-                  Issue State : <span>{data.issue_state}</span>
-                </p>
-                <p>
-                  Issuer raiser Email : <span>{data.issue_user_email}</span>
-                </p>
-                <p>
-                  You Email : <span>{user.email} </span>
-                </p>
-              </div>
-
-              {data.issue_state === "pending" ? null : (
-                <div>
-                  <Image
-                    src={data.issue_resolve_image_url}
-                    height={200}
-                    width={250}
-                    alt="image"
-                  />
-                  <p>Issue Resolved On : {data.issue_resolved_on}</p>
-                </div>
-              )}
-            </div>
-*/
