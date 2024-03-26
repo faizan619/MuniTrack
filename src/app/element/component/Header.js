@@ -49,15 +49,6 @@ const Header = () => {
             <>
               <Link
                 className={`px-3 py-1 rounded-md hover:bg-gray-600 transition-all ${
-                  isActive("/search") ? "bg-gray-600" : "text-white"
-                }
-            `}
-                href="/search"
-              >
-                Search
-              </Link>
-              <Link
-                className={`px-3 py-1 rounded-md hover:bg-gray-600 transition-all ${
                   isActive("/issue") ? "bg-gray-600" : "text-white"
                 }
             `}
