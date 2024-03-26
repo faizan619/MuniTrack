@@ -7,15 +7,18 @@ html{
   background-color: black;
 }
 
-.wallpaper{
+/* .wallpaper{
   background-image: url("../../public/assets/download.jpeg");
-}
+} */
 
 .wallpaper1{
   background-image:url("../../public/background/img3.jpg")
 }
 .wallpaper2{
   background-image:url("../../public/background/img4.jpg")
+}
+.wallpaper{
+  background-image:url("../../public/compo/img4.jpg")  
 }
 
 /* .shadowshow{

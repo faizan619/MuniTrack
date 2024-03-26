@@ -1,11 +1,19 @@
 "use client";
 
+import { arima, serif } from "@/app/element/fonts";
 import { useAuthContext } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-export default function EditForm({ id, title, describe, location, u_email ,u_name}) {
+export default function EditForm({
+  id,
+  title,
+  describe,
+  location,
+  u_email,
+  u_name,
+}) {
   const { user } = useAuthContext();
 
   const router = useRouter();
@@ -53,9 +61,9 @@ export default function EditForm({ id, title, describe, location, u_email ,u_nam
 
   if (user?.email === u_email) {
     return (
-      <div className="min-h-[90vh] wallpaper1 text-white text-center p-5">
-        <p>This is Update page for User : {u_name}</p>
-        <form className="text-black flex flex-col gap-3">
+      <div className="min-h-[90vh] wallpaper1 flex flex-col items-center text-white text-center px-2 py-5">
+        <form className="text-black border md:w-3/4 wallpaper rounded-md md:py-10 p-3 sm:p-5 flex flex-col gap-3">
+      <p className={`text-white ${arima.className} text-xl uppercase`}>Update </p>
           <label className="text-white text-left" htmlFor="title">
             Name
           </label>
@@ -101,6 +109,11 @@ export default function EditForm({ id, title, describe, location, u_email ,u_nam
               }));
             }}
           />
+          <p className={`${serif.className} text-left text-sm capitalize text-red-700`}>
+            {u_name} .Be Sure To Update Correct Data.otherwise Legal Action will
+            be taken.
+          </p>
+
           <button
             type="submit"
             onClick={handleUpdate}

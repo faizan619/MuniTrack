@@ -123,7 +123,7 @@ export default function ResolvedForm({ id, state }) {
       <div
         className={`flex pt-10 justify-center min-h-[90vh] wallpaper1 pb-28`}
       >
-        <div className={`w-[80%] rounded-md bg-white py-8 px-2 flex flex-col items-center gap-5`}>
+        <div className={`w-[80%] rounded-md wallpaper py-8 px-2 flex flex-col items-center gap-5`}>
           <select
             className={`text-black text-lg ${arima.className} border p-3 rounded-md w-[80%] md:w-1/2 bg-white border-black`}
             value={info.state}
@@ -148,10 +148,10 @@ export default function ResolvedForm({ id, state }) {
                 accept="image/* "
                 onChange={handleChange}
                 multiple="true"
-                className={`text-black border border-dashed rounded-md w-[80%] md:w-1/2 px-2 py-3 ${
+                className={`border border-green-700 text-white border-dashed file:bg-white file:border-2 file:px-3 file:rounded-md file:border-dashed rounded-md w-[80%] md:w-1/2 px-2 py-3 ${
                   imageUpload
-                    ? "file:bg-gray-600 file:text-white file:px-2 border-black"
-                    : "bg-gray-700"
+                    ? "border-double file:border-double"
+                    : ""
                 } ${arima.className}`}
               />
               {previewUrl != null && (
@@ -160,14 +160,14 @@ export default function ResolvedForm({ id, state }) {
                   height={0}
                   width={350}
                   alt="image"
-                  className={`object-contain shadow-md w-[80%] shadow-white rounded-md h-80 bg-black`}
+                  className={`object-contain shadow-md w-[80%] shadow-white rounded-md h-80`}
                 />
               )}
             </div>
           )}
           <button
             onClick={handleIssue}
-            className={`w-[80%] bg-green-700 border-white px-3 py-2 rounded-md hover:scale-105 transition-all text-white ${serif.className} uppercase`}
+            className={`w-[80%] md:w-1/2 bg-green-700 border-white px-3 py-2 rounded-md hover:scale-105 transition-all text-white ${serif.className} uppercase`}
           >
             Submit
           </button>
