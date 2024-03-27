@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { RWebShare } from "react-web-share";
 
 export default function Details({ name }) {
   const [data, setData] = useState([]);
@@ -158,14 +159,20 @@ const ConditionView = ({ data }) => {
           </div>
         </div>
         <div className={`flex gap-2`}>
-          <button
-            className={`${serif.className}`}
-            onClick={() => {
-              toast.success("Share Feature is still building.");
+          <RWebShare
+            data={{
+              text: "This is Just for testing!",
+              url: "http://localhost:3000/drive",
+              title: "testing",
             }}
+            onClick={()=>{toast.success("Sharing!")}}
           >
-            Share
-          </button>
+            <button
+              className={`${serif.className}`}
+            >
+              Share
+            </button>
+          </RWebShare>
         </div>
       </div>
       <Image
@@ -189,9 +196,24 @@ const ConditionView = ({ data }) => {
         className={`bg-gray-800 ${serif.className} text-white p-3 rounded-md`}
       >
         <h1 className={`${serif.className} mb-3`}>Issue Raiser Information</h1>
-        <p className={`px-3`}>Name : <span className={`${arima.className} underline`}>{data.issue_user_name}</span></p>
-        <p className={`px-3`}>Email : <span className={`${arima.className} underline`}>{data.issue_user_email}</span></p>
-        <p className={`px-3`}>Raised Issue From : <span className={`${arima.className} underline`}>{data.issue_location}</span></p>
+        <p className={`px-3`}>
+          Name :{" "}
+          <span className={`${arima.className} underline`}>
+            {data.issue_user_name}
+          </span>
+        </p>
+        <p className={`px-3`}>
+          Email :{" "}
+          <span className={`${arima.className} underline`}>
+            {data.issue_user_email}
+          </span>
+        </p>
+        <p className={`px-3`}>
+          Raised Issue From :{" "}
+          <span className={`${arima.className} underline`}>
+            {data.issue_location}
+          </span>
+        </p>
       </div>
       <div className={`flex justify-center items-center gap-5`}>
         {user?.email === data.issue_user_email ? (
