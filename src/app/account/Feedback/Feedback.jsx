@@ -5,6 +5,7 @@ import confetti from "canvas-confetti";
 import { useRouter } from "next/navigation";
 import { getAuth } from "firebase/auth";
 import { useAuthContext } from "@/context/AuthContext";
+import { serif,arima } from "@/app/element/fonts";
 
 const FeedbackPage = () => {
   const auth = getAuth();
@@ -83,10 +84,10 @@ const FeedbackPage = () => {
   };
 
   return (
-    <div className="min-h-[90vh] flex flex-col pt-5 items-center gap-10 selection:bg-green-950 selection:text-white ">
+    <div className="min-h-[90vh] text-white flex flex-col pt-5 items-center gap-10 selection:bg-green-950 selection:text-white ">
       <div className="text-center">
-        <h1 className="font-bold ">Feedback</h1>
-        <p>
+        <h1 className={`${serif.className} text-xl`}>Feedback</h1>
+        <p className={`${arima.className}`}>
           We are glad to give your precious time in improving the functionality
           of the app
         </p>
@@ -158,13 +159,13 @@ const FeedbackPage = () => {
             placeholder="Your feedback or any improvement in the website !"
             rows={10}
             cols={30}
-            className="border border-gray-600 rounded-md p-1 min-h-9"
+            className={`border border-gray-600 ${arima.className} rounded-md p-1 min-h-9 text-black`}
           />
           <button
             type="submit"
             onClick={handleSubmit}
             disabled={loading}
-            className="border border-gray-600 py-1 rounded-md hover:bg-gray-600 hover:text-white transition-all"
+            className={`border border-gray-600 py-1 rounded-md hover:bg-gray-600 hover:text-white transition-all ${serif.className}`}
           >
             {loading?"Loading...":"Submit"}
           </button>
