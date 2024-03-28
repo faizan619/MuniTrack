@@ -7,10 +7,6 @@ html{
   background-color: black;
 }
 
-/* .wallpaper{
-  background-image: url("../../public/assets/download.jpeg");
-} */
-
 .wallpaper1{
   background-image:url("../../public/background/img3.jpg")
 }
@@ -19,6 +15,14 @@ html{
 }
 .wallpaper{
   background-image:url("../../public/compo/img4.jpg")  
+}
+
+.featH{
+  display: none;
+}
+
+.featHide:hover .featH {
+  display: inline-block;
 }
 
 /* .shadowshow{
