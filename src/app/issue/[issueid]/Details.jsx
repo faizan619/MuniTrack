@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { RWebShare } from "react-web-share";
+import { usePathname } from "next/navigation";
 
 export default function Details({ name }) {
   const [data, setData] = useState([]);
@@ -141,6 +142,7 @@ export default function Details({ name }) {
 
 const ConditionView = ({ data }) => {
   let { user } = useAuthContext();
+  const path = usePathname();
   return (
     <>
       <div className={`flex justify-between transition-all`}>
@@ -161,14 +163,13 @@ const ConditionView = ({ data }) => {
         <div className={`flex gap-2`}>
           <RWebShare
             data={{
-              text: "This is Just for testing!",
-              url: "http://localhost:3000/drive",
-              title: "testing",
+              text: `${data.issue_describe}`,
+              url: `https://munitrack.vercel.app${path}`,
+              title: `${data.issue_title}`,
             }}
-            onClick={()=>{toast.success("Sharing!")}}
           >
             <button
-              className={`${serif.className}`}
+              className={`relative uppercase flex items-center ${serif.className} transition-all cursor-pointer before:bg-black  before:absolute before:-bottom-1 before:block before:h-[2px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100`}
             >
               Share
             </button>
