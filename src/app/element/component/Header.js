@@ -59,12 +59,12 @@ const Header = () => {
               {user?.emailVerified ? null : (
                 <Link
                   className={`px-3 py-1 rounded-md hover:bg-gray-600 transition-all ${
-                    isActive("/drive") ? "bg-gray-600" : "text-white"
+                    isActive("/incharge") ? "bg-gray-600" : "text-white"
                   }
             `}
-                  href="/drive"
+                  href="/incharge"
                 >
-                  Create
+                  Admin
                 </Link>
               )}
               <Link

@@ -95,11 +95,11 @@ export default function Home() {
                 </button>
                 <button
                   onClick={() => {
-                    router.push("/drive");
+                    router.push("/incharge");
                   }}
                   className={`relative uppercase ml-3 flex items-center ${serif.className} transition-all cursor-pointer text-xl before:bg-gray-500  before:absolute before:-bottom-1 before:block before:h-[2px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 hover:scale-105`}
                 >
-                  Campaign
+                  Admin
                 </button>
               </>
             )}
