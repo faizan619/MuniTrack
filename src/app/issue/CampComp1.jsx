@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import { arima, serif } from "../element/fonts";
 import { useAuthContext } from "@/context/AuthContext";
 import Link from "next/link";
+import { RWebShare } from "react-web-share";
 
 export default function CampComp({ camps }) {
   const { user } = useAuthContext();
@@ -126,13 +127,19 @@ export default function CampComp({ camps }) {
                       Join
                     </Link>
                     {user.emailVerified ? (
-                      <>
-                        <button
-                          onClick={handleShare}
-                          className={`relative hover:scale-105 transition-all  uppercase flex items-center ${serif.className} transition-all cursor-pointer before:bg-gray-500  before:absolute before:-bottom-1 before:block before:h-[2px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100`}
-                        >
-                          Share
-                        </button>
+                      <><RWebShare
+                            data={{
+                              text: `Hello! MuniTrack has Organized a ${item.drive_title} at ${item.drive_location}. Wanna Join Us? Here is the Group link`,
+                              url: `${item.drive_link}`,
+                              title: `Let's Together Make the Earth A Better Place to Live :)`,
+                            }}
+                          >
+                            <button
+                              className={`relative hover:scale-105 transition-all  uppercase flex items-center ${serif.className} transition-all cursor-pointer before:bg-gray-500  before:absolute before:-bottom-1 before:block before:h-[2px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100`}
+                            >
+                              Share
+                            </button>
+                          </RWebShare>
                       </>
                     ) : (
                       <>
