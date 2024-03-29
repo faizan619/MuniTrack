@@ -81,7 +81,7 @@ export default function Search() {
               <p>Loading Issue</p>
             ) : allData.length !== 0 ? (
               allData.map((item) => (
-                <div>
+                <div key={item._id}>
                   <p>hm {item._id}</p>
                 </div>
               ))

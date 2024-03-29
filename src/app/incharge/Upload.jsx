@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { arima, serif } from "../element/fonts";
 import Link from "next/link";
+import { RWebShare } from "react-web-share";
 
 export default function Upload() {
   const { user } = useAuthContext();
