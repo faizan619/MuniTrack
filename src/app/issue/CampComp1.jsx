@@ -7,9 +7,6 @@ import { RWebShare } from "react-web-share";
 
 export default function CampComp({ camps }) {
   const { user } = useAuthContext();
-  const handleShare = () => {
-    toast.success("This Feature is going to build");
-  };
   const handleDelete = async (id) => {
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN_URL}/${id}`, {
