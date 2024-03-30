@@ -1,5 +1,9 @@
 "use client";
 
+import DetailBtn from "@/app/element/component/DetailBtn";
+import { arima, serif } from "@/app/element/fonts";
+import DeleteIssue from "@/app/issue/DeleteIssue";
+import { useAuthContext } from "@/context/AuthContext";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -20,6 +24,7 @@ function useDebounce(value, delay) {
 }
 
 export default function Search() {
+  const { user } = useAuthContext();
   const [inp, setInp] = useState(undefined);
   const [data, setData] = useState("");
 
@@ -63,7 +68,7 @@ export default function Search() {
     }
   }, [debouncedId]);
   return (
-    <div className="min-h-[90vh] wallpaper1 text-white p-3 ">
+    <div className="h-[90vh] overflow-auto wallpaper1 text-white p-3 ">
       <input
         type="text"
         placeholder="Search Issue"
@@ -74,16 +79,16 @@ export default function Search() {
         }}
       />
       {!inp ? (
-        <div className={`text-white flex gap-5 flex-col flex-wrap justify-evenly py-5`}>
+        <div
+          className={`text-white flex gap-5 flex-col flex-wrap justify-evenly py-5`}
+        >
           <p>Total Issue Available : {allData.length}</p>
-          <div>
+          <div className={`flex flex-wrap gap-5`}>
             {!allData ? (
               <p>Loading Issue</p>
             ) : allData.length !== 0 ? (
               allData.map((item) => (
-                <div key={item._id}>
-                  <p>hm {item._id}</p>
-                </div>
+                <IssueCard key={item._id} item={item} />
               ))
             ) : (
               <p>No Issue Uploaded Yet</p>
@@ -97,14 +102,9 @@ export default function Search() {
       ) : data.length !== 0 ? (
         <div className="flex flex-col py-5">
           <p className="text-lg">Data Found : {data.length} </p>
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap gap-5">
             {data.map((item, index) => (
-              <div
-                key={index}
-                className="relative rounded-md overflow-hidden m-2"
-              >
-                <p className={`text-white`}>{item.issue_title}</p>
-              </div>
+              <IssueCard key={item._id} item={item} />
             ))}
           </div>
         </div>
@@ -115,34 +115,47 @@ export default function Search() {
   );
 }
 
-/*
-<Image
-                  src={item.issue_image_url}
-                  alt="bg image"
-                  width={350}
-                  height={100}
-                  className="absolute z-0 h-full w-full brightness-50 "
-                />
-                <div className="z-10 px-7 items-start py-5 backdrop-blur-sm text-white flex flex-col gap-2">
-                  <p>
-                    Title :{" "}
-                    <span className="font-bold capitalize">
-                      {item.issue_title}
-                    </span>
-                  </p>
-                  <p>
-                    Issued Raised by{" "}
-                    <span className="font-bold">{item.issue_user_name}</span>
-                  </p>
-                  <p>
-                    Location :{" "}
-                    <span className="font-bold">{item.issue_location}</span>
-                  </p>
-                  <button
-                    className="text-left border border-white hover:bg-white hover:text-black transition-all px-3 py-1 rounded-md"
-                    onClick={() => router.push(`/issue/${item._id}`)}
-                  >
-                    View Details
-                  </button>
-                </div>
-*/
+const IssueCard = ({item}) => {
+  const {user} = useAuthContext();
+
+  return (
+    <div
+      className={`text-white z-10 ${
+        item.issue_state === "pending" ? "border-red-700" : "border-green-700"
+      } border-2 relative h-80 flex flex-col w-72 overflow-hidden rounded-md shadow-md hover:shadow-gray-700 hover:scale-105 transition-all`}
+    >
+      <Image
+        src={item.issue_image_url}
+        alt="bg image"
+        width={350}
+        height={100}
+        className="h-36 w-full z-10"
+      />
+      <p
+        className={`absolute z-20 ${
+          item.issue_state === "pending" ? "bg-red-700" : "bg-green-700"
+        } capitalize px-5 right-0`}
+      >
+        {item.issue_state}
+      </p>
+      <div className="flex-1 gap-2 bg-gray-200 text-black flex flex-col items-center justify-between z-10 py-4 px-3">
+        <p
+          className={`${serif.className} text-2xl uppercase border h-8 overflow-hidden`}
+        >
+          {item.issue_user_name}
+        </p>
+        <p
+          className={`text-center text-sm italic  h-14 overflow-hidden ${arima.className}`}
+        >
+          {item.issue_describe}
+        </p>
+        <div className="w-full flex justify-center gap-5">
+          <DetailBtn url={item._id} />
+          {user.emailVerified && item.issue_user_email !== user.email ? null : (
+            <DeleteIssue dltItem={item} />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};

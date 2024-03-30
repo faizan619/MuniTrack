@@ -8,7 +8,7 @@ export default function SideNav() {
   const pathname = usePathname();
   const isActive = (path) => path === pathname;
   return (
-    <div className={`w-20 h-[90vh] bg-gray-800 pt-3`}>
+    <div className={`w-20 h-[90vh] bg-gray-800 pt-3 z-20`}>
       <div className={`flex flex-col justify-evenly h-full`}>
         <div
           className={`flex justify-center items-center py-3 cursor-pointer hover:scale-110 transition-all featHide`}
