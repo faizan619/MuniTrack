@@ -1,6 +1,7 @@
 "use client";
 import { arima, serif } from "@/app/element/fonts";
 import { useAuthContext } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 export default function DriveCreate() {
@@ -15,17 +16,18 @@ export default function DriveCreate() {
     drive_on: "",
     drive_link: "",
   });
+  const router =useRouter();
 
   let [view1, setView1] = useState(true);
   let [view2, setView2] = useState(false);
+  const [loading,setLoading] = useState(false);
   const handleView1 = () => {
-    setView1(false);
-    setView2(true);
-    // if(data.drive_title && data.drive_describe){
-    // }
-    // else{
-    //   toast.error("Please Enter All Credentials");
-    // }
+    if (data.drive_title && data.drive_describe) {
+      setView1(false);
+      setView2(true);
+    } else {
+      toast.error("Please Fill All Credentials");
+    }
   };
   const handleView2 = () => {
     setView1(true);
@@ -48,6 +50,7 @@ export default function DriveCreate() {
         data.drive_link
       ) {
         try {
+          setLoading(true)
           let drive_info = await fetch(
             `${process.env.NEXT_PUBLIC_DOMAIN_URL}/campaign`,
             {
@@ -64,7 +67,7 @@ export default function DriveCreate() {
           drive_info = await drive_info.json();
           if (drive_info.success) {
             toast.remove();
-            toast.success("Form Submitted Successfully !");
+            toast.success("Campaign Uploaded !");
             setData({
               drive_title: "",
               drive_describe: "",
@@ -73,20 +76,24 @@ export default function DriveCreate() {
               drive_time: "",
               drive_on: "",
             });
+            setLoading(false)
+            router.push("/incharge")
           } else {
             toast.remove();
             toast.error("Can't Post the Data ! Please Refresh the Page .");
+            setLoading(false)
           }
         } catch (error) {
           toast.remove();
           toast.error("Sever Error ! please Refresh .");
+          setLoading(false)
         }
       } else {
         toast.remove();
         toast.error("Enter all the credentials !");
       }
     } else {
-      toast.error("Enter Valid WhatsApp Link.")
+      toast.error("Enter Valid WhatsApp Link.");
     }
   };
 
@@ -237,10 +244,11 @@ export default function DriveCreate() {
                 Back
               </button>
               <button
+                disabled={loading}
                 className={`border ${serif.className} rounded-md px-7 uppercase py-2 bg-green-600 text-white hover:scale-105`}
                 onClick={handleSubmit}
               >
-                Submit
+                {loading?"Uploading.":"Submit"}
               </button>
             </div>
           </>

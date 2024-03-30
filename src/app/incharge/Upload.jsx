@@ -23,6 +23,28 @@ export default function Upload() {
     router.push("/incharge/create");
   };
 
+  const handleDelete=async(id)=>{
+    try{
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_DOMAIN_URL}/campaign/${id}`,
+        {
+          method:"DELETE",
+        }
+      );
+      if(!res.ok){
+        toast.remove();
+        toast.error("Failed To Delete Campaign");
+      }
+      toast.remove();
+      toast.success("Campaign Deleted Successfully");
+      router.refresh()
+    }
+    catch(error){
+      toast.remove();
+      toast.error(error.message);
+    }
+  }
+
   const [camps, setCamp] = useState(undefined);
   const getAllDrive = async () => {
     toast.remove();
@@ -66,10 +88,10 @@ export default function Upload() {
     );
   } else {
     return (
-      <div className="min-h-[90vh] wallpaper1 text-white py-3 px-2">
+      <div className="h-[90vh] overflow-auto wallpaper1 text-white py-3 px-2">
         <div className="flex flex-wrap gap-5 sm:p-3">
           <button
-            className="uppercase bg-gradient-to-r from-purple-600 to-pink-600 hover:from-pink-600 hover:to-purple-600 hover:bg-gradient-to-t px-5 wallpaper3 w-full sm:w-[25rem] shadow-md shadow-gray-600 py-3 rounded-md transition-all min-h-20 hover:scale-105"
+            className={`uppercase ${serif.className} bg-gradient-to-r from-purple-600 to-pink-600 hover:from-pink-600 hover:to-purple-600 hover:bg-gradient-to-t px-5 wallpaper3 w-full sm:w-[25rem] shadow-md shadow-gray-600 py-3 rounded-md transition-all min-h-20 hover:scale-105`}
             onClick={handlecreate}
           >
             Host a Campaign
