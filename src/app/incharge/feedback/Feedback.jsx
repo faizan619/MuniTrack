@@ -25,13 +25,13 @@ export default function Page() {
     getFeedback();
   }, []);
   return (
-    <div className={`text-white text-center p-4`}>
+    <div className={`text-white text-center p-4 h-[90vh] overflow-auto wallpaper1`}>
       <h1 className={`${serif.className} mb-5 text-xl`}>
-        Feedback Around the Globe
+        Feedback 
       </h1>
       <div className={`bg-gray-700 rounded-md py-5 px-3 flex flex-wrap justify-evenly items-center gap-5`}>
       {!data ? (
-              <p>Loading Issue</p>
+              <p>Loading Feedback</p>
             ) : data.length !== 0 ? (
               data.map((item) => (
                 <div key={item._id} className={`border py-3 rounded-md bg-white text-black px-2 w-80`}>
@@ -45,7 +45,7 @@ export default function Page() {
                 </div>
               ))
             ) : (
-              <p>No Issue Uploaded Yet</p>
+              <p>No Feedback Uploaded Yet</p>
             )}
       </div>
     </div>
