@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import register from "../element/auth/register";
 import loginFun from "../element/auth/login";
+import { arima, serif } from "../element/fonts";
 
 export default function Admin() {
   const { user } = useAuthContext();
@@ -13,31 +14,33 @@ export default function Admin() {
 
   const [pass, setPass] = useState("");
   const [special, setSpecial] = useState(false);
-  const [login,setLogin] = useState(false)
+  const [login, setLogin] = useState(false);
 
   const handleRegisterAdmin = (e) => {
     e.preventDefault();
     let password = pass.toLowerCase();
     if (password) {
       if (password === process.env.NEXT_PUBLIC_REGISTER) {
-        toast.success("Register Yourself for Admin");
+        toast.remove();
+        toast.success("Register Admin Details");
         setSpecial(true);
-        setLogin(false)
-      }
-      else if(password === process.env.NEXT_PUBLIC_LOGIN){
-        toast.success("Login Yourself as Admin");
-        setLogin(true)
-        setSpecial(false)
-      }
-       else {
-        toast.success("Enter Correct Password or try Google Login!");
+        setLogin(false);
+      } else if (password === process.env.NEXT_PUBLIC_LOGIN) {
+        toast.remove();
+        toast.success("Login as Admin");
+        setLogin(true);
         setSpecial(false);
-        setLogin(false)
+      } else {
+        toast.remove();
+        toast.success("Only Admin is Aware about Password! Please Try Google Login");
+        setSpecial(false);
+        setLogin(false);
       }
     } else {
+      toast.remove();
       toast.error("Please Enter the Password!");
       setSpecial(false);
-      setLogin(false)
+      setLogin(false);
     }
   };
 
@@ -53,160 +56,240 @@ export default function Admin() {
     }
   }, [user, router]);
 
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const handleRegisterForm = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    let admin_info = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN_URL}/user`,{
-      method:"POST",
-      headers:{"Content-Type":"application/json",},
-      body:JSON.stringify({displayName,email}),
-    });
-    if(!admin_info.ok){
-      toast.error("There is Some problem while parsing your login. Try Again Later")
-      // throw new Error("Server Error !")
-    }
-    admin_info = await admin_info.json();
-    if(admin_info.success){
-      const { result, error } = await register(email, password, displayName);
-      if (error) {
-        if (error.code === "auth/email-already-in-use") {
-          toast.remove();
-          toast.error("Email already Registerend!!");
-        } else {
-          toast.remove();
-          toast.error(error.message);
+    if (password.length > 5) {
+      setLoading(true);
+      let admin_info = await fetch(
+        `${process.env.NEXT_PUBLIC_DOMAIN_URL}/user`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ displayName, email }),
         }
-        setLoading(false)
-      } else {
-        // console.log(result);
-        return router.push("/");
+      );
+      if (!admin_info.ok) {
+        toast.error(
+          "There is Some problem while parsing your login. Try Again Later"
+        );
       }
-    }
-    else{
-      toast.remove();
-      toast.error("Email Already Registered !!")
-      setLoading(false)
+      admin_info = await admin_info.json();
+      if (admin_info.success) {
+        const { result, error } = await register(email, password, displayName);
+        if (error) {
+          if (error.code === "auth/email-already-in-use") {
+            toast.remove();
+            toast.error("Email already Registerend!!");
+          } else {
+            toast.remove();
+            toast.error(error.message);
+          }
+          setLoading(false);
+        } else {
+          // console.log(result);
+          return router.push("/");
+        }
+      } else {
+        toast.remove();
+        toast.error("Email Already Registered !!");
+        setLoading(false);
+      }
+    } else {
+      toast.error("Min 6 letter is Required for Password");
     }
   };
 
-  const handleLoginForm = async (e)=>{
+  const handleLoginForm = async (e) => {
     e.preventDefault();
     const { result, error } = await loginFun(email, password);
 
     if (error) {
       if (error.code === "auth/invalid-credential") {
-        toast.remove()
+        toast.remove();
         toast.error("Check your credentials");
       } else {
         toast.remove();
         toast.error("Some Problem in the Network");
       }
     } else {
-      // console.log(result);
-      return router.push("/")
+      return router.push("/");
     }
-  }
+  };
 
-  const backControl = (e)=>{
-    setLogin(false)
-    setSpecial(false)
-  }
+  const backControl = (e) => {
+    setLogin(false);
+    setSpecial(false);
+  };
 
   return (
-    <div className="h-[90vh] flex justify-center items-center bg-black text-white">
+    <div className="h-[90vh] flex wallpaper1 justify-center items-center bg-black text-white">
       {special ? (
-        <form className="border flex flex-col gap-3 px-5 py-10 rounded-md" onSubmit={handleRegisterForm}>
-        <label>
-          <input
-            type="text"
-            required
-            autoFocus
-            name="name"
-            id="name"
-            placeholder="david gray"
-            maxLength={20}
-            value={displayName}
-            onChange={(e) => setdisplayName(e.target.value)}
-            className="py-1 px-2 text-black w-full rounded-sm"
-          />
-          {displayName.length===20?(<p className="text-[13px] text-green-600">maximum 20 words required</p>):(null)}
-        </label>
-          <input
-            type="email"
-            required
-            name="email"
-            id="email"
-            placeholder="david@gmail.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="py-1 px-2 text-black w-full rounded-sm"
-          />
-          <label>
-
-          <input
-            type="password"
-            required
-            name="pass"
-            id="pass"
-            placeholder="*****"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="py-1 px-2 text-black w-full rounded-sm"
-          />
-          {password!==""?(<p className="text-[13px] text-green-600 ">Remember the password for future login</p>):(null)}
-          </label>
-          <button type="submit" disabled={loading} className="border w-full py-1 rounded-sm">
-            Register
-          </button>
-          <button className="border border-dotted py-1" onClick={backControl}>Back</button>
-        </form>
-      ): login?(<form className="border flex flex-col gap-5 px-5 py-10 rounded-md" onSubmit={handleLoginForm}>
-      <input
-            type="email"
-            required
-            name="email"
-            id="email"
-            placeholder="david@gmail.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="py-1 px-2 text-black w-full rounded-sm"
-          />
-          <input
-            type="password"
-            required
-            name="pass"
-            id="pass"
-            placeholder="*****"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="py-1 px-2 text-black w-full rounded-sm"
-          />
-          <button type="submit" className="border w-full py-1 rounded-sm">
-            Login
-          </button>
-          <button className="border border-dotted py-1" onClick={backControl}>Back</button>
-      </form>) : (
-      
         <form
-          className="border p-10 rounded-md flex flex-col gap-5"
+          className="border w-[90%] sm:w-[70%] md:w-[50%] bg-white text-black flex flex-col gap-5 px-5 py-10 rounded-md"
+          onSubmit={handleRegisterForm}
+        >
+          <p className={`${serif.className} text-center text-xl uppercase`}>
+            Register
+          </p>
+          <label>
+            <p className={`${arima.className}`}>User Name : </p>
+            <input
+              type="text"
+              required
+              autoFocus
+              name="name"
+              id="name"
+              placeholder="david gray"
+              maxLength={20}
+              value={displayName}
+              onChange={(e) => setdisplayName(e.target.value)}
+              className={`px-2 py-3 border w-full border-gray-400 rounded-md text-black ${arima.className}`}
+            />
+            {displayName.length === 20 ? (
+              <p className="text-[13px] text-green-600">
+                maximum 20 words required
+              </p>
+            ) : null}
+          </label>
+          <label>
+            <p className={`${arima.className}`}>Enter Address :</p>
+            <input
+              type="email"
+              required
+              name="email"
+              id="email"
+              placeholder="david@gmail.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className={`px-2 py-3 border w-full border-gray-400 rounded-md text-black ${arima.className}`}
+            />
+          </label>
+          <label>
+            <p className={`${arima.className}`}>Password : (min: 6 letter)</p>
+            <input
+              type="password"
+              required
+              name="pass"
+              id="pass"
+              placeholder="*****"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={`px-2 py-3 border w-full border-gray-400 rounded-md text-black ${arima.className}`}
+            />
+            {password !== "" ? (
+              password.length > 5 ? (
+                <p className={`${arima.className} text-green-600 text-[13px]`}>
+                  You are good to Go
+                </p>
+              ) : (
+                <p className="text-[13px] text-red-600 capitalize">
+                  Min Length 6 letter : ({password.length} Letter)
+                </p>
+              )
+            ) : null}
+          </label>
+          <div className={`${serif.className} mt-3 flex gap-5 text-white`}>
+            <button
+              type="submit"
+              disabled={loading}
+              className="border bg-green-600 hover:bg-green-700 rounded-md flex-1 w-full py-2 "
+            >
+              Register
+            </button>
+            <button
+              className="border flex-1 bg-red-600 hover:bg-red-700 rounded-md py-2"
+              onClick={backControl}
+            >
+              Back
+            </button>
+          </div>
+        </form>
+      ) : login ? (
+        <form
+          className="border w-[90%] sm:w-[70%] md:w-[50%] bg-white text-black flex flex-col gap-5 px-5 py-10 rounded-md"
+          onSubmit={handleLoginForm}
+        >
+          <p className={`text-center ${serif.className} uppercase text-xl`}>
+            Login
+          </p>
+          <p
+            className={`text-red-600 ${arima.className} capitalize text-sm text-center`}
+          >
+            Enter the Email and Password which is provided to you
+          </p>
+          <label>
+            <p className={`${serif.className}`}>Email Address : </p>
+            <input
+              type="email"
+              required
+              name="email"
+              id="email"
+              placeholder="david@gmail.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className={`px-2 py-3 border w-full border-gray-400 rounded-md text-black ${arima.className}`}
+            />
+          </label>
+          <label>
+            <p className={`${serif.className}`}>Password</p>
+            <input
+              type="password"
+              required
+              name="pass"
+              id="pass"
+              placeholder="*****"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={`px-2 py-3 border border-gray-400 w-full rounded-md text-black ${arima.className}`}
+            />
+          </label>
+          <div className={`${serif.className} mt-3 flex gap-5 text-white`}>
+            <button
+              type="submit"
+              className="border bg-green-600 hover:bg-green-700 rounded-md flex-1 w-full py-2 "
+            >
+              Login
+            </button>
+            <button
+              className="border flex-1 bg-red-600 hover:bg-red-700 rounded-md py-2"
+              onClick={backControl}
+            >
+              Back
+            </button>
+          </div>
+        </form>
+      ) : (
+        <form
+          className="border p-7 rounded-md flex flex-col bg-white gap-5"
           onSubmit={handleRegisterAdmin}
         >
+          <p className={`text-center ${serif.className} text-black`}>
+            Unique Password
+          </p>
           <input
             type="text"
             placeholder="Enter Password"
             value={pass}
             onChange={(e) => setPass(e.target.value)}
-            className="px-2 py-3 rounded-md text-black"
+            className={`px-2 py-3 border border-gray-400 shadow-md rounded-md text-black ${arima.className}`}
             maxLength={18}
           />
-          <input
-            type="submit"
-            className="border py-3 rounded-md cursor-pointer"
-          />
-          <p className="border text-center py-3 rounded-md cursor-pointer" onClick={()=>{router.push("/google")}}>Back</p>
+          <div className={`flex gap-3 ${serif.className}`}>
+            <input
+              type="submit"
+              className="border flex-1 py-3 bg-green-700 hover:bg-green-800 rounded-md cursor-pointer"
+            />
+            <p
+              className="border flex-1 text-center py-3 bg-red-700 hover:bg-red-800 rounded-md cursor-pointer"
+              onClick={() => {
+                router.push("/google");
+              }}
+            >
+              Back
+            </p>
+          </div>
         </form>
-        
       )}
     </div>
   );
