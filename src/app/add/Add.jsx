@@ -235,7 +235,7 @@ export default function Add() {
               value={location.name}
               readOnly
               placeholder="Click the Button"
-              className={`text-black p-2 rounded-md flex-1 ${
+              className={`text-black p-2 w-full rounded-md flex-1 ${
                 location.name ? "block" : "hidden"
               }`}
             />
