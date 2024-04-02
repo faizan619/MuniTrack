@@ -51,12 +51,12 @@ export default function Details({ name }) {
   };
 
   return (
-    <div className="min-h-[90vh] flex justify-center pb-20 text-center wallpaper1 text-white">
+    <div className="min-h-[90vh] p-2 flex justify-center pb-20 text-center wallpaper1 text-white">
       {loading ? (
         <p>Loading...</p>
       ) : (
         data && (
-          <div className={`w-[80%] py-5`}>
+          <div className={`sm:w-[80%] sm:py-5`}>
             <div
               className={`flex flex-col border-4 ${
                 data.issue_state === "pending"
@@ -70,9 +70,9 @@ export default function Details({ name }) {
                     user?.emailVerified ? null : (
                       <Link
                         href={`/issue/resolved/${data._id}`}
-                        className="border px-5 py-2 rounded-md hover:bg-white hover:text-black cursor-pointer transition-all"
+                        className="border px-2 sm:px-5 py-2 rounded-md hover:bg-white hover:text-black cursor-pointer transition-all"
                       >
-                        Resolve This Issue
+                        Resolve Issue
                       </Link>
                     )
                   ) : (
@@ -92,7 +92,7 @@ export default function Details({ name }) {
                 </span>
               </p>
               <p
-                className={`${kushan.className} text-center text-3xl capitalize`}
+                className={`${kushan.className} text-center text-lg sm:text-3xl capitalize`}
               >
                 {data.issue_title}
               </p>
@@ -154,7 +154,7 @@ const ConditionView = ({ data }) => {
             alt={data.issue_user_name}
           />
           <div className={`${serif.className}`}>
-            <p>{data.issue_user_name}</p>
+            <p className={`text-sm sm:text-md`}>{data.issue_user_name}</p>
             <p className={`text-sm`}>
               {new Date(data.issue_uploaded_on).toLocaleDateString()}
             </p>
@@ -169,7 +169,7 @@ const ConditionView = ({ data }) => {
             }}
           >
             <button
-              className={`relative uppercase flex items-center ${serif.className} transition-all cursor-pointer before:bg-black  before:absolute before:-bottom-1 before:block before:h-[2px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100`}
+              className={`relative uppercase text-sm md:text-xl flex items-center ${serif.className} transition-all cursor-pointer before:bg-black  before:absolute before:-bottom-1 before:block before:h-[2px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100`}
             >
               Share
             </button>
@@ -181,10 +181,10 @@ const ConditionView = ({ data }) => {
         alt="Issue Image"
         height={0}
         width={350}
-        className="object-contain shadow-sm shadow-black w-full h-96 rounded-md border-black"
+        className="object-contain shadow-sm shadow-black w-full h-80 sm:h-96 rounded-md border-black"
       />
       <div className={`${serif.className} px-3`}>
-        Location : {data.issue_location}{" "}
+        <span className="font-bold">Location :</span> {data.issue_location}{" "}
         {data.issue_manual_location === "" ||
         data.issue_manual_location === "none"
           ? ""

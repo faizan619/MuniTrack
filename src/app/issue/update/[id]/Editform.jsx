@@ -62,7 +62,7 @@ export default function EditForm({
   if (user?.email === u_email) {
     return (
       <div className="min-h-[90vh] wallpaper1 flex flex-col items-center text-white text-center px-2 py-5">
-        <form className="text-black border md:w-3/4 wallpaper rounded-md md:py-10 p-3 sm:p-5 flex flex-col gap-3">
+        <form className="text-black shadow-sm md:shadow-white w-full md:w-3/4  rounded-md md:py-10 p-3 sm:p-5 flex flex-col gap-3">
       <p className={`text-white ${arima.className} text-xl uppercase`}>Update </p>
           <label className="text-white text-left" htmlFor="title">
             Name
