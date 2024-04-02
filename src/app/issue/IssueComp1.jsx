@@ -102,9 +102,9 @@ const IssueCard = ({ item }) => {
       <p className={`absolute z-20 ${item.issue_state==="pending"?"bg-red-700":"bg-green-700"} capitalize px-5 right-0`}>{item.issue_state}</p>
       <div className="flex-1 gap-2 bg-gray-200 text-black flex flex-col items-center justify-between z-10 py-4 px-3">
         <p
-          className={`${serif.className} text-2xl uppercase border h-8 overflow-hidden`}
+          className={`${serif.className} text-md text-center uppercase border h-8 overflow-hidden`}
         >
-          {item.issue_user_name}
+          {item.issue_title}
         </p>
         <p
           className={`text-center text-sm italic  h-14 overflow-hidden ${arima.className}`}
