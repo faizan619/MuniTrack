@@ -17,7 +17,7 @@ export default function HomePost() {
   const [showIssue, SetShowIssue] = useState(true);
   const [showCamp, SetShowCamp] = useState(false);
   const [showIn, setIn] = useState(false);
-  
+
   const getAllPost = async () => {
     toast.remove();
     toast.loading("Loading the Issue");
@@ -25,8 +25,8 @@ export default function HomePost() {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_DOMAIN_URL}/issue`,
         { cache: "no-store" }
-        );
-        if (!response.ok) {
+      );
+      if (!response.ok) {
         throw new Error(`Fetching Error : Status :${response.status}`);
       }
       const raw_issue = await response.json();
@@ -42,12 +42,10 @@ export default function HomePost() {
     getAllPost();
   }, [user]);
 
-  
-  
   if (!user) {
     return <NotAuth name={"Chat Room"} />;
   }
-  
+
   const getAllDrive = async () => {
     toast.remove();
     toast.loading("Loading the Campaigns");
@@ -111,7 +109,6 @@ export default function HomePost() {
     setIn(true);
     getPost();
   };
-  
 
   return (
     <div className="pb-20 wallpaper1 min-h-[90vh]">
@@ -120,7 +117,9 @@ export default function HomePost() {
           className={`border text-xl px-2 sm:px-5 py-2 rounded-md cursor-pointer hover:scale-105 ${
             showIssue ? "bg-white" : ""
           } ${showIssue ? "text-black" : "text-white"}`}
-          onClick={()=>{handleIssueView()}}
+          onClick={() => {
+            handleIssueView();
+          }}
         >
           Issue
         </p>
@@ -128,18 +127,24 @@ export default function HomePost() {
           className={`border text-xl px-2 sm:px-5 py-2 rounded-md cursor-pointer hover:scale-105 ${
             showCamp ? "bg-white " : ""
           } ${showCamp ? "text-black" : "text-white"}`}
-          onClick={()=>{handleCampView()}}
+          onClick={() => {
+            handleCampView();
+          }}
         >
           Campaign
         </p>
-        <p
-          className={`border text-xl px-2 sm:px-5 py-2 rounded-md cursor-pointer hover:scale-105 ${
-            showIn ? "bg-white " : ""
-          } ${showIn ? "text-black" : "text-white"}`}
-          onClick={()=>{handleInCharge()}}
-        >
-          Admin
-        </p>
+        {user.emailVerified ? null : (
+          <p
+            className={`border text-xl px-2 sm:px-5 py-2 rounded-md cursor-pointer hover:scale-105 ${
+              showIn ? "bg-white " : ""
+            } ${showIn ? "text-black" : "text-white"}`}
+            onClick={() => {
+              handleInCharge();
+            }}
+          >
+            Admin
+          </p>
+        )}
       </div>
       {showIssue && <IssueComp1 issues={data} />}
       {showCamp && <CampComp camps={camp} />}
