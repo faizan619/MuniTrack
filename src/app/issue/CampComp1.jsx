@@ -32,9 +32,12 @@ export default function CampComp({ camps }) {
       </p>
       <div className="flex gap-5 flex-wrap p-3 justify-evenly">
         {camps === undefined ? (
-          <p className="text-white">Loading Campaign.</p>
+          <div className={`text-white ${serif.className} text-xl`}>
+            <div className="w-16 mb-12  border-4 border-dashed rounded-full animate-spin dark:border-violet-400"></div>
+            <p>Loading...</p>
+          </div>
         ) : camps.length === 0 ? (
-          <p>No Campaign Found!</p>
+          <p className={`text-white ${serif.className}`}>No Campaign Found!</p>
         ) : (
           camps.map((item) => (
             <div
@@ -112,7 +115,9 @@ export default function CampComp({ camps }) {
                     Place :{" "}
                     <span className={`capitalize`}>{item.drive_location}</span>
                   </p>
-                  <p className="text-sm capitalize sm:hidden">InCharge : {item.drive_host_name}</p>
+                  <p className="text-sm capitalize sm:hidden">
+                    InCharge : {item.drive_host_name}
+                  </p>
                   <div
                     className={`flex py-2 gap-2 ${arima.className} justify-between`}
                   >
@@ -124,19 +129,20 @@ export default function CampComp({ camps }) {
                       Join
                     </Link>
                     {user.emailVerified ? (
-                      <><RWebShare
-                            data={{
-                              text: `Hello! MuniTrack has Organized a ${item.drive_title} at ${item.drive_location}. Wanna Join Us? Here is the Group link`,
-                              url: `${item.drive_link}`,
-                              title: `Let's Together Make the Earth A Better Place to Live :)`,
-                            }}
+                      <>
+                        <RWebShare
+                          data={{
+                            text: `Hello! MuniTrack has Organized a ${item.drive_title} at ${item.drive_location}. Wanna Join Us? Here is the Group link`,
+                            url: `${item.drive_link}`,
+                            title: `Let's Together Make the Earth A Better Place to Live :)`,
+                          }}
+                        >
+                          <button
+                            className={`relative hover:scale-105 transition-all  uppercase flex items-center ${serif.className} transition-all cursor-pointer before:bg-gray-500  before:absolute before:-bottom-1 before:block before:h-[2px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100`}
                           >
-                            <button
-                              className={`relative hover:scale-105 transition-all  uppercase flex items-center ${serif.className} transition-all cursor-pointer before:bg-gray-500  before:absolute before:-bottom-1 before:block before:h-[2px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100`}
-                            >
-                              Share
-                            </button>
-                          </RWebShare>
+                            Share
+                          </button>
+                        </RWebShare>
                       </>
                     ) : (
                       <>
