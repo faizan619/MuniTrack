@@ -19,8 +19,6 @@ export default function HomePost() {
   const [showIn, setIn] = useState(false);
 
   const getAllPost = async () => {
-    toast.remove();
-    toast.loading("Loading the Issue");
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_DOMAIN_URL}/issue`,
@@ -47,8 +45,6 @@ export default function HomePost() {
   }
 
   const getAllDrive = async () => {
-    toast.remove();
-    toast.loading("Loading the Campaigns");
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_DOMAIN_URL}/campaign`,
@@ -69,8 +65,6 @@ export default function HomePost() {
     }
   };
   const getPost = async () => {
-    toast.remove();
-    toast.loading("Loading the Admin.");
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_DOMAIN_URL}/user`,

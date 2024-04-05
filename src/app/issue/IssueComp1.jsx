@@ -20,7 +20,10 @@ export default function IssueComp1({ issues }) {
       )}
       <div className="flex gap-5 flex-wrap p-3 justify-evenly">
         {issues === undefined ? (
-          <p className="text-white">Loading Issues.</p>
+          <div className={`text-white ${serif.className} text-xl`}>
+            <div className="w-16 mb-12  border-4 border-dashed rounded-full animate-spin dark:border-violet-400"></div>
+            <p>Loading...</p>
+          </div>
         ) : issues.length === 0 ? (
           <p>No Issue Found!</p>
         ) : (
@@ -91,7 +94,11 @@ const IssueCard = ({ item }) => {
   };
   const { user } = useAuthContext();
   return (
-    <div className={`text-white ${item.issue_state==="pending"?"border-red-700":"border-green-700"} border-2 relative h-80 flex flex-col w-72 overflow-hidden rounded-md shadow-md hover:shadow-gray-700 hover:scale-105 transition-all`}>
+    <div
+      className={`text-white ${
+        item.issue_state === "pending" ? "border-red-700" : "border-green-700"
+      } border-2 relative h-80 flex flex-col w-72 overflow-hidden rounded-md shadow-md hover:shadow-gray-700 hover:scale-105 transition-all`}
+    >
       <Image
         src={item.issue_image_url}
         alt="bg image"
@@ -99,7 +106,13 @@ const IssueCard = ({ item }) => {
         height={100}
         className="h-36 w-full z-10"
       />
-      <p className={`absolute z-20 ${item.issue_state==="pending"?"bg-red-700":"bg-green-700"} capitalize px-5 right-0`}>{item.issue_state}</p>
+      <p
+        className={`absolute z-20 ${
+          item.issue_state === "pending" ? "bg-red-700" : "bg-green-700"
+        } capitalize px-5 right-0`}
+      >
+        {item.issue_state}
+      </p>
       <div className="flex-1 gap-2 bg-gray-200 text-black flex flex-col items-center justify-between z-10 py-4 px-3">
         <p
           className={`${serif.className} text-md text-center uppercase border h-8 overflow-hidden`}
