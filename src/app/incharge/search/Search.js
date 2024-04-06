@@ -83,17 +83,51 @@ export default function Search() {
           className={`text-white flex gap-5 flex-col flex-wrap justify-evenly py-5`}
         >
           <p>Total Issue Available : {allData.length}</p>
-          <div className={`flex flex-wrap gap-5`}>
-            {!allData ? (
-              <p>Loading Issue</p>
-            ) : allData.length !== 0 ? (
-              allData.map((item) => (
-                <IssueCard key={item._id} item={item} />
-              ))
-            ) : (
-              <p>No Issue Uploaded Yet</p>
-            )}
-          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>No. </th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Raised By</th>
+                <th>View</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {!allData ? (
+                <p>Loading Issue</p>
+              ) : allData.length !== 0 ? (
+                allData.map((item, index) => (
+                  <tr key={item._id}>
+                    <td className={`capitalize border p-1 ${
+        item.issue_state === "pending" ? "bg-red-600" : "bg-green-700"
+      }`}>{index + 1}</td>
+                    <td className={`capitalize border p-1 `}>
+                      {item.issue_title}
+                    </td>
+                    <td className={`capitalize border p-1 `}>
+                      {item.issue_location}
+                    </td>
+                    <td className={`capitalize border p-1 `}>
+                      {item.issue_user_name}
+                    </td>
+                    <td className={`capitalize border p-1 `}>
+                      <DetailBtn url={item._id} />
+                    </td>
+                    <td className={`capitalize border p-1 `}>
+                      {user.emailVerified &&
+                      item.issue_user_email !== user.email ? null : (
+                        <DeleteIssue dltItem={item} />
+                      )}
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <p>No Issue Uploaded Yet</p>
+              )}
+            </tbody>
+          </table>
         </div>
       ) : !data ? (
         <p>Loading..</p>
@@ -115,8 +149,8 @@ export default function Search() {
   );
 }
 
-const IssueCard = ({item}) => {
-  const {user} = useAuthContext();
+const IssueCard = ({ item }) => {
+  const { user } = useAuthContext();
 
   return (
     <div
