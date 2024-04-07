@@ -112,7 +112,7 @@ export default function Search() {
                     <td className={`capitalize border p-1 `}>
                       {item.issue_user_name}
                     </td>
-                    <td className={`capitalize border p-1 `}>
+                    <td className={`capitalize border p-1 flex flex-col justify-center`}>
                       <DetailBtn url={item._id} />
                     </td>
                     <td className={`capitalize border p-1 `}>

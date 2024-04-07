@@ -30,11 +30,52 @@ export default function Page() {
         Feedback 
       </h1>
       <div className={`bg-gray-700 rounded-md py-5 px-3 flex flex-wrap justify-evenly items-center gap-5`}>
+      <table className="rounded-md">
+      <thead>
+              <tr>
+                <th>No. </th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Response</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tbody>
       {!data ? (
               <p>Loading Feedback</p>
             ) : data.length !== 0 ? (
-              data.map((item) => (
-                <div key={item._id} className={`border py-3 rounded-md bg-white text-black px-2 w-80`}>
+              data.map((item,index) => (
+                <tr key={item._id} className="bg-white text-black">
+                    <td className={`capitalize border p-1 `}>{index + 1}</td>
+                    <td className={`capitalize border p-1 `}>
+                      {item.name}
+                    </td>
+                    <td className={`capitalize border p-1 `}>
+                      {item.email}
+                    </td>
+                    <td className={`capitalize border p-1 `}>
+                      {item.selectedEmoji}
+                    </td>
+                    <td className={`capitalize border p-1 `}>
+                      {item.message}
+                    </td>
+                  </tr>
+              ))
+            ) : (
+              <p>No Feedback Uploaded Yet</p>
+            )}
+              
+            </tbody>
+
+      </table>
+      </div>
+    </div>
+  );
+}
+
+
+/*
+<div key={item._id} className={`border py-3 rounded-md bg-white text-black px-2 w-80`}>
                   <p className={`${arima.className} text-lg uppercase`}> {item.name}</p>
                   <span className={`italic`}>{item.email}</span>
                   <div className={`bg-gray-300 my-5 py-3`}>
@@ -43,11 +84,4 @@ export default function Page() {
                   <p className={`${arima.className} mt-3`}>{item.message}</p>
                   </div>
                 </div>
-              ))
-            ) : (
-              <p>No Feedback Uploaded Yet</p>
-            )}
-      </div>
-    </div>
-  );
-}
+*/
