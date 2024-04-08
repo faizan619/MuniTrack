@@ -6,7 +6,6 @@ import { Campaign } from "@/mongodb/schema/campaignSchema";
 connectDB()
 export async function GET(request, { params }) {
   const { emailid } = params;
-  // console.log("Email Id : ", emailid);
   try {
     let issue = await Issue.find({ issue_user_email: emailid });
     return NextResponse.json(issue);

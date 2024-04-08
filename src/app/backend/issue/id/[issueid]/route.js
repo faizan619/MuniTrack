@@ -5,7 +5,6 @@ import { Issue } from "@/mongodb/schema/issueSchema";
 connectDB()
 export async function GET(request, { params }) {
     const { issueid } = params;
-  
     try {
       const task = await Issue.findById(issueid);
       return NextResponse.json(task);
@@ -23,7 +22,6 @@ export async function GET(request, { params }) {
       const { issueid } = params;  
       let {title,describe,location} = await request.json();
       let post = await Issue.findById(issueid);
-      // post.issue_public_view = true;
       post.issue_title=title;
       post.issue_describe=describe;
       post.issue_manual_location = location;

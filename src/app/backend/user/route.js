@@ -29,13 +29,7 @@ export async function POST(request){
             },{status:500})
         }
         else{
-            // const existingUser = await User.findOne({
-            //     $or: [{ email: email }],
-            //   });
-          
-            //   if (existingUser) {
-            //     return res.status(400).send("Email already taken");
-            //   }
+            
             const emailExist = await User.findOne({
                 email
             })
