@@ -123,7 +123,7 @@ export default function ResolvedForm({ id, state }) {
       <div
         className={`flex pt-10 justify-center min-h-[90vh] wallpaper1 pb-28`}
       >
-        <div className={`w-[80%] rounded-md wallpaper py-8 px-2 flex flex-col items-center gap-5`}>
+        <div className={`w-[80%] rounded-md py-8 px-2 flex flex-col items-center gap-5`}>
           <select
             className={`text-black text-lg ${arima.className} border p-3 rounded-md w-[80%] md:w-1/2 bg-white border-black`}
             value={info.state}
