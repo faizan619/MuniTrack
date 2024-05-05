@@ -14,7 +14,7 @@ export default function Google() {
 
   useEffect(() => {
     if (user != null) {
-      toast.remove();
+      toast.remove(); 
       toast.success(`Welcome ${auth.currentUser.displayName}`);
       router.push("/");
     }
@@ -49,7 +49,7 @@ export default function Google() {
   };
 
   return (
-    <div className="h-[90vh] flex flex-col gap-5 justify-center items-center">
+    <div className="h-[90vh] img6 flex flex-col gap-5 justify-center items-center">
 
     <div className="hidden lg:inline-block">
       <button

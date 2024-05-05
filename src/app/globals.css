@@ -16,6 +16,18 @@ html{
 .wallpaper{
   background-image:url("../../public/compo/img4.jpg")  
 }
+.img2{
+  background-image: url("../../public/background/img2.jpg");
+  background-size: cover; /* This will scale the background image to be as large as possible while ensuring its aspect ratio is maintained */
+  background-position: center; /* This will center the background image */
+  background-repeat: no-repeat;
+}
+.img6{
+  background-image: url("../../public/background/img6.jpg");
+  background-size: cover; /* This will scale the background image to be as large as possible while ensuring its aspect ratio is maintained */
+  background-position: center; /* This will center the background image */
+  background-repeat: no-repeat;
+}
 
 .featH{
   display: none;
