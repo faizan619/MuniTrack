@@ -79,7 +79,7 @@ export default function Account() {
     return <div className={``}>Only Logined Users can view this page</div>;
   }
   return (
-    <div className="min-h-[90vh] flex md:justify-center wallpaper1 ">
+    <div className="min-h-[90vh] flex md:justify-center img6 ">
       <div className="flex z-10 md:pt-5 flex-col gap-5 w-full md:w-3/4 px-3 pb-20">
         <div className="flex gap-5 items-center flex-col sm:flex-row">
           <p className=" rounded-md text-sm flex justify-center items-center">
@@ -177,7 +177,7 @@ export default function Account() {
         </p>
         <div
           className={`bg-gray-800 px-3 py-5 rounded-md text-white flex items-center justify-between hover:underline cursor-pointer border border-gray-500 ${serif.className}`}
-          onClick={IssueIsOpen}
+          onClick={IssueIsOpen} 
         >
           <p className="">Issue Uploaded [ {data?.length} ].</p>
           <svg

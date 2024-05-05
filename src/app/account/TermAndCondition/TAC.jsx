@@ -7,7 +7,7 @@ export default function TAC() {
   const pathname = usePathname();
 
   return (
-    <div className="min-h-[90vh] py-5 px-3 flex items-center flex-col text-white gap-3">
+    <div className="min-h-[90vh] img6 py-5 px-3 flex items-center flex-col text-white gap-3">
       <div className="md:w-3/4">
         <h1 className={`text-center font-bold underline ${serif.className} pb-3 text-lg`}>
           Municipal Grievance Tracker Terms and Conditions

@@ -84,7 +84,7 @@ const FeedbackPage = () => {
   };
 
   return (
-    <div className="min-h-[90vh] text-white flex flex-col pt-5 items-center gap-10 selection:bg-green-950 selection:text-white ">
+    <div className="min-h-[90vh] text-white flex img6 flex-col pt-5 items-center gap-10 selection:bg-green-950 selection:text-white ">
       <div className="text-center">
         <h1 className={`${serif.className} text-xl`}>Feedback</h1>
         <p className={`${arima.className}`}>
