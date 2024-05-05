@@ -25,20 +25,20 @@ export default function IssueComp1({ issues }) {
             <p>Loading...</p>
           </div>
         ) : issues.length === 0 ? (
-          <p>No Issue Found!</p>
+          <p className="text-white">No Issue Found!</p>
         ) : (
           <div className="w-full flex flex-wrap gap-5 justify-evenly">
             <Link
               href={"/add"}
-              className="relative rounded-md overflow-hidden flex flex-col justify-center items-center border cursor-alias bg-gray-600 h-80 w-72 hover:scale-105 transition-all"
+              className="relative wallpaper1 rounded-md overflow-hidden flex flex-col justify-center items-center border cursor-alias bg-gray-600 h-80 w-72 hover:scale-105 transition-all"
             >
-              <Image
+              {/* <Image
                 src={Ima1}
                 alt="bg image"
                 width={350}
                 height={100}
                 className="absolute z-0 h-full w-full brightness-50 "
-              />
+              /> */}
               <div
                 className={`z-10 uppercase text-lg ${serif.className} text-white`}
               >

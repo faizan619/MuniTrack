@@ -105,7 +105,7 @@ export default function HomePost() {
   };
 
   return (
-    <div className="pb-20 wallpaper1 min-h-[90vh]">
+    <div className="pb-20 img6 min-h-[90vh]">
       <div className={`flex justify-evenly py-5 ${arima.className}`}>
         <p
           className={`border text-xl px-2 sm:px-5 py-2 rounded-md cursor-pointer hover:scale-105 ${

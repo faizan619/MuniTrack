@@ -67,7 +67,7 @@ export default function Details({ name }) {
               <p className={`italic text-sm flex justify-between items-center`}>
                 <div className={`text-center capitalize rounded-md`}>
                   {data.issue_state === "pending" ? (
-                    user?.emailVerified ? null : (
+                    (user?.emailVerified || !user) ? null : (
                       <Link
                         href={`/issue/resolved/${data._id}`}
                         className="border px-2 sm:px-5 py-2 rounded-md hover:bg-white hover:text-black cursor-pointer transition-all"
