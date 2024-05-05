@@ -10,11 +10,11 @@ export default function Home() {
 
   if (!user) {
     return (
-      <div className="wallpaper1 h-[90vh] text-white flex justify-center items-center text-center ">
+      <div className="img6 h-[90vh] text-white flex justify-center items-center text-center ">
         <div className="flex flex-col gap-6 p-7 rounded-md">
           <div>
             <h1 className={`text-4xl ${kushan.className} font-bold`}>
-              Welcome to MuniTrack
+              Welcome to MuniTrack 
             </h1>
             <p className={`capitalize text-md ${arima.className}`}>
               (Municipal grievance Tracker)
