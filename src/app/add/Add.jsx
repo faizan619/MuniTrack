@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { storage } from "@/firebase/config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
 
 export default function Add() {
   const auth = getAuth();
@@ -87,6 +89,23 @@ export default function Add() {
         lng: position.coords.longitude,
       });
       setData((prevInfo) => ({ ...prevInfo, issue_location: location }));
+      var map = L.map("mapid").setView(
+        // [position.coords.latitude, position.coords.longitude],
+        [location.lat, location.lng],
+        13
+      );
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(
+        map
+      );
+      L.marker([location.lat, location.lng])
+        .addTo(map)
+        // .bindPopup(
+        //   `Latitude: ${position.coords.latitude},Longitude: ${position.coords.longitude}`
+        // )
+        .bindPopup(
+          `Latitude: ${location.lat},Longitude: ${location.lng}`
+        )
+        .openPopup();
     } catch (err) {
       console.error(err.message);
     }
@@ -158,28 +177,59 @@ export default function Add() {
     }
   };
 
-  const resetButton = () => {
-    if (
-      previewUrl ||
-      data.issue_image_url ||
-      data.issue_describe ||
-      data.issue_title
-    ) {
-      setPreviewUrl(null);
-      setImageUpload(false);
-      setLoading("");
-      setLocation({
-        name: "",
-      });
-      setData({
-        issue_title: "",
-        issue_describe: "",
-        issue_location: "",
-      });
+  // const resetButton = () => {
+  //   if (
+  //     previewUrl ||
+  //     data.issue_image_url ||
+  //     data.issue_describe ||
+  //     data.issue_title
+  //   ) {
+  //     setPreviewUrl(null);
+  //     setImageUpload(false);
+  //     setLoading("");
+  //     setLocation({
+  //       name: "",
+  //     });
+  //     setData({
+  //       issue_title: "",
+  //       issue_describe: "",
+  //       issue_location: "",
+  //     });
+  //     toast.remove();
+  //     toast.success("Data Successfully Cleared!");
+  //   } else {
+  //     toast.success("Data is Already Empty!");
+  //   }
+  // };
+
+  const [inpFile, SetinpFile] = useState(true);
+  const [inpLocation, SetinpLocation] = useState(false);
+  const [inpIssue, SetinpIssue] = useState(false);
+
+  const showFile = () => {
+    SetinpFile(true);
+    SetinpIssue(false);
+    SetinpLocation(false);
+  };
+  const showLocation = (e) => {
+    e.preventDefault();
+    if (!file) {
       toast.remove();
-      toast.success("Data Successfully Cleared!");
+      toast.error("Please Upload the Image of the Issue!");
     } else {
-      toast.success("Data is Already Empty!");
+      SetinpFile(false);
+      SetinpLocation(true);
+      SetinpIssue(false);
+    }
+  };
+  const showIssue = (e) => {
+    e.preventDefault();
+    if (!data.issue_location) {
+      toast.error("Please Allow us to get the location!");
+    } else {
+      SetinpIssue(true);
+      SetinpFile(false);
+      SetinpLocation(false);
     }
   };
 
@@ -187,123 +237,187 @@ export default function Add() {
     <div className="h-[90vh] wallpaper1 flex flex-col text-white overflow-auto text-center">
       <div className="h-full pt-5 ">
         <form className="flex flex-col gap-5  justify-center pb-20 px-5 md:px-20 lg:px-36">
-          <div className="flex flex-col gap-5">
-            <input
-              type="file"
-              accept="image/* "
-              onChange={handleChange}
-              multiple="true"
-              className={`text-white border border-dashed rounded-md p-2 ${
-                imageUpload
-                  ? "file:bg-gray-600 file:text-white file:px-2"
-                  : "bg-gray-700"
-              } `}
-            />
-            {previewUrl != null && (
-              <Image
-                src={previewUrl}
-                height={0}
-                width={350}
-                alt="image"
-                className={`self-center rounded-md  bg-red-700  `}
-              />
-            )}
-          </div>
-          {imageUpload ? (
+          {inpFile ? (
             <>
-              <input
-                type="text"
-                required
-                placeholder="Issuer Name"
-                readOnly
-                value={auth.currentUser.displayName}
-                className="p-2 rounded-md text-black selection:bg-transparent"
-              />
-              <input
-                type="text"
-                required
-                placeholder="Issuer Email"
-                value={auth.currentUser.email}
-                readOnly
-                className="text-black p-2 rounded-md selection:bg-transparent"
-              />
+              <div className="flex flex-col gap-5">
+                <input
+                  type="file"
+                  accept="image/* "
+                  onChange={handleChange}
+                  multiple="true"
+                  className={`text-white border border-dashed rounded-md p-2 ${
+                    imageUpload
+                      ? "file:bg-gray-600 file:text-white file:px-2"
+                      : "bg-gray-700"
+                  } `}
+                />
+                {previewUrl != null && (
+                  <Image
+                    src={previewUrl}
+                    height={0}
+                    width={350}
+                    alt="image"
+                    className={`self-center rounded-md  bg-red-700  `}
+                  />
+                )}
+              </div>
+
+              {imageUpload ? (
+                <>
+                  <label>
+                    <p className="text-left">Name:</p>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Issuer Name"
+                      readOnly
+                      value={auth.currentUser.displayName}
+                      className="p-2 rounded-md text-black selection:bg-transparent w-full hover:cursor-not-allowed"
+                    />
+                  </label>
+                  <label>
+                    <p className="text-left">Email:</p>
+
+                    <input
+                      type="text"
+                      required
+                      placeholder="Issuer Email"
+                      value={auth.currentUser.email}
+                      readOnly
+                      className="text-black p-2 rounded-md selection:bg-transparent w-full  hover:cursor-not-allowed"
+                    />
+                  </label>
+                  <p className="text-red-700 text-sm italic">
+                    Name and Email are auto generated according to your login
+                    credentials and it cannot be modified
+                  </p>
+                </>
+              ) : null}
+              <button
+                onClick={showLocation}
+                className="border bg-green-700 text-center hover:bg-green-800 py-2 flex-1 rounded-md cursor-pointer"
+              >
+                Next
+              </button>
             </>
           ) : null}
-          <div className="flex gap-3">
-            <input
-              type="text"
-              value={location.name}
-              readOnly
-              placeholder="Click the Button"
-              className={`text-black p-2 w-full rounded-md flex-1 ${
-                location.name ? "block" : "hidden"
-              }`}
-            />
-            <button
-              onClick={identifyLocation}
-              className={`p-2 flex-1 rounded-md border bg-green-700 ${
-                location.name ? "hidden" : "block"
-              } `}
-            >
-              Get Location
-            </button>
-          </div>
-          <input
-            type="text"
-            placeholder="Enter Loction Manually (Optional)"
-            className="text-black p-2 rounded-md"
-            value={data.issue_manual_location}
-            onChange={(e) => {
-              setData((prevInfo) => ({
-                ...prevInfo,
-                issue_manual_location: e.target.value,
-              }));
-            }}
-          />
-          <input
-            type="text"
-            required
-            placeholder="Issue Title"
-            value={data.issue_title}
-            onChange={(e) => {
-              setData((prevInfo) => ({
-                ...prevInfo,
-                issue_title: e.target.value,
-              }));
-            }}
-            className="text-black p-2 rounded-md"
-          />
-          <textarea
-            type="text"
-            required
-            placeholder="Describe Issue"
-            cols={0}
-            rows={5}
-            value={data.issue_describe}
-            onChange={(e) => {
-              setData((prevInfo) => ({
-                ...prevInfo,
-                issue_describe: e.target.value,
-              }));
-            }}
-            className="text-black p-2 rounded-md min-h-10"
-          />
 
-          <div className="flex gap-3 sm:gap-7 lg:gap-10">
-            <input
-              type="submit"
-              disabled={loading}
-              onClick={handleSubmit}
-              className="border bg-green-700 hover:bg-green-800 py-2 flex-1 rounded-md cursor-pointer"
-              value={loading ? "Uploading..." : "Submit"}
-            />
-            <input
-              type="reset"
-              disabled={loading}
-              onClick={resetButton}
-              className="border bg-red-700 hover:bg-red-800 py-2 flex-1 rounded-md cursor-pointer"
-            />
-          </div>
+          {inpLocation ? (
+            <>
+              <div className="flex gap-3">
+                <input
+                  type="text"
+                  value={location.name}
+                  readOnly
+                  placeholder="Click the Button"
+                  className={`text-black p-2 w-full rounded-md flex-1 ${
+                    location.name ? "block" : "hidden"
+                  }`}
+                />
+                <button
+                  onClick={identifyLocation}
+                  className={`p-2 flex-1 rounded-md border bg-green-700 ${
+                    location.name ? "hidden" : "block"
+                  } `}
+                >
+                  Get Location
+                </button>
+              </div>
+              {/* <p>{location.lng}</p> */}
+              {data.issue_location ? (
+                <>
+                  <div id="mapid" className="h-[300px]"></div>
+                  <label>
+                    <input
+                      type="text"
+                      placeholder="Enter Loction Manually (Optional)"
+                      className="text-black p-2 rounded-md w-full"
+                      value={data.issue_manual_location}
+                      onChange={(e) => {
+                        setData((prevInfo) => ({
+                          ...prevInfo,
+                          issue_manual_location: e.target.value,
+                        }));
+                      }}
+                    />
+                    <span className="text-red-600 text-sm float-left italic">
+                      If the location is not correct then you can type for
+                      manual location
+                    </span>
+                  </label>
+                </>
+              ) : null}
+
+              <div className="flex gap-3 sm:gap-7 lg:gap-10">
+                <button
+                  onClick={showFile}
+                  className="border bg-red-700 hover:bg-red-800 py-2 flex-1 rounded-md cursor-pointer"
+                >
+                  Back
+                </button>
+                <button
+                  onClick={showIssue}
+                  className="border bg-green-700 hover:bg-green-800 py-2 flex-1 rounded-md cursor-pointer"
+                >
+                  Next
+                </button>
+              </div>
+            </>
+          ) : null}
+
+          {inpIssue ? (
+            <>
+              <label>
+                <p className="text-left">Enter Issue Title</p>
+                <input
+                  type="text"
+                  required
+                  placeholder="Issue Title"
+                  value={data.issue_title}
+                  onChange={(e) => {
+                    setData((prevInfo) => ({
+                      ...prevInfo,
+                      issue_title: e.target.value,
+                    }));
+                  }}
+                  className="text-black p-2 rounded-md w-full"
+                />
+              </label>
+              <label>
+                <p className="text-left">Description Your Issue</p>
+                <textarea
+                  type="text"
+                  required
+                  placeholder="Describe Issue"
+                  cols={0}
+                  rows={10}
+                  value={data.issue_describe}
+                  onChange={(e) => {
+                    setData((prevInfo) => ({
+                      ...prevInfo,
+                      issue_describe: e.target.value,
+                    }));
+                  }}
+                  className="text-black p-2 rounded-md min-h-10 w-full"
+                />
+              </label>
+              <div className="flex gap-3 sm:gap-7 lg:gap-10">
+                <button
+                  onClick={showLocation}
+                  className="border bg-red-700 hover:bg-red-800 py-2 flex-1 rounded-md cursor-pointer"
+                >
+                  Back
+                </button>
+                <input
+                  type="submit"
+                  disabled={loading}
+                  onClick={handleSubmit}
+                  className="border bg-green-700 hover:bg-green-800 py-2 flex-1 rounded-md cursor-pointer"
+                  value={loading ? "Uploading..." : "Submit"}
+                />
+              </div>
+            </>
+          ) : null}
         </form>
       </div>
     </div>
