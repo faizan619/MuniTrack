@@ -4,41 +4,43 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Img1 from "../../../../public/assets/img7.jpg";
 import { serif, arima, kushan, rye, car } from "../fonts";
+import Splash from "./Splash";
 export default function Home() {
   const { user } = useAuthContext();
   const router = useRouter();
 
-  if (!user) {
+  if (user) {
     return (
-      <div className="img6 h-[90vh] text-white flex justify-center items-center text-center ">
-        <div className="flex flex-col gap-6 p-7 rounded-md">
-          <div>
-            <h1 className={`text-4xl ${kushan.className} font-bold`}>
-              Welcome to MuniTrack 
-            </h1>
-            <p className={`capitalize text-md ${arima.className}`}>
-              (Municipal grievance Tracker)
-            </p>
-          </div>
-          <p className="italic text-sm">
-            You need to{" "}
-            <span
-              className={`text-red-600 uppercase font-bold ${kushan.className} text-md`}
-            >
-              Login
-            </span>{" "}
-            to Continue Using the app
-          </p>
-          <button
-            className={`uppercase text-lg border py-1 rounded-lg bg-red-600 border-none hover:scale-105 ${kushan.className} transition-all`}
-            onClick={() => {
-              router.push("/google");
-            }}
-          >
-            Login
-          </button>
-        </div>
-      </div>
+      // <div className="img6 h-[90vh] text-white flex justify-center items-center text-center ">
+      //   <div className="flex flex-col gap-6 p-7 rounded-md">
+      //     <div>
+      //       <h1 className={`text-4xl ${kushan.className} font-bold`}>
+      //         Welcome to MuniTrack 
+      //       </h1>
+      //       <p className={`capitalize text-md ${arima.className}`}>
+      //         (Municipal grievance Tracker)
+      //       </p>
+      //     </div>
+      //     <p className="italic text-sm">
+      //       You need to{" "}
+      //       <span
+      //         className={`text-red-600 uppercase font-bold ${kushan.className} text-md`}
+      //       >
+      //         Login
+      //       </span>{" "}
+      //       to Continue Using the app
+      //     </p>
+      //     <button
+      //       className={`uppercase text-lg border py-1 rounded-lg bg-red-600 border-none hover:scale-105 ${kushan.className} transition-all`}
+      //       onClick={() => {
+      //         router.push("/google");
+      //       }}
+      //     >
+      //       Login
+      //     </button>
+      //   </div>
+      // </div>
+      <Splash/>
     );
   }
 
